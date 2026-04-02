@@ -1,0 +1,498 @@
+[
+  {
+    "id": "loc-1",
+    "qrCode": "visby-quest-1",
+    "name": {
+      "en": "The Powder Tower",
+      "sv": "Kruttornet",
+      "de": "Der Pulverturm"
+    },
+    "description": {
+      "en": "The Powder Tower is one of the oldest defensive structures in Visby, dating back to the 12th century. It served as a gunpowder storage facility during medieval times.",
+      "sv": "Kruttornet är en av de äldsta försvarsanläggningarna i Visby, från 1100-talet. Det användes som krutförråd under medeltiden.",
+      "de": "Der Pulverturm ist eines der ältesten Verteidigungsbauwerke in Visby aus dem 12. Jahrhundert. Er diente im Mittelalter als Schießpulverlager."
+    },
+    "readMore": {
+      "en": "Standing sentinel by the harbor, the Powder Tower is believed to be the oldest building in Visby. Its thick stone walls have witnessed centuries of trade, warfare, and the rise and fall of Hanseatic power.",
+      "sv": "Kruttornet vid hamnen anses vara den äldsta byggnaden i Visby. Dess tjocka stenmurar har bevittnat århundraden av handel, krig och Hansaförbundets uppgång och fall.",
+      "de": "Der Pulverturm am Hafen gilt als das älteste Gebäude in Visby. Seine dicken Steinmauern haben Jahrhunderte des Handels, der Kriege und des Aufstiegs und Falls der Hanse miterlebt."
+    },
+    "clue": {
+      "en": "I am the oldest guard of the wall. Find the round tower where the gunpowder slept, by the water's edge.",
+      "sv": "Jag är murens äldsta väktare. Hitta det runda tornet där krutet vilade, vid vattnets kant.",
+      "de": "Ich bin der älteste Wächter der Mauer. Finde den runden Turm, wo das Schießpulver schlief, am Wasserrand."
+    },
+    "coordinates": {
+      "lat": 57.6388,
+      "lng": 18.2848
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6388,18.2848",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-2",
+    "qrCode": "visby-quest-2",
+    "name": {
+      "en": "St. Mary's Cathedral",
+      "sv": "Sankta Maria Domkyrka",
+      "de": "Dom zu Visby"
+    },
+    "description": {
+      "en": "St. Mary's Cathedral, consecrated in 1225, is the only medieval church in Visby still in use. Its impressive towers dominate the city skyline.",
+      "sv": "Sankta Maria Domkyrka, invigd 1225, är den enda medeltidskyrkan i Visby som fortfarande används. Dess imponerande torn dominerar stadens silhuett.",
+      "de": "Der Dom zu Visby, geweiht 1225, ist die einzige mittelalterliche Kirche in Visby, die noch genutzt wird. Seine imposanten Türme dominieren die Stadtsilhouette."
+    },
+    "readMore": {
+      "en": "Originally built for German merchants, this cathedral has survived fires, wars, and the passage of time. Its mix of Romanesque and Gothic architecture tells the story of Visby's golden age as a Hanseatic trading hub.",
+      "sv": "Ursprungligen byggd för tyska köpmän har denna katedral överlevt bränder, krig och tidens gång. Dess blandning av romansk och gotisk arkitektur berättar om Visbys guldålder som hanseatisk handelsstad.",
+      "de": "Ursprünglich für deutsche Kaufleute erbaut, hat diese Kathedrale Brände, Kriege und den Lauf der Zeit überstanden. Ihre Mischung aus romanischer und gotischer Architektur erzählt die Geschichte von Visbys goldener Ära als Hansestadt."
+    },
+    "clue": {
+      "en": "The only medieval house of prayer still singing. Look up — my twin towers watch over the rooftops.",
+      "sv": "Det enda medeltida bönehuset som fortfarande sjunger. Titta upp — mina tvillingtorn vakar över hustaken.",
+      "de": "Das einzige mittelalterliche Gebetshaus, das noch singt. Schau hoch — meine Zwillingstürme wachen über die Dächer."
+    },
+    "coordinates": {
+      "lat": 57.6389,
+      "lng": 18.2943
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6389,18.2943",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-3",
+    "qrCode": "visby-quest-3",
+    "name": {
+      "en": "Almedalen",
+      "sv": "Almedalen",
+      "de": "Almedalen"
+    },
+    "description": {
+      "en": "Almedalen is Visby's beloved park by the sea, famous as the site of Sweden's annual political gathering, Almedalsveckan.",
+      "sv": "Almedalen är Visbys älskade park vid havet, känd som platsen för Sveriges årliga politiska samling, Almedalsveckan.",
+      "de": "Almedalen ist Visbys beliebter Park am Meer, berühmt als Ort der jährlichen politischen Versammlung Schwedens, der Almedalsveckan."
+    },
+    "readMore": {
+      "en": "Once the medieval harbor, Almedalen was transformed into a park in the 19th century. Every summer it hosts Almedalsveckan, where politicians and citizens meet in open dialogue — a uniquely Swedish tradition.",
+      "sv": "En gång den medeltida hamnen förvandlades Almedalen till en park på 1800-talet. Varje sommar värd för Almedalsveckan, där politiker och medborgare möts i öppen dialog.",
+      "de": "Einst der mittelalterliche Hafen, wurde Almedalen im 19. Jahrhundert in einen Park umgewandelt. Jeden Sommer findet hier die Almedalsveckan statt, wo Politiker und Bürger im offenen Dialog zusammentreffen."
+    },
+    "clue": {
+      "en": "Where ships once docked, now grass and speeches grow. This garden by the sea hosts the nation's voice each summer.",
+      "sv": "Där skepp en gång lade till, växer nu gräs och tal. Denna trädgård vid havet hyser nationens röst varje sommar.",
+      "de": "Wo einst Schiffe anlegten, wachsen nun Gras und Reden. Dieser Garten am Meer beherbergt jeden Sommer die Stimme der Nation."
+    },
+    "coordinates": {
+      "lat": 57.6365,
+      "lng": 18.287
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6365,18.2870",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-4",
+    "qrCode": "visby-quest-4",
+    "name": {
+      "en": "Botanical Garden",
+      "sv": "Botaniska Trädgården",
+      "de": "Botanischer Garten"
+    },
+    "description": {
+      "en": "Visby's Botanical Garden sits among medieval ruins, blending nature and history in a peaceful oasis within the city walls.",
+      "sv": "Visbys Botaniska Trädgård ligger bland medeltidsruiner och blandar natur och historia i en fridfull oas innanför stadsmurarna.",
+      "de": "Visbys Botanischer Garten liegt zwischen mittelalterlichen Ruinen und verbindet Natur und Geschichte in einer friedlichen Oase innerhalb der Stadtmauern."
+    },
+    "readMore": {
+      "en": "Founded in 1855, the garden is nestled between the ruins of St. Olof's and St. Lars' churches. Gotland's mild climate allows exotic plants to thrive alongside native species.",
+      "sv": "Grundad 1855 ligger trädgården inbäddad mellan ruinerna av S:t Olofs och S:t Lars kyrkor. Gotlands milda klimat låter exotiska växter frodas tillsammans med inhemska arter.",
+      "de": "Der 1855 gegründete Garten liegt eingebettet zwischen den Ruinen der St. Olofs- und St. Lars-Kirchen. Gotlands mildes Klima lässt exotische Pflanzen neben einheimischen Arten gedeihen."
+    },
+    "clue": {
+      "en": "Between two fallen houses of God, a garden blooms. Where roses climb ancient stones, seek beauty among the ruins.",
+      "sv": "Mellan två fallna gudshus blommar en trädgård. Där rosor klättrar på gamla stenar, sök skönhet bland ruinerna.",
+      "de": "Zwischen zwei gefallenen Gotteshäusern blüht ein Garten. Wo Rosen an alten Steinen klettern, suche Schönheit unter den Ruinen."
+    },
+    "coordinates": {
+      "lat": 57.6378,
+      "lng": 18.2962
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6378,18.2962",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-5",
+    "qrCode": "visby-quest-5",
+    "name": {
+      "en": "St. Karin's Ruin",
+      "sv": "S:t Karins Ruin",
+      "de": "St. Katharinen-Ruine"
+    },
+    "description": {
+      "en": "The ruins of St. Karin's Church stand as a dramatic reminder of Visby's medieval golden age. Built in the 13th century, it remains one of the best-preserved church ruins in Scandinavia.",
+      "sv": "Ruinerna av S:t Karins kyrka står som en dramatisk påminnelse om Visbys medeltida guldålder. Byggd på 1200-talet är den en av de bäst bevarade kyrkoruinerna i Skandinavien.",
+      "de": "Die Ruinen der St. Katharinen-Kirche stehen als dramatische Erinnerung an Visbys mittelalterliche Blütezeit. Im 13. Jahrhundert erbaut, gehört sie zu den besterhaltenen Kirchenruinen Skandinaviens."
+    },
+    "readMore": {
+      "en": "St. Karin's was a Franciscan monastery church, known for its beautiful rose window. Today its soaring arches frame the sky, and the ruin serves as a magical venue for concerts and the annual Medieval Week.",
+      "sv": "S:t Karins var en franciskansk klosterkyrka, känd för sitt vackra rosfönster. Idag ramar dess höga valvbågar in himlen, och ruinen fungerar som en magisk plats för konserter och den årliga Medeltidsveckan.",
+      "de": "St. Katharinen war eine Franziskanerklosterkirche, bekannt für ihr schönes Rosettenfenster. Heute rahmen ihre hohen Bögen den Himmel ein, und die Ruine dient als magischer Veranstaltungsort für Konzerte und die jährliche Mittelalterwoche."
+    },
+    "clue": {
+      "en": "My roof is the open sky, my walls still reach for heaven. Find the church with no ceiling, where monks once prayed in silence.",
+      "sv": "Mitt tak är den öppna himlen, mina väggar sträcker sig fortfarande mot himlen. Hitta kyrkan utan tak, där munkar en gång bad i tystnad.",
+      "de": "Mein Dach ist der offene Himmel, meine Wände greifen noch zum Himmel. Finde die Kirche ohne Decke, wo Mönche einst in Stille beteten."
+    },
+    "coordinates": {
+      "lat": 57.6401,
+      "lng": 18.2939
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6401,18.2939",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-6",
+    "qrCode": "visby-quest-6",
+    "name": {
+      "en": "Dalman Gate",
+      "sv": "Dalmansporten",
+      "de": "Dalman-Tor"
+    },
+    "description": {
+      "en": "Dalman Gate is the best-preserved city gate in the Visby Ring Wall. This impressive medieval gateway was the main entrance from the harbor area.",
+      "sv": "Dalmansporten är den bäst bevarade stadsporten i Visbys ringmur. Denna imponerande medeltida port var huvudingången från hamnområdet.",
+      "de": "Das Dalman-Tor ist das besterhaltene Stadttor in der Ringmauer von Visby. Dieses beeindruckende mittelalterliche Tor war der Haupteingang vom Hafengebiet."
+    },
+    "readMore": {
+      "en": "Named after a local merchant family, Dalman Gate features a pointed arch typical of Gothic architecture. Walking through it feels like stepping back 700 years into Visby's Hanseatic past.",
+      "sv": "Uppkallad efter en lokal köpmansfamilj har Dalmansporten en spetsbåge typisk för gotisk arkitektur. Att gå igenom den känns som att kliva tillbaka 700 år till Visbys hanseatiska förflutna.",
+      "de": "Benannt nach einer lokalen Kaufmannsfamilie, weist das Dalman-Tor einen Spitzbogen auf, typisch für die gotische Architektur. Hindurchzugehen fühlt sich an wie eine Zeitreise 700 Jahre zurück in Visbys Hansezeit."
+    },
+    "clue": {
+      "en": "I am the stone mouth through which merchants passed from sea to city. Find the arch that still swallows travelers near the harbor.",
+      "sv": "Jag är stenmunnen genom vilken köpmän passerade från hav till stad. Hitta valvet som fortfarande sväljer resenärer nära hamnen.",
+      "de": "Ich bin der Steinmund, durch den Kaufleute vom Meer in die Stadt gelangten. Finde den Bogen, der noch immer Reisende in Hafennähe verschluckt."
+    },
+    "coordinates": {
+      "lat": 57.6372,
+      "lng": 18.2878
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6372,18.2878",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-7",
+    "qrCode": "visby-quest-7",
+    "name": {
+      "en": "Maiden's Tower",
+      "sv": "Jungfrutornet",
+      "de": "Jungfrauenturm"
+    },
+    "description": {
+      "en": "The Maiden's Tower is perhaps Visby's most romantic landmark. Legend says a young woman was sealed inside the tower as punishment for betraying the city to the Danes.",
+      "sv": "Jungfrutornet är kanske Visbys mest romantiska landmärke. Legenden säger att en ung kvinna murades in i tornet som straff för att ha förrått staden till danskarna.",
+      "de": "Der Jungfrauenturm ist vielleicht Visbys romantischstes Wahrzeichen. Der Legende nach wurde eine junge Frau als Strafe für den Verrat der Stadt an die Dänen im Turm eingemauert."
+    },
+    "readMore": {
+      "en": "Whether the legend is true or not, the tower stands as one of the most photographed spots in Visby. Its dramatic silhouette against the sea makes it a perfect spot for sunset viewing.",
+      "sv": "Oavsett om legenden är sann eller inte, står tornet som en av de mest fotograferade platserna i Visby. Dess dramatiska silhuett mot havet gör det till en perfekt plats för solnedgångar.",
+      "de": "Ob die Legende wahr ist oder nicht, der Turm ist einer der meistfotografierten Orte in Visby. Seine dramatische Silhouette vor dem Meer macht ihn zum perfekten Ort für Sonnenuntergänge."
+    },
+    "clue": {
+      "en": "A girl's secret became her prison of stone. Find the lonely tower on the wall where a maiden waits forever, facing the sea.",
+      "sv": "En flickas hemlighet blev hennes fängelse av sten. Hitta det ensamma tornet på muren där en jungfru väntar för evigt, vänd mot havet.",
+      "de": "Das Geheimnis eines Mädchens wurde ihr Gefängnis aus Stein. Finde den einsamen Turm an der Mauer, wo eine Jungfrau ewig wartet, dem Meer zugewandt."
+    },
+    "coordinates": {
+      "lat": 57.6345,
+      "lng": 18.283
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6345,18.2830",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-8",
+    "qrCode": "visby-quest-8",
+    "name": {
+      "en": "Gotland Museum",
+      "sv": "Gotlands Museum",
+      "de": "Gotland Museum"
+    },
+    "description": {
+      "en": "Gotland Museum is Sweden's largest regional museum, housing Viking treasures, medieval artifacts, and the famous Spillings Hoard — the world's largest known Viking silver treasure.",
+      "sv": "Gotlands Museum är Sveriges största länsmuseum med vikingaskatter, medeltida föremål och den berömda Spillingsskatten — världens största kända vikingasilverskatt.",
+      "de": "Das Gotland Museum ist Schwedens größtes Regionalmuseum mit Wikingerschätzen, mittelalterlichen Artefakten und dem berühmten Spillings-Schatz — dem größten bekannten Wikinger-Silberschatz der Welt."
+    },
+    "readMore": {
+      "en": "The museum's crown jewel is the Spillings Hoard, discovered in 1999 — 67 kg of silver coins, rings and bars from the Viking Age. The museum also features stunning picture stones and a medieval art collection.",
+      "sv": "Museets kronjuvel är Spillingsskatten, upptäckt 1999 — 67 kg silvermynt, ringar och tackor från vikingatiden. Museet har också fantastiska bildstenar och en medeltida konstsamling.",
+      "de": "Das Kronjuwel des Museums ist der Spillings-Schatz, entdeckt 1999 — 67 kg Silbermünzen, Ringe und Barren aus der Wikingerzeit. Das Museum zeigt auch beeindruckende Bildsteine und eine mittelalterliche Kunstsammlung."
+    },
+    "clue": {
+      "en": "Within my walls lie the greatest Viking treasures ever found. Seek the house of history where 67 kilos of silver sleep.",
+      "sv": "Inom mina väggar vilar de största vikingaskatterna som någonsin hittats. Sök historiens hus där 67 kilo silver vilar.",
+      "de": "In meinen Mauern liegen die größten jemals gefundenen Wikingerschätze. Suche das Haus der Geschichte, wo 67 Kilo Silber ruhen."
+    },
+    "coordinates": {
+      "lat": 57.6393,
+      "lng": 18.295
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6393,18.2950",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-9",
+    "qrCode": "visby-quest-9",
+    "name": {
+      "en": "St. Nicolai Ruin",
+      "sv": "S:t Nicolai Ruin",
+      "de": "St. Nikolai-Ruine"
+    },
+    "description": {
+      "en": "The ruins of St. Nicolai's Church, built by Dominican monks in the 13th century, are among the most atmospheric in Visby. Its soaring walls host concerts and events.",
+      "sv": "Ruinerna av S:t Nicolai kyrka, byggd av dominikanska munkar på 1200-talet, är bland de mest stämningsfulla i Visby. Dess höga murar hyser konserter och evenemang.",
+      "de": "Die Ruinen der St. Nikolai-Kirche, erbaut von Dominikanermönchen im 13. Jahrhundert, gehören zu den stimmungsvollsten in Visby. Ihre hohen Mauern beherbergen Konzerte und Veranstaltungen."
+    },
+    "readMore": {
+      "en": "St. Nicolai was one of the largest churches in medieval Visby. Today its acoustics make it a sought-after concert venue. During Medieval Week, the ruin comes alive with music, theater, and torchlight.",
+      "sv": "S:t Nicolai var en av de största kyrkorna i det medeltida Visby. Idag gör dess akustik den till en eftertraktad konsertlokal. Under Medeltidsveckan fylls ruinen med musik, teater och fackelsken.",
+      "de": "St. Nikolai war eine der größten Kirchen im mittelalterlichen Visby. Heute macht ihre Akustik sie zu einem begehrten Konzertort. Während der Mittelalterwoche erwacht die Ruine mit Musik, Theater und Fackelschein zum Leben."
+    },
+    "clue": {
+      "en": "Where brothers in black robes chanted, now music fills the open air. Find the grand ruin where echoes of hymns still linger.",
+      "sv": "Där bröder i svarta kåpor sjöng, fyller nu musik den öppna luften. Hitta den stora ruinen där ekon av hymner fortfarande dröjer kvar.",
+      "de": "Wo Brüder in schwarzen Roben sangen, erfüllt nun Musik die freie Luft. Finde die große Ruine, wo Echos von Hymnen noch verweilen."
+    },
+    "coordinates": {
+      "lat": 57.6412,
+      "lng": 18.2927
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6412,18.2927",
+    "images": [],
+    "scanCount": 1
+  },
+  {
+    "id": "loc-10",
+    "qrCode": "visby-quest-10",
+    "name": {
+      "en": "Söderport",
+      "sv": "Söderport",
+      "de": "Söderport (Südtor)"
+    },
+    "description": {
+      "en": "Söderport (South Gate) is the largest gate in Visby's city wall. This twin-towered gateway provided the main southern entrance into the walled city.",
+      "sv": "Söderport är den största porten i Visbys stadsmur. Denna dubbelporttorniga port var den södra huvudingången till den muromgärdade staden.",
+      "de": "Söderport (Südtor) ist das größte Tor in der Stadtmauer von Visby. Dieses Doppelturmtor war der südliche Haupteingang zur ummauerten Stadt."
+    },
+    "readMore": {
+      "en": "The impressive double-towered Söderport controlled access from the south. Its defensive design includes murder holes and arrow slits. Today it's one of the most iconic entry points for visitors exploring the walled city.",
+      "sv": "Den imponerande Söderport med sina dubbla torn kontrollerade tillträdet från söder. Dess försvarskonstruktion inkluderar kastvärn och skottgluggar. Idag är den en av de mest ikoniska ingångarna för besökare.",
+      "de": "Das beeindruckende Doppelturmtor Söderport kontrollierte den Zugang von Süden. Seine Verteidigungskonstruktion umfasst Gusslöcher und Schießscharten. Heute ist es einer der ikonischsten Eingänge für Besucher."
+    },
+    "clue": {
+      "en": "Two stone giants guard the way from the south. Pass between my towers and enter the kingdom within the wall.",
+      "sv": "Två stenjättar vaktar vägen från söder. Passera mellan mina torn och träd in i riket inom muren.",
+      "de": "Zwei Steinriesen bewachen den Weg von Süden. Geh zwischen meinen Türmen hindurch und betritt das Reich innerhalb der Mauer."
+    },
+    "coordinates": {
+      "lat": 57.6325,
+      "lng": 18.292
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6325,18.2920",
+    "images": [],
+    "scanCount": 1
+  },
+  {
+    "id": "loc-11",
+    "qrCode": "visby-quest-11",
+    "name": {
+      "en": "Norderport",
+      "sv": "Norderport",
+      "de": "Norderport (Nordtor)"
+    },
+    "description": {
+      "en": "Norderport is the northern gate of Visby's medieval ring wall. While smaller than Söderport, it offers charming views of the wall stretching along the coastline.",
+      "sv": "Norderport är den norra porten i Visbys medeltida ringmur. Även om den är mindre än Söderport erbjuder den charmiga vyer av muren som sträcker sig längs kusten.",
+      "de": "Norderport ist das Nordtor der mittelalterlichen Ringmauer von Visby. Obwohl kleiner als Söderport, bietet es charmante Ausblicke auf die Mauer entlang der Küste."
+    },
+    "readMore": {
+      "en": "The northern gate was strategically positioned to control the coastal road. The area around Norderport was once bustling with fishermen and traders arriving from the northern part of Gotland.",
+      "sv": "Den norra porten var strategiskt placerad för att kontrollera kustvägen. Området runt Norderport var en gång livligt med fiskare och handlare som anlände från norra Gotland.",
+      "de": "Das Nordtor war strategisch platziert, um die Küstenstraße zu kontrollieren. Das Gebiet um Norderport war einst belebt von Fischern und Händlern aus dem Norden Gotlands."
+    },
+    "clue": {
+      "en": "The wall's northern mouth opens toward windswept shores. Find the humble gate where fishermen once dragged their catch into the city.",
+      "sv": "Murens norra mun öppnar sig mot vindpinade stränder. Hitta den ödmjuka porten där fiskare en gång drog sin fångst in i staden.",
+      "de": "Der nördliche Mund der Mauer öffnet sich zu windgepeitschten Küsten. Finde das bescheidene Tor, wo Fischer einst ihren Fang in die Stadt zogen."
+    },
+    "coordinates": {
+      "lat": 57.6468,
+      "lng": 18.2925
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6468,18.2925",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-12",
+    "qrCode": "visby-quest-12",
+    "name": {
+      "en": "St. Hans & St. Per",
+      "sv": "S:t Hans & S:t Per",
+      "de": "St. Hans & St. Per"
+    },
+    "description": {
+      "en": "The twin ruins of St. Hans and St. Per are unique — two churches sharing one wall. They represent Visby's unusual medieval tradition of building paired churches.",
+      "sv": "Tvillingruinerna S:t Hans och S:t Per är unika — två kyrkor som delar en vägg. De representerar Visbys ovanliga medeltida tradition att bygga parade kyrkor.",
+      "de": "Die Zwillingsruinen St. Hans und St. Per sind einzigartig — zwei Kirchen, die sich eine Wand teilen. Sie repräsentieren Visbys ungewöhnliche mittelalterliche Tradition gepaarter Kirchen."
+    },
+    "readMore": {
+      "en": "These conjoined churches date from the 12th-13th centuries. One served the German community, the other the Swedish-speaking population. Their shared wall symbolizes the cultural duality of medieval Visby.",
+      "sv": "Dessa sammanfogade kyrkor är från 1100-1200-talen. En tjänade den tyska gemenskapen, den andra den svensktalande befolkningen. Deras gemensamma vägg symboliserar det medeltida Visbys kulturella dualitet.",
+      "de": "Diese verbundenen Kirchen stammen aus dem 12.-13. Jahrhundert. Eine diente der deutschen Gemeinde, die andere der schwedischsprachigen Bevölkerung. Ihre gemeinsame Wand symbolisiert die kulturelle Dualität des mittelalterlichen Visby."
+    },
+    "clue": {
+      "en": "Two houses of faith, joined at the hip like siblings. Find the twin ruins where two peoples prayed under different roofs but shared one wall.",
+      "sv": "Två troens hus, sammanfogade som syskon. Hitta tvillingruinerna där två folk bad under olika tak men delade en vägg.",
+      "de": "Zwei Glaubenshäuser, verbunden wie Geschwister. Finde die Zwillingsruinen, wo zwei Völker unter verschiedenen Dächern beteten, aber eine Wand teilten."
+    },
+    "coordinates": {
+      "lat": 57.6403,
+      "lng": 18.291
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6403,18.2910",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-13",
+    "qrCode": "visby-quest-13",
+    "name": {
+      "en": "Kapitelhusgården",
+      "sv": "Kapitelhusgården",
+      "de": "Kapitelhusgården"
+    },
+    "description": {
+      "en": "Kapitelhusgården is one of Visby's best-preserved medieval merchant houses. This impressive stone building showcases the wealth of Hanseatic traders.",
+      "sv": "Kapitelhusgården är ett av Visbys bäst bevarade medeltida köpmanshus. Denna imponerande stenbyggnad visar hanseatiska handelsmäns rikedom.",
+      "de": "Kapitelhusgården ist eines der besterhaltenen mittelalterlichen Kaufmannshäuser in Visby. Dieses beeindruckende Steingebäude zeigt den Reichtum der Hansekaufleute."
+    },
+    "readMore": {
+      "en": "Dating from the 13th century, this merchant house features a stepped gable typical of Hanseatic architecture. The ground floor served as a warehouse, while the upper floors were the merchant's living quarters.",
+      "sv": "Från 1200-talet har detta köpmanshus en trappstegsgavel typisk för hanseatisk arkitektur. Bottenvåningen fungerade som lager, medan de övre våningarna var köpmannens bostad.",
+      "de": "Aus dem 13. Jahrhundert stammend, weist dieses Kaufmannshaus einen Treppengiebel auf, typisch für hanseatische Architektur. Das Erdgeschoss diente als Lager, die oberen Stockwerke als Wohnräume des Kaufmanns."
+    },
+    "clue": {
+      "en": "Where merchants stored their treasures in stone vaults. Find the stepped gable house where Hanseatic gold was counted.",
+      "sv": "Där köpmän förvarade sina skatter i stenvalv. Hitta trappgavelhuset där hanseatiskt guld räknades.",
+      "de": "Wo Kaufleute ihre Schätze in Steingewölben lagerten. Finde das Treppengibelhaus, wo hanseatisches Gold gezählt wurde."
+    },
+    "coordinates": {
+      "lat": 57.6395,
+      "lng": 18.2932
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6395,18.2932",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-14",
+    "qrCode": "visby-quest-14",
+    "name": {
+      "en": "Fiskarplan",
+      "sv": "Fiskarplan",
+      "de": "Fiskarplan"
+    },
+    "description": {
+      "en": "Fiskarplan (Fisherman's Square) is a charming cobblestone square near the harbor where fishermen once sold their daily catch. Today it's lined with cafés.",
+      "sv": "Fiskarplan är ett charmigt kullerstenstorg nära hamnen där fiskare en gång sålde sin dagliga fångst. Idag kantas det av kaféer.",
+      "de": "Fiskarplan (Fischerplatz) ist ein charmanter Kopfsteinpflasterplatz am Hafen, wo Fischer einst ihren täglichen Fang verkauften. Heute ist er von Cafés gesäumt."
+    },
+    "readMore": {
+      "en": "This lively square has been a gathering place for centuries. The surrounding timber-frame houses and flower-covered facades make it one of Visby's most photographed spots.",
+      "sv": "Detta livliga torg har varit en samlingsplats i århundraden. De omgivande korsvirkes­husen och blomtäckta fasaderna gör det till en av Visbys mest fotograferade platser.",
+      "de": "Dieser lebhafte Platz ist seit Jahrhunderten ein Treffpunkt. Die umgebenden Fachwerkhäuser und blumenbedeckten Fassaden machen ihn zu einem der meistfotografierten Orte in Visby."
+    },
+    "clue": {
+      "en": "Salt and scales once covered these cobblestones. Find the square where the sea's bounty was traded, now sweetened with coffee and cake.",
+      "sv": "Salt och fjäll täckte en gång dessa kullerstenar. Hitta torget där havets gåvor handlades, nu sötad med kaffe och kaka.",
+      "de": "Salz und Schuppen bedeckten einst dieses Kopfsteinpflaster. Finde den Platz, wo die Gaben des Meeres gehandelt wurden, nun versüßt mit Kaffee und Kuchen."
+    },
+    "coordinates": {
+      "lat": 57.64,
+      "lng": 18.2875
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6400,18.2875",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-15",
+    "qrCode": "visby-quest-15",
+    "name": {
+      "en": "Österport",
+      "sv": "Österport",
+      "de": "Österport (Osttor)"
+    },
+    "description": {
+      "en": "Österport (East Gate) is the landward entrance to Visby, facing the island interior. Its imposing archway welcomed travelers arriving from the Gotlandic countryside.",
+      "sv": "Österport är ingången till Visby från landsidan, vänd mot öns inland. Dess imposanta valv välkomnade resenärer som anlände från den gotländska landsbygden.",
+      "de": "Österport (Osttor) ist der landseitige Eingang nach Visby, zum Inselinneren gewandt. Sein imposanter Torbogen empfing Reisende aus der gotländischen Landschaft."
+    },
+    "readMore": {
+      "en": "Unlike the harbor-facing gates, Österport was the gateway for farmers, pilgrims, and land travelers. The road through Österport connected Visby to the rest of Gotland and was the artery of inland trade.",
+      "sv": "Till skillnad från hamnportarna var Österport porten för bönder, pilgrimer och landresenärer. Vägen genom Österport förbandt Visby med resten av Gotland och var den inländska handelns pulsåder.",
+      "de": "Im Gegensatz zu den hafenseitigen Toren war Österport das Tor für Bauern, Pilger und Landreisende. Die Straße durch Österport verband Visby mit dem Rest Gotlands und war die Ader des Binnenhandels."
+    },
+    "clue": {
+      "en": "Not from the sea, but from the green fields beyond — find the gate where farmers brought their harvest inside the walls.",
+      "sv": "Inte från havet, utan från de gröna fälten bortom — hitta porten där bönder förde sin skörd innanför murarna.",
+      "de": "Nicht vom Meer, sondern von den grünen Feldern jenseits — finde das Tor, durch das Bauern ihre Ernte in die Mauern brachten."
+    },
+    "coordinates": {
+      "lat": 57.6398,
+      "lng": 18.301
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6398,18.3010",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-1775137918922",
+    "qrCode": "visby-quest-18",
+    "name": {
+      "en": "Terminalen",
+      "sv": "Ny Plats",
+      "de": "Neuer Standort"
+    },
+    "description": {
+      "en": "här jobabr många, bl.a. Ludvig om sommrar",
+      "sv": "Beskrivning...",
+      "de": "Beschreibung..."
+    },
+    "readMore": {
+      "en": "More details...",
+      "sv": "Mer detaljer...",
+      "de": "Mehr Details..."
+    },
+    "clue": {
+      "en": "där Ludde jobbar",
+      "sv": "En gåta...",
+      "de": "Ein Rätsel..."
+    },
+    "coordinates": {
+      "lat": 57.63443724183792,
+      "lng": 18.280240648143344
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.63443724183792, 18.280240648143344",
+    "images": [],
+    "scanCount": 0
+  }
+]
