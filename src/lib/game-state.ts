@@ -467,13 +467,6 @@ export const useGameState = create<GameState>()(
             set({
               locations: fallbackLocations,
             });
-
-            try {
-              const seeded = await api.bootstrapLocations(defaultLocations as BackendLocation[]);
-              locations = seeded.locations;
-            } catch (error) {
-              console.error("Failed to seed backend locations, using bundled defaults.", error);
-            }
           }
 
           const resolvedLocations =

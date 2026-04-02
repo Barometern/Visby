@@ -1,12 +1,16 @@
 import { createServer } from "node:http";
 import { randomBytes, randomUUID, scryptSync, timingSafeEqual } from "node:crypto";
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
 import {
   addScanForUser,
   createLocation,
   createUser,
   deleteLocation,
   deleteSession,
+  ensureAdminUser,
   getLocationById,
+  getLocationByQrCode,
   getUserByEmail,
   getUserBySessionId,
   listLocations,
@@ -20,11 +24,30 @@ import { logError, logInfo, logWarn } from "./lib/logger.mjs";
 import { validateAuthPayload, validateLocationPayload } from "./lib/validation.mjs";
 
 const PORT = Number(process.env.PORT || 8787);
-const ADMIN_EMAIL = "admin@visbyquest.com";
 const SESSION_COOKIE = "visbyquest_session";
 const SESSION_TTL_MS = 1000 * 60 * 60 * 24 * 7;
 const IS_PROD = process.env.NODE_ENV === "production";
 const ADMIN_ENABLED = !IS_PROD || process.env.ENABLE_ADMIN === "true";
+const ADMIN_BOOTSTRAP_EMAIL = process.env.ADMIN_BOOTSTRAP_EMAIL?.trim().toLowerCase() || "";
+const ADMIN_BOOTSTRAP_PASSWORD = process.env.ADMIN_BOOTSTRAP_PASSWORD || "";
+const DIST_DIR = path.resolve(process.cwd(), "dist");
+
+const CONTENT_TYPES = {
+  ".css": "text/css; charset=utf-8",
+  ".html": "text/html; charset=utf-8",
+  ".ico": "image/x-icon",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".js": "text/javascript; charset=utf-8",
+  ".json": "application/json; charset=utf-8",
+  ".map": "application/json; charset=utf-8",
+  ".mjs": "text/javascript; charset=utf-8",
+  ".png": "image/png",
+  ".svg": "image/svg+xml",
+  ".txt": "text/plain; charset=utf-8",
+  ".woff": "font/woff",
+  ".woff2": "font/woff2",
+};
 
 try {
   if (listLocations().length === 0) {
@@ -35,6 +58,20 @@ try {
 } catch (error) {
   logError("locations.seed_failed", {
     message: error instanceof Error ? error.message : "Unknown seed error",
+  });
+}
+
+try {
+  if (ADMIN_BOOTSTRAP_EMAIL && ADMIN_BOOTSTRAP_PASSWORD) {
+    ensureAdminUser({
+      email: ADMIN_BOOTSTRAP_EMAIL,
+      passwordHash: hashPassword(ADMIN_BOOTSTRAP_PASSWORD),
+    });
+    logInfo("admin.bootstrapped", { email: ADMIN_BOOTSTRAP_EMAIL });
+  }
+} catch (error) {
+  logError("admin.bootstrap_failed", {
+    message: error instanceof Error ? error.message : "Unknown admin bootstrap error",
   });
 }
 
@@ -126,6 +163,53 @@ function sendJsonWithCookie(res, statusCode, payload, cookieHeader) {
     "Set-Cookie": cookieHeader,
   });
   res.end(JSON.stringify(payload));
+}
+
+function resolveStaticPath(requestPath) {
+  const normalizedPath = decodeURIComponent(requestPath === "/" ? "/index.html" : requestPath);
+  const relativePath = normalizedPath.replace(/^\/+/, "");
+  const absolutePath = path.resolve(DIST_DIR, relativePath);
+
+  if (!absolutePath.startsWith(DIST_DIR)) {
+    return null;
+  }
+
+  return absolutePath;
+}
+
+function sendFile(res, filePath) {
+  const ext = path.extname(filePath).toLowerCase();
+  const contentType = CONTENT_TYPES[ext] || "application/octet-stream";
+  const cacheControl =
+    filePath.endsWith("index.html")
+      ? "no-cache"
+      : "public, max-age=31536000, immutable";
+
+  res.writeHead(200, {
+    "Content-Type": contentType,
+    "Cache-Control": cacheControl,
+  });
+  res.end(readFileSync(filePath));
+}
+
+function tryServeFrontend(res, requestPath) {
+  if (!existsSync(DIST_DIR)) {
+    return false;
+  }
+
+  const assetPath = resolveStaticPath(requestPath);
+  if (assetPath && existsSync(assetPath)) {
+    sendFile(res, assetPath);
+    return true;
+  }
+
+  const fallbackPath = path.join(DIST_DIR, "index.html");
+  if (!existsSync(fallbackPath)) {
+    return false;
+  }
+
+  sendFile(res, fallbackPath);
+  return true;
 }
 
 function hashPassword(password, salt = randomBytes(16).toString("hex")) {
@@ -233,7 +317,7 @@ const server = createServer(async (req, res) => {
       const user = createUser({
         email,
         passwordHash: hashPassword(password),
-        isAdmin: email === ADMIN_EMAIL,
+        isAdmin: false,
       });
       upsertSession({
         id: sessionId,
@@ -313,6 +397,13 @@ const server = createServer(async (req, res) => {
     }
 
     if (req.method === "POST" && url.pathname === "/api/bootstrap/locations") {
+      const result = await requireAdmin(req);
+
+      if ("error" in result) {
+        sendError(res, result.statusCode || 401, result.error, { path: url.pathname });
+        return;
+      }
+
       const { locations } = await parseJsonBody(req);
 
       if (!Array.isArray(locations)) {
@@ -402,6 +493,16 @@ const server = createServer(async (req, res) => {
         return;
       }
 
+      const existingQrLocation = getLocationByQrCode(validation.value.qrCode);
+      if (existingQrLocation) {
+        sendError(res, 409, "A location with that QR code already exists.", {
+          path: url.pathname,
+          email: result.user.email,
+          qrCode: validation.value.qrCode,
+        });
+        return;
+      }
+
       const createdLocation = createLocation(validation.value);
 
       sendJson(res, 201, { location: sanitizeLocation(createdLocation) });
@@ -430,6 +531,17 @@ const server = createServer(async (req, res) => {
         return;
       }
 
+      const existingQrLocation = getLocationByQrCode(validation.value.qrCode);
+      if (existingQrLocation && existingQrLocation.id !== locationId) {
+        sendError(res, 409, "A location with that QR code already exists.", {
+          path: url.pathname,
+          locationId,
+          email: result.user.email,
+          qrCode: validation.value.qrCode,
+        });
+        return;
+      }
+
       const updatedLocation = updateLocation(locationId, validation.value);
 
       sendJson(res, 200, { location: sanitizeLocation(updatedLocation) });
@@ -449,6 +561,12 @@ const server = createServer(async (req, res) => {
 
       sendJson(res, 200, { ok: true });
       return;
+    }
+
+    if (req.method === "GET" && !url.pathname.startsWith("/api/")) {
+      if (tryServeFrontend(res, url.pathname)) {
+        return;
+      }
     }
 
     sendError(res, 404, "Not found.", { path: url.pathname, method: req.method });

@@ -49,6 +49,9 @@ db.exec(`
     FOREIGN KEY (user_email) REFERENCES users(email) ON DELETE CASCADE,
     FOREIGN KEY (location_id) REFERENCES locations(id) ON DELETE CASCADE
   );
+
+  CREATE UNIQUE INDEX IF NOT EXISTS idx_locations_qr_code
+  ON locations(qr_code);
 `);
 
 function runInTransaction(work) {
@@ -398,8 +401,32 @@ export function getLocationById(locationId) {
   return parseLocation(row);
 }
 
+export function getLocationByQrCode(qrCode) {
+  const row = db.prepare(`SELECT * FROM locations WHERE qr_code = ?`).get(qrCode);
+  return parseLocation(row);
+}
+
 export function setUserPaid(email) {
   db.prepare(`UPDATE users SET has_paid = 1 WHERE email = ?`).run(email);
+  return getUserByEmail(email);
+}
+
+export function ensureAdminUser({ email, passwordHash }) {
+  const existingUser = getUserByEmail(email);
+
+  if (!existingUser) {
+    return createUser({ email, passwordHash, isAdmin: true });
+  }
+
+  db.prepare(
+    `
+      UPDATE users
+      SET is_admin = 1,
+          password_hash = ?
+      WHERE email = ?
+    `,
+  ).run(passwordHash, email);
+
   return getUserByEmail(email);
 }
 

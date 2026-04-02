@@ -82,12 +82,6 @@ export const api = {
       method: "GET",
     });
   },
-  bootstrapLocations(locations: BackendLocation[]) {
-    return apiRequest<{ locations: BackendLocation[] }>("/api/bootstrap/locations", {
-      method: "POST",
-      body: JSON.stringify({ locations }),
-    });
-  },
   createLocation(location: BackendLocation) {
     return apiRequest<{ location: BackendLocation }>("/api/admin/locations", {
       method: "POST",
