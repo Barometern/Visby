@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { VISBY_LOCATIONS } from "@/lib/game-state";
+import { VISBY_LOCATIONS } from "@/data/locations";
 import { useGameState } from "@/lib/game-state";
 
 export default function AppBootstrap() {

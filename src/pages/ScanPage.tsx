@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import QRScanner from '@/components/QRScanner';
 import ScanRevealAnimation from '@/components/ScanRevealAnimation';
 import LocationScreen from '@/components/LocationScreen';
+import { playSuccessfulScanSound } from '@/lib/audio';
 import { useGameState } from '@/lib/game-state';
 import { t } from '@/lib/i18n';
+import { resolveScannedLocationId } from '@/lib/qr';
 import { Button } from '@/components/ui/button';
 import { Lock, MapPinned, QrCode, ScrollText, Sparkles } from 'lucide-react';
 
@@ -21,7 +23,7 @@ export default function ScanPage() {
   const [scannedLocationId, setScannedLocationId] = useState<string | null>(null);
   const [scanError, setScanError] = useState<string | null>(null);
   const [alreadyScannedNotice, setAlreadyScannedNotice] = useState(false);
-  const [alreadyScannedTimer, setAlreadyScannedTimer] = useState<number | null>(null);
+  const alreadyScannedTimerRef = useRef<number | null>(null);
 
   // Reset to scanning when navigating to this page
   useEffect(() => {
@@ -29,9 +31,9 @@ export default function ScanPage() {
     setScannedLocationId(null);
     setScanError(null);
     setAlreadyScannedNotice(false);
-    if (alreadyScannedTimer) {
-      window.clearTimeout(alreadyScannedTimer);
-      setAlreadyScannedTimer(null);
+    if (alreadyScannedTimerRef.current) {
+      window.clearTimeout(alreadyScannedTimerRef.current);
+      alreadyScannedTimerRef.current = null;
     }
   }, [routeLocation.key]);
 
@@ -44,64 +46,16 @@ export default function ScanPage() {
     ? locations.findIndex((location) => location.id === scannedLocation.id)
     : -1;
 
-  const resolveScannedLocationId = (decodedText: string) => {
-    const normalizedText = decodedText.trim();
-    const loweredText = normalizedText.toLowerCase();
-
-    const directMatch = locations.find((location) => {
-      const qrCode = location.qrCode?.trim().toLowerCase();
-      return (
-        location.id.toLowerCase() === loweredText ||
-        qrCode === loweredText
-      );
-    });
-
-    if (directMatch) return directMatch.id;
-
-    const visbyQuestMatch = loweredText.match(/visby-quest-(\d+)/);
-    if (visbyQuestMatch) {
-      const qrCode = `visby-quest-${visbyQuestMatch[1]}`;
-      const byQuestCode = locations.find((location) => location.qrCode.toLowerCase() === qrCode);
-      if (byQuestCode) return byQuestCode.id;
-    }
-
-    const locIdMatch = loweredText.match(/loc-\d+/);
-    if (locIdMatch) {
-      const byLocId = locations.find((location) => location.id.toLowerCase() === locIdMatch[0]);
-      if (byLocId) return byLocId.id;
-    }
-
-    try {
-      const url = new URL(normalizedText);
-      const pathSegments = url.pathname.split('/').filter(Boolean);
-      const lastSegment = pathSegments[pathSegments.length - 1]?.toLowerCase();
-      const locationIdParam = url.searchParams.get('locationId')?.toLowerCase();
-      const qrParam = url.searchParams.get('qr')?.toLowerCase() ?? url.searchParams.get('code')?.toLowerCase();
-
-      const urlMatch = locations.find((location) =>
-        location.id.toLowerCase() === lastSegment ||
-        location.id.toLowerCase() === locationIdParam ||
-        location.qrCode.toLowerCase() === lastSegment ||
-        location.qrCode.toLowerCase() === qrParam,
-      );
-
-      if (urlMatch) return urlMatch.id;
-    } catch {
-      // Not a URL, continue.
-    }
-
-    return null;
-  };
-
   const handleScan = async (decodedText: string) => {
     if (needsPayment) return true;
     setScanError(null);
     setAlreadyScannedNotice(false);
 
-    const locationId = resolveScannedLocationId(decodedText);
+    const locationId = resolveScannedLocationId(decodedText, locations);
 
     if (!locationId) {
-      setScanError(`Scanned QR code does not match any loaded location. Received: ${decodedText}`);
+      console.warn("Unrecognized QR code scanned.", decodedText);
+      setScanError(t('scanMismatchError', language));
       return false;
     }
 
@@ -112,71 +66,17 @@ export default function ScanPage() {
       if (result.alreadyScanned) {
         if (navigator.vibrate) navigator.vibrate([30, 30, 30]);
         setAlreadyScannedNotice(true);
-        if (alreadyScannedTimer) {
-          window.clearTimeout(alreadyScannedTimer);
+        if (alreadyScannedTimerRef.current) {
+          window.clearTimeout(alreadyScannedTimerRef.current);
         }
-        const timer = window.setTimeout(() => {
+        alreadyScannedTimerRef.current = window.setTimeout(() => {
           setAlreadyScannedNotice(false);
-          setAlreadyScannedTimer(null);
+          alreadyScannedTimerRef.current = null;
         }, 4200);
-        setAlreadyScannedTimer(timer);
         return false;
       }
 
-      // Woosh + chime sound effect only for new successful scans
-      try {
-        const ctx = new AudioContext();
-
-        const bufferSize = ctx.sampleRate * 0.4;
-        const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-        const data = noiseBuffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
-          data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
-        }
-        const noise = ctx.createBufferSource();
-        noise.buffer = noiseBuffer;
-        const noiseFilter = ctx.createBiquadFilter();
-        noiseFilter.type = 'bandpass';
-        noiseFilter.frequency.setValueAtTime(2000, ctx.currentTime);
-        noiseFilter.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.4);
-        noiseFilter.Q.value = 2;
-        const noiseGain = ctx.createGain();
-        noiseGain.gain.setValueAtTime(0.15, ctx.currentTime);
-        noiseGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
-        noise.connect(noiseFilter);
-        noiseFilter.connect(noiseGain);
-        noiseGain.connect(ctx.destination);
-        noise.start();
-
-        const chime = ctx.createOscillator();
-        const chimeGain = ctx.createGain();
-        chime.connect(chimeGain);
-        chimeGain.connect(ctx.destination);
-        chime.type = 'sine';
-        chime.frequency.setValueAtTime(523, ctx.currentTime + 0.2);
-        chime.frequency.setValueAtTime(659, ctx.currentTime + 0.35);
-        chime.frequency.setValueAtTime(784, ctx.currentTime + 0.5);
-        chime.frequency.setValueAtTime(1047, ctx.currentTime + 0.65);
-        chimeGain.gain.setValueAtTime(0, ctx.currentTime);
-        chimeGain.gain.linearRampToValueAtTime(0.25, ctx.currentTime + 0.25);
-        chimeGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1);
-        chime.start(ctx.currentTime + 0.2);
-        chime.stop(ctx.currentTime + 1);
-
-        setTimeout(() => {
-          const thud = ctx.createOscillator();
-          const thudGain = ctx.createGain();
-          thud.connect(thudGain);
-          thudGain.connect(ctx.destination);
-          thud.type = 'sine';
-          thud.frequency.setValueAtTime(80, ctx.currentTime);
-          thud.frequency.exponentialRampToValueAtTime(30, ctx.currentTime + 0.3);
-          thudGain.gain.setValueAtTime(0.3, ctx.currentTime);
-          thudGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
-          thud.start();
-          thud.stop(ctx.currentTime + 0.3);
-        }, 2500);
-      } catch {}
+      playSuccessfulScanSound();
 
       setPhase('reveal');
       return true;
