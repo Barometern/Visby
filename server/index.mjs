@@ -13,6 +13,7 @@ import {
   getLocationByQrCode,
   getUserByEmail,
   getUserBySessionId,
+  initDb,
   listLocations,
   seedLocations,
   setUserPaid,
@@ -49,10 +50,12 @@ const CONTENT_TYPES = {
   ".woff2": "font/woff2",
 };
 
+await initDb();
+
 try {
-  if (listLocations().length === 0) {
+  if ((await listLocations()).length === 0) {
     const bundledLocations = loadBundledLocations();
-    const seededLocations = seedLocations(bundledLocations);
+    const seededLocations = await seedLocations(bundledLocations);
     logInfo("locations.seeded", { count: seededLocations.length });
   }
 } catch (error) {
@@ -63,7 +66,7 @@ try {
 
 try {
   if (ADMIN_BOOTSTRAP_EMAIL && ADMIN_BOOTSTRAP_PASSWORD) {
-    ensureAdminUser({
+    await ensureAdminUser({
       email: ADMIN_BOOTSTRAP_EMAIL,
       passwordHash: hashPassword(ADMIN_BOOTSTRAP_PASSWORD),
     });
@@ -257,7 +260,7 @@ async function requireUser(req) {
   const sessionId = cookies[SESSION_COOKIE] || getBearerToken(req);
   if (!sessionId) return { error: "Missing session." };
 
-  const user = getUserBySessionId(sessionId);
+  const user = await getUserBySessionId(sessionId);
 
   if (!user) {
     return { error: "Session not found." };
@@ -306,7 +309,7 @@ const server = createServer(async (req, res) => {
       }
       const { email, password } = validation.value;
 
-      const existingUser = getUserByEmail(email);
+      const existingUser = await getUserByEmail(email);
 
       if (existingUser) {
         sendError(res, 409, "A user with that email already exists.", { path: url.pathname, email });
@@ -314,12 +317,12 @@ const server = createServer(async (req, res) => {
       }
 
       const sessionId = randomUUID();
-      const user = createUser({
+      const user = await createUser({
         email,
         passwordHash: hashPassword(password),
         isAdmin: false,
       });
-      upsertSession({
+      await upsertSession({
         id: sessionId,
         userEmail: user.email,
         expiresAt: Date.now() + SESSION_TTL_MS,
@@ -342,7 +345,7 @@ const server = createServer(async (req, res) => {
       }
       const { email, password } = validation.value;
 
-      const user = getUserByEmail(email);
+      const user = await getUserByEmail(email);
 
       if (!user || !verifyPassword(password, user.passwordHash)) {
         sendError(res, 401, "Invalid email or password.", { path: url.pathname, email });
@@ -350,7 +353,7 @@ const server = createServer(async (req, res) => {
       }
 
       const sessionId = randomUUID();
-      upsertSession({
+      await upsertSession({
         id: sessionId,
         userEmail: user.email,
         expiresAt: Date.now() + SESSION_TTL_MS,
@@ -373,7 +376,7 @@ const server = createServer(async (req, res) => {
         return;
       }
 
-      deleteSession(result.sessionId);
+      await deleteSession(result.sessionId);
 
       sendJsonWithCookie(res, 200, { ok: true }, clearSessionCookieHeader());
       return;
@@ -392,7 +395,7 @@ const server = createServer(async (req, res) => {
     }
 
     if (req.method === "GET" && url.pathname === "/api/locations") {
-      sendJson(res, 200, { locations: listLocations().map(sanitizeLocation) });
+      sendJson(res, 200, { locations: (await listLocations()).map(sanitizeLocation) });
       return;
     }
 
@@ -419,7 +422,7 @@ const server = createServer(async (req, res) => {
         }
       }
 
-      sendJson(res, 200, { locations: seedLocations(locations).map(sanitizeLocation) });
+      sendJson(res, 200, { locations: (await seedLocations(locations)).map(sanitizeLocation) });
       return;
     }
 
@@ -431,7 +434,7 @@ const server = createServer(async (req, res) => {
         return;
       }
 
-      const updatedUser = setUserPaid(result.user.email);
+      const updatedUser = await setUserPaid(result.user.email);
 
       sendJson(res, 200, { user: sanitizeUser(updatedUser) });
       return;
@@ -460,7 +463,7 @@ const server = createServer(async (req, res) => {
         return;
       }
 
-      if (!getLocationById(locationId)) {
+      if (!(await getLocationById(locationId))) {
         sendError(res, 404, "This QR code points to a location that is not available.", {
           path: url.pathname,
           locationId,
@@ -468,7 +471,7 @@ const server = createServer(async (req, res) => {
         return;
       }
 
-      const scanResult = addScanForUser(result.user.email, locationId);
+      const scanResult = await addScanForUser(result.user.email, locationId);
 
       sendJson(res, 200, {
         alreadyScanned: scanResult.alreadyScanned,
@@ -493,7 +496,7 @@ const server = createServer(async (req, res) => {
         return;
       }
 
-      const existingQrLocation = getLocationByQrCode(validation.value.qrCode);
+      const existingQrLocation = await getLocationByQrCode(validation.value.qrCode);
       if (existingQrLocation) {
         sendError(res, 409, "A location with that QR code already exists.", {
           path: url.pathname,
@@ -503,7 +506,7 @@ const server = createServer(async (req, res) => {
         return;
       }
 
-      const createdLocation = createLocation(validation.value);
+      const createdLocation = await createLocation(validation.value);
 
       sendJson(res, 201, { location: sanitizeLocation(createdLocation) });
       return;
@@ -521,7 +524,7 @@ const server = createServer(async (req, res) => {
       const { location } = await parseJsonBody(req);
       const validation = validateLocationPayload(location);
 
-      if (!getLocationById(locationId)) {
+      if (!(await getLocationById(locationId))) {
         sendError(res, 404, "Location not found.", { path: url.pathname, locationId });
         return;
       }
@@ -531,7 +534,7 @@ const server = createServer(async (req, res) => {
         return;
       }
 
-      const existingQrLocation = getLocationByQrCode(validation.value.qrCode);
+      const existingQrLocation = await getLocationByQrCode(validation.value.qrCode);
       if (existingQrLocation && existingQrLocation.id !== locationId) {
         sendError(res, 409, "A location with that QR code already exists.", {
           path: url.pathname,
@@ -542,7 +545,7 @@ const server = createServer(async (req, res) => {
         return;
       }
 
-      const updatedLocation = updateLocation(locationId, validation.value);
+      const updatedLocation = await updateLocation(locationId, validation.value);
 
       sendJson(res, 200, { location: sanitizeLocation(updatedLocation) });
       return;
@@ -557,7 +560,7 @@ const server = createServer(async (req, res) => {
       }
 
       const locationId = decodeURIComponent(url.pathname.split("/").pop() || "");
-      deleteLocation(locationId);
+      await deleteLocation(locationId);
 
       sendJson(res, 200, { ok: true });
       return;
