@@ -109,7 +109,7 @@ export default function MapPage() {
 
       <div className="map-perspective relative flex flex-1 items-center justify-center px-4 pb-4 md:px-8 md:pb-6">
         <div
-          className="parchment-map-container relative -translate-y-4 flex w-full max-w-[min(92vw,980px)] cursor-pointer flex-col overflow-visible md:-translate-y-6"
+          className="parchment-map-container relative -translate-y-4 flex w-[340px] min-w-[340px] max-w-[340px] cursor-pointer flex-col overflow-visible md:-translate-y-6"
           onClick={handleContainerClick}
         >
           <motion.div
@@ -122,7 +122,7 @@ export default function MapPage() {
           />
 
           <motion.div
-            className="parchment-torn relative aspect-[0.82/1] min-h-[420px] overflow-hidden sm:min-h-[520px] lg:min-h-[620px]"
+            className="parchment-torn relative h-[458px] w-full overflow-hidden"
             initial={false}
             animate={mapUnrolled ? { scaleY: 1, opacity: 1 } : { scaleY: 0.03, opacity: 0 }}
             transition={{
@@ -153,7 +153,7 @@ export default function MapPage() {
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               style={{ transformOrigin: "center center" }}
             >
-              <div ref={calibrationMapHostRef} className="h-full w-full" />
+              <div ref={calibrationMapHostRef} className="h-full w-full" style={{ width: '800px', height: '656px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
             </motion.div>
 
             <motion.img
@@ -267,7 +267,7 @@ export default function MapPage() {
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               style={{ transformOrigin: "center center" }}
             >
-              <div ref={calibrationMarkerHostRef} className="h-full w-full bg-transparent" />
+              <div ref={calibrationMarkerHostRef} className="h-full w-full bg-transparent" style={{ width: '800px', height: '656px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
             </motion.div>
 
             <div className="paper-texture-overlay" />

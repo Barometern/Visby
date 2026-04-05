@@ -1,4 +1,4 @@
-import { useEffect, type RefObject } from "react";
+import { useEffect, type RefObject, type MutableRefObject } from "react";
 import L from "leaflet";
 
 type Bounds = {
@@ -14,13 +14,14 @@ type LandmarkPoint = {
 type UseCalibrationMapsArgs = {
   mapHostRef: RefObject<HTMLDivElement | null>;
   markerHostRef: RefObject<HTMLDivElement | null>;
-  mapRef: RefObject<L.Map | null>;
-  markerMapRef: RefObject<L.Map | null>;
+  mapRef: MutableRefObject<L.Map | null>;
+  markerMapRef: MutableRefObject<L.Map | null>;
   bounds: Bounds;
   wallPath: [number, number][];
   landmarkPoints: readonly LandmarkPoint[];
   zoomedIn: boolean;
   mapUnrolled: boolean;
+  showCalibrationMarkers: boolean;
 };
 
 function syncCalibrationMap(
@@ -43,6 +44,7 @@ export function useCalibrationMaps({
   landmarkPoints,
   zoomedIn,
   mapUnrolled,
+  showCalibrationMarkers,
 }: UseCalibrationMapsArgs) {
   useEffect(() => {
     if (!mapHostRef.current || mapRef.current) return;
@@ -55,7 +57,6 @@ export function useCalibrationMaps({
       doubleClickZoom: false,
       boxZoom: false,
       keyboard: false,
-      tap: false,
       touchZoom: false,
     });
 
@@ -88,7 +89,6 @@ export function useCalibrationMaps({
       doubleClickZoom: false,
       boxZoom: false,
       keyboard: false,
-      tap: false,
       touchZoom: false,
     });
 
@@ -105,15 +105,17 @@ export function useCalibrationMaps({
       lineJoin: "round",
     }).addTo(map);
 
-    landmarkPoints.forEach((point) => {
-      L.circleMarker([point.lat, point.lng], {
-        radius: 1.8,
-        color: "#6f4421",
-        weight: 0.8,
-        fillColor: "#f2c66c",
-        fillOpacity: 1,
-      }).addTo(map);
-    });
+    if (showCalibrationMarkers) {
+      landmarkPoints.forEach((point) => {
+        L.circleMarker([point.lat, point.lng], {
+          radius: 1.8,
+          color: "#6f4421",
+          weight: 0.8,
+          fillColor: "#f2c66c",
+          fillOpacity: 1,
+        }).addTo(map);
+      });
+    }
 
     syncCalibrationMap(map, bounds.defaultBounds);
     markerMapRef.current = map;
@@ -122,7 +124,7 @@ export function useCalibrationMaps({
       map.remove();
       markerMapRef.current = null;
     };
-  }, [bounds.defaultBounds, landmarkPoints, markerHostRef, markerMapRef, wallPath]);
+  }, [bounds.defaultBounds, landmarkPoints, markerHostRef, markerMapRef, wallPath, showCalibrationMarkers]);
 
   useEffect(() => {
     if (!mapUnrolled) return;
@@ -132,18 +134,19 @@ export function useCalibrationMaps({
     syncCalibrationMap(markerMapRef.current, currentBounds);
   }, [bounds.defaultBounds, bounds.zoomBounds, mapRef, mapUnrolled, markerMapRef, zoomedIn]);
 
-  useEffect(() => {
-    if (!mapUnrolled) return;
+  // Disabled resize observer to lock map size
+  // useEffect(() => {
+  //   if (!mapUnrolled) return;
 
-    const resizeObserver = new ResizeObserver(() => {
-      const currentBounds = zoomedIn ? bounds.zoomBounds : bounds.defaultBounds;
-      syncCalibrationMap(mapRef.current, currentBounds);
-      syncCalibrationMap(markerMapRef.current, currentBounds);
-    });
+  //   const resizeObserver = new ResizeObserver(() => {
+  //     const currentBounds = zoomedIn ? bounds.zoomBounds : bounds.defaultBounds;
+  //     syncCalibrationMap(mapRef.current, currentBounds);
+  //     syncCalibrationMap(markerMapRef.current, currentBounds);
+  //   });
 
-    if (mapHostRef.current) resizeObserver.observe(mapHostRef.current);
-    if (markerHostRef.current) resizeObserver.observe(markerHostRef.current);
+  //   if (mapHostRef.current) resizeObserver.observe(mapHostRef.current);
+  //   if (markerHostRef.current) resizeObserver.observe(markerHostRef.current);
 
-    return () => resizeObserver.disconnect();
-  }, [bounds.defaultBounds, bounds.zoomBounds, mapHostRef, mapRef, mapUnrolled, markerHostRef, markerMapRef, zoomedIn]);
+  //   return () => resizeObserver.disconnect();
+  // }, [bounds.defaultBounds, bounds.zoomBounds, mapHostRef, mapRef, mapUnrolled, markerHostRef, markerMapRef, zoomedIn]);
 }

@@ -14,18 +14,18 @@ export const calibrationMapBounds = {
 };
 
 export const historicMapMotionConfig = {
-  default: { scale: 2.5, x: "35%", y: "-6.5%", rotate: 0, opacity: 1 },
+  default: { scale: 2.5, x: "36.5%", y: "-4%", rotate: 0, opacity: 1 },
   zoom: { scale: 3.6, x: "70%", y: "-8%", rotate: 8, opacity: 1 },
 };
 
 export const modernImageMotionConfig = {
-  default: { scale: 1.75, x: "-19%", y: "1%", rotate: 5, opacity: 1 },
-  zoom: { scale: 2.50, x: "-11%", y: "-6%", rotate: 13, opacity: 1 },
+  default: { scale: 1.75, x: "-19%", y: "4%", rotate: 5, opacity: 1 },
+  zoom: { scale: 2.50, x: "-9%", y: "-2%", rotate: 13, opacity: 1 },
 };
 
 export const calibrationOverlayMotionConfig = {
-  default: { scale: 5.2, x: "-7%", y: "34%", rotate: 5 },
-  zoom: { scale: 7.5, x: "0%", y: "43%", rotate: 13 },
+  default: { scale: 4.0, x: "-6%", y: "35%", rotate: 5 },
+  zoom: { scale: 5.5, x: "0%", y: "43%", rotate: 13 },
 };
 
 export const calibrationWallPath: [number, number][] = [
@@ -57,9 +57,9 @@ export const calibrationLandmarkPoints = [
   { key: "almedalen", label: "Almedalen", lat: 57.635916689306306, lng: 18.286092763236468},
   { key: "storatorget", label: "Stora Torget", lat: 57.64415927301605, lng: 18.297964121505366},
   { key: "osterport", label: "Österport", lat: 57.6384611579294, lng: 18.298383603209018 },
-  { key: "customMarker", label: "Ny markör", lat: 57.64659836400059, lng: 18.29643299895732 },
-   { key: "customMarker", label: "Ny markör2", lat: 57.63748979470508, lng: 18.283867360559494},
-   { key: "customMarker", label: "Ny markör3", lat: 57.63562431035566, lng: 18.29003653492442},
+  { key: "customMarker1", label: "Ny markör", lat: 57.64659836400059, lng: 18.29643299895732 },
+   { key: "customMarker2", label: "Ny markör2", lat: 57.63748979470508, lng: 18.283867360559494},
+   { key: "customMarker3", label: "Ny markör3", lat: 57.63562431035566, lng: 18.29003653492442},
 ] as const;
 
 export const mapModes = ["historic", "modernImage", "calibration"] as const;
