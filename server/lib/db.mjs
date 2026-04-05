@@ -2,7 +2,9 @@ import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { DatabaseSync } from "node:sqlite";
 
-const DATA_DIR = path.resolve(process.cwd(), "server/data");
+const DATA_DIR = process.env.DATA_DIR
+  ? path.resolve(process.env.DATA_DIR)
+  : path.resolve(process.cwd(), "server/data");
 const DB_PATH = path.join(DATA_DIR, "visby-quest.sqlite");
 const LEGACY_JSON_PATH = path.join(DATA_DIR, "db.json");
 
