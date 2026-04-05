@@ -27,7 +27,7 @@ Use this before any real-world pilot on phones outdoors.
 
 ## Admin / Operations
 - Export locations before the event.
-- Create a SQLite backup before the event.
+- Confirm the Railway Postgres service is healthy before the event.
 - Confirm admin is hidden in public mode.
 - Verify scan counts increase after a real scan.
 

@@ -1,6 +1,6 @@
 # Visby Quest
 
-Visby Quest ar en platsbaserad React/Vite-app med en liten Node-backend och SQLite for auth, scan-progress och platsdata.
+Visby Quest ar en platsbaserad React/Vite-app med en liten Node-backend och Postgres for auth, scan-progress och platsdata.
 
 ## Lokalt
 
@@ -43,6 +43,7 @@ Viktiga env-vars:
 ```bash
 NODE_ENV=production
 ENABLE_ADMIN=false
+DATABASE_URL=postgresql://...
 ADMIN_BOOTSTRAP_EMAIL=your-admin@example.com
 ADMIN_BOOTSTRAP_PASSWORD=choose-a-strong-password
 ```
@@ -54,15 +55,9 @@ Om `ADMIN_BOOTSTRAP_EMAIL` och `ADMIN_BOOTSTRAP_PASSWORD` ar satta vid uppstart 
 - `POST /api/bootstrap/locations` ar inte langre publik; den kraver adminsession.
 - Nya anvandare blir inte admin genom att registrera en viss e-postadress.
 - QR-koder ar unika i backend, bade via route-kontroller och en unik databasindex.
-- Lokala artefakter som SQLite-databas, backup, exporter och loggar ar ignorerade i git.
+- Lokala artefakter som exporter och loggar ar ignorerade i git.
 
 ## Driftkommandon
-
-Skapa backup av SQLite:
-
-```bash
-npm run backup:db
-```
 
 Exportera locations:
 

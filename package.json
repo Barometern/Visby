@@ -9,7 +9,6 @@
     "dev:full": "node --watch server/index.mjs & vite",
     "start": "NODE_ENV=production node server/index.mjs",
     "server": "node server/index.mjs",
-    "backup:db": "node server/scripts/backup-db.mjs",
     "export:locations": "node server/scripts/export-locations.mjs",
     "loadtest:scan": "node server/scripts/load-scan.mjs",
     "build": "vite build",
