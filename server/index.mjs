@@ -27,6 +27,8 @@ import { validateAuthPayload, validateLocationPayload } from "./lib/validation.m
 const PORT = Number(process.env.PORT || 8787);
 const SESSION_COOKIE = "visbyquest_session";
 const SESSION_TTL_MS = 1000 * 60 * 60 * 24 * 7;
+const AUTH_RATE_LIMIT_WINDOW_MS = 1000 * 60 * 15;
+const AUTH_RATE_LIMIT_MAX_ATTEMPTS = 10;
 const IS_PROD = process.env.NODE_ENV === "production";
 const ADMIN_ENABLED = !IS_PROD || process.env.ENABLE_ADMIN === "true";
 const ADMIN_BOOTSTRAP_EMAIL = process.env.ADMIN_BOOTSTRAP_EMAIL?.trim().toLowerCase() || "";
@@ -49,6 +51,16 @@ const CONTENT_TYPES = {
   ".woff": "font/woff",
   ".woff2": "font/woff2",
 };
+
+const authAttempts = new Map();
+
+class RequestError extends Error {
+  constructor(statusCode, message) {
+    super(message);
+    this.name = "RequestError";
+    this.statusCode = statusCode;
+  }
+}
 
 await initDb();
 
@@ -108,7 +120,12 @@ async function parseJsonBody(req) {
   }
 
   const raw = Buffer.concat(chunks).toString("utf8");
-  return JSON.parse(raw);
+
+  try {
+    return JSON.parse(raw);
+  } catch {
+    throw new RequestError(400, "Invalid JSON body.");
+  }
 }
 
 function getBearerToken(req) {
@@ -126,6 +143,77 @@ function parseCookies(req) {
     cookies[key] = decodeURIComponent(rest.join("="));
     return cookies;
   }, {});
+}
+
+function getClientIp(req) {
+  const forwardedFor = req.headers["x-forwarded-for"];
+  if (typeof forwardedFor === "string" && forwardedFor.length > 0) {
+    return forwardedFor.split(",")[0].trim();
+  }
+
+  return req.socket.remoteAddress || "unknown";
+}
+
+function getAuthRateLimitKey(req, email = "") {
+  return `${getClientIp(req)}:${email.trim().toLowerCase()}`;
+}
+
+function clearExpiredAuthAttempts(now = Date.now()) {
+  for (const [key, entry] of authAttempts.entries()) {
+    if (entry.resetAt <= now) {
+      authAttempts.delete(key);
+    }
+  }
+}
+
+function getRetryAfterSeconds(resetAt, now = Date.now()) {
+  return Math.max(1, Math.ceil((resetAt - now) / 1000));
+}
+
+function enforceAuthRateLimit(req, res, email = "") {
+  const now = Date.now();
+  clearExpiredAuthAttempts(now);
+
+  const key = getAuthRateLimitKey(req, email);
+  const entry = authAttempts.get(key);
+
+  if (!entry || entry.resetAt <= now) {
+    return true;
+  }
+
+  if (entry.attempts < AUTH_RATE_LIMIT_MAX_ATTEMPTS) {
+    return true;
+  }
+
+  const retryAfterSeconds = getRetryAfterSeconds(entry.resetAt, now);
+  res.setHeader("Retry-After", String(retryAfterSeconds));
+  sendError(res, 429, "Too many authentication attempts. Please try again later.", {
+    path: req.url,
+    retryAfterSeconds,
+    ip: getClientIp(req),
+    email: email.trim().toLowerCase(),
+  });
+  return false;
+}
+
+function recordAuthAttempt(req, email = "") {
+  const now = Date.now();
+  const key = getAuthRateLimitKey(req, email);
+  const entry = authAttempts.get(key);
+
+  if (!entry || entry.resetAt <= now) {
+    authAttempts.set(key, {
+      attempts: 1,
+      resetAt: now + AUTH_RATE_LIMIT_WINDOW_MS,
+    });
+    return;
+  }
+
+  entry.attempts += 1;
+}
+
+function clearAuthAttempts(req, email = "") {
+  authAttempts.delete(getAuthRateLimitKey(req, email));
 }
 
 function sessionCookieHeader(sessionId, maxAgeSeconds = SESSION_TTL_MS / 1000) {
@@ -309,9 +397,14 @@ const server = createServer(async (req, res) => {
       }
       const { email, password } = validation.value;
 
+      if (!enforceAuthRateLimit(req, res, email)) {
+        return;
+      }
+
       const existingUser = await getUserByEmail(email);
 
       if (existingUser) {
+        recordAuthAttempt(req, email);
         sendError(res, 409, "A user with that email already exists.", { path: url.pathname, email });
         return;
       }
@@ -334,6 +427,7 @@ const server = createServer(async (req, res) => {
         { user: sanitizeUser(user) },
         sessionCookieHeader(sessionId),
       );
+      clearAuthAttempts(req, email);
       return;
     }
 
@@ -345,9 +439,14 @@ const server = createServer(async (req, res) => {
       }
       const { email, password } = validation.value;
 
+      if (!enforceAuthRateLimit(req, res, email)) {
+        return;
+      }
+
       const user = await getUserByEmail(email);
 
       if (!user || !verifyPassword(password, user.passwordHash)) {
+        recordAuthAttempt(req, email);
         sendError(res, 401, "Invalid email or password.", { path: url.pathname, email });
         return;
       }
@@ -365,6 +464,7 @@ const server = createServer(async (req, res) => {
         { user: sanitizeUser(user) },
         sessionCookieHeader(sessionId),
       );
+      clearAuthAttempts(req, email);
       return;
     }
 
@@ -574,6 +674,13 @@ const server = createServer(async (req, res) => {
 
     sendError(res, 404, "Not found.", { path: url.pathname, method: req.method });
   } catch (error) {
+    if (error instanceof RequestError) {
+      sendError(res, error.statusCode, error.message, {
+        path: req.url,
+      });
+      return;
+    }
+
     const message = error instanceof Error ? error.message : "Unknown server error.";
     sendError(res, 500, "The server hit an unexpected error. Please try again.", {
       path: req.url,

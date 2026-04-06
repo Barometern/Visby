@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { Pool } from "pg";
 
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -6,13 +7,23 @@ if (!DATABASE_URL) {
   throw new Error("DATABASE_URL is required for the Postgres-backed server.");
 }
 
-const shouldUseSsl =
-  process.env.PGSSL === "true" ||
-  (!DATABASE_URL.includes("railway.internal") && process.env.NODE_ENV === "production");
+const isRailwayInternal = DATABASE_URL.includes("railway.internal");
+const pgSslMode =
+  process.env.PGSSL_MODE ||
+  (isRailwayInternal ? "disable" : process.env.NODE_ENV === "production" ? "require" : "disable");
+const allowInsecurePgSsl = process.env.PGSSL_INSECURE_SKIP_VERIFY === "true";
+
+let ssl = false;
+
+if (pgSslMode === "require") {
+  ssl = allowInsecurePgSsl ? { rejectUnauthorized: false } : { rejectUnauthorized: true };
+} else if (pgSslMode !== "disable") {
+  throw new Error(`Unsupported PGSSL_MODE: ${pgSslMode}`);
+}
 
 const pool = new Pool({
   connectionString: DATABASE_URL,
-  ssl: shouldUseSsl ? { rejectUnauthorized: false } : false,
+  ssl,
 });
 
 function parseLocation(row) {

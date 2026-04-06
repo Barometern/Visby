@@ -48,6 +48,10 @@ const translations = {
     paywallDesc: 'You\'ve used your 2 free scans. Pay once to unlock all 15 locations!',
     payWithKlarna: 'Pay with Klarna',
     freeScansLeft: 'free scans remaining',
+    scanErrorHint: 'Look for the Visby Quest QR marker at the site and try again.',
+    shareButton: 'Share my achievement',
+    shareCopied: 'Copied!',
+    sharePuzzleText: 'I just completed the Visby Quest in Visby! 🏆 #VisbyCityWall',
 
     // Location
     readMore: 'Read More',
@@ -147,6 +151,10 @@ const translations = {
     paywallDesc: 'Du har använt dina 2 gratis skanningar. Betala en gång för att låsa upp alla 15 platser!',
     payWithKlarna: 'Betala med Klarna',
     freeScansLeft: 'gratis skanningar kvar',
+    scanErrorHint: 'Leta efter Visby Quest-markören på platsen och försök igen.',
+    shareButton: 'Dela mitt resultat',
+    shareCopied: 'Kopierat!',
+    sharePuzzleText: 'Jag har klarat Visby Quest i Visby! 🏆 #VisbyCityWall',
 
     readMore: 'Läs Mer',
     gallery: 'Galleri',
@@ -242,6 +250,10 @@ const translations = {
     paywallDesc: 'Du hast deine 2 kostenlosen Scans verbraucht. Zahle einmal, um alle 15 Orte freizuschalten!',
     payWithKlarna: 'Mit Klarna Bezahlen',
     freeScansLeft: 'kostenlose Scans übrig',
+    scanErrorHint: 'Suche nach der Visby Quest-Markierung am Standort und versuche es erneut.',
+    shareButton: 'Leistung teilen',
+    shareCopied: 'Kopiert!',
+    sharePuzzleText: 'Ich habe die Visby Quest in Visby abgeschlossen! 🏆 #VisbyCityWall',
 
     readMore: 'Mehr Lesen',
     gallery: 'Galerie',

@@ -4,6 +4,26 @@ import { api, type BackendLocation, type BackendUser } from './api';
 import type { Language } from './i18n';
 import type { LocationData } from './location-types';
 
+const LOCATIONS_CACHE_KEY = 'visby-quest-locations-cache';
+
+function loadCachedLocations(): BackendLocation[] | null {
+  try {
+    const raw = localStorage.getItem(LOCATIONS_CACHE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw) as BackendLocation[];
+  } catch {
+    return null;
+  }
+}
+
+function saveCachedLocations(locations: BackendLocation[]): void {
+  try {
+    localStorage.setItem(LOCATIONS_CACHE_KEY, JSON.stringify(locations));
+  } catch {
+    // Storage quota exceeded or unavailable — ignore.
+  }
+}
+
 interface GameState {
   language: Language;
   setLanguage: (lang: Language) => void;
@@ -84,8 +104,13 @@ export const useGameState = create<GameState>()(
           try {
             const locationsResponse = await api.getLocations();
             locations = locationsResponse.locations;
+            saveCachedLocations(locations);
           } catch (error) {
             console.error("Failed to load locations from backend.", error);
+            const cached = loadCachedLocations();
+            if (cached && cached.length > 0) {
+              locations = cached;
+            }
           }
 
           if (locations.length === 0) {

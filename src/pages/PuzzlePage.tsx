@@ -1,15 +1,50 @@
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Award } from 'lucide-react';
+import { Sparkles, Award, Share2 } from 'lucide-react';
 import PuzzleGrid from '@/components/PuzzleGrid';
 import { useGameState } from '@/lib/game-state';
 import { t } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import wallTexture from '@/assets/wall-texture.jpg';
+import puzzleImage from '@/assets/puzzle-placeholder.jpg';
 
 export default function PuzzlePage() {
   const { language, unlockedPieces } = useGameState();
   const total = 15;
   const isComplete = unlockedPieces.length >= total;
+
+  const [confettiPieces, setConfettiPieces] = useState<Array<{ id: number; x: number; color: string; delay: number }>>([]);
+  const [copied, setCopied] = useState(false);
+  const confettiShownRef = useRef(false);
+
+  useEffect(() => {
+    if (isComplete && !confettiShownRef.current) {
+      confettiShownRef.current = true;
+      const colors = ['#c9a84c', '#e8c25c', '#f5e7c7', '#8b6914', '#d4af37', '#ffd700'];
+      setConfettiPieces(
+        Array.from({ length: 26 }, (_, i) => ({
+          id: i,
+          x: Math.random() * 100,
+          color: colors[i % colors.length],
+          delay: Math.random() * 0.8,
+        }))
+      );
+      window.setTimeout(() => setConfettiPieces([]), 4500);
+    }
+  }, [isComplete]);
+
+  const handleShare = async () => {
+    const text = t('sharePuzzleText', language);
+    if (navigator.share) {
+      try { await navigator.share({ text }); } catch { /* user cancelled */ }
+    } else {
+      try {
+        await navigator.clipboard.writeText(text);
+        setCopied(true);
+        window.setTimeout(() => setCopied(false), 2500);
+      } catch { /* clipboard denied */ }
+    }
+  };
 
   return (
     <div
@@ -125,6 +160,18 @@ export default function PuzzlePage() {
                 background: 'linear-gradient(180deg, rgba(255,245,220,0.15) 0%, transparent 30%)',
               }} />
 
+              {/* Faint preview of complete puzzle – hints at destination */}
+              {unlockedPieces.length < total && (
+                <img
+                  src={puzzleImage}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 h-full w-full select-none object-cover pointer-events-none"
+                  style={{ opacity: 0.07, filter: 'blur(1px) saturate(0.7)' }}
+                  draggable={false}
+                />
+              )}
+
               {/* Puzzle grid */}
               <PuzzleGrid />
 
@@ -187,10 +234,36 @@ export default function PuzzlePage() {
                 <Sparkles className="w-4 h-4 mr-2" />
                 {t('claimReward', language)}
               </Button>
+              <Button
+                variant="outline"
+                className="mt-3 font-heading border-medieval-gold/40 text-medieval-gold hover:bg-medieval-gold/10"
+                onClick={() => void handleShare()}
+              >
+                <Share2 className="w-4 h-4 mr-2" />
+                {copied ? t('shareCopied', language) : t('shareButton', language)}
+              </Button>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+
+      {/* Confetti celebration */}
+      <AnimatePresence>
+        {confettiPieces.length > 0 && (
+          <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
+            {confettiPieces.map((piece) => (
+              <motion.div
+                key={piece.id}
+                className="absolute w-2 h-2 rounded-sm"
+                style={{ left: `${piece.x}%`, top: '-10px', backgroundColor: piece.color }}
+                initial={{ y: -10, rotate: 0, opacity: 1 }}
+                animate={{ y: '110vh', rotate: 540, opacity: [1, 1, 0] }}
+                transition={{ duration: 2.5 + piece.delay, delay: piece.delay, ease: 'easeIn' }}
+              />
+            ))}
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

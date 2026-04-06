@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import QRScanner from '@/components/QRScanner';
 import ScanRevealAnimation from '@/components/ScanRevealAnimation';
@@ -189,15 +189,21 @@ export default function ScanPage() {
       {alreadyScannedNotice && (
         <div className="fixed inset-x-4 top-4 z-[95] mx-auto max-w-xl rounded-2xl border border-medieval-gold/25 bg-[linear-gradient(180deg,rgba(201,168,76,0.18),rgba(67,47,29,0.92))] p-4 text-center shadow-[0_16px_40px_rgba(0,0,0,0.28)] backdrop-blur-sm">
           <p className="font-body text-sm leading-6 text-amber-50/95">
-            Du har redan skannat denna plats.
+            {t('alreadyScanned', language)}
           </p>
         </div>
       )}
 
       {scanError && (
-        <div className="mt-4 rounded-2xl border border-destructive/30 bg-destructive/10 p-4 text-center">
+        <motion.div
+          className="mt-4 rounded-2xl border border-destructive/30 bg-destructive/10 p-4 text-center"
+          initial={{ x: 0 }}
+          animate={{ x: [-6, 6, -5, 5, -3, 3, 0] }}
+          transition={{ duration: 0.4, ease: 'easeInOut' }}
+        >
           <p className="font-body text-sm text-destructive">{scanError}</p>
-        </div>
+          <p className="font-body text-xs text-destructive/70 mt-1">{t('scanErrorHint', language)}</p>
+        </motion.div>
       )}
 
       <AnimatePresence>
