@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
 import { randomBytes, randomUUID, scryptSync, timingSafeEqual } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
+import { createReadStream, existsSync } from "node:fs";
 import path from "node:path";
 import {
   addScanForUser,
@@ -17,6 +17,7 @@ import {
   listLocations,
   seedLocations,
   setUserPaid,
+  startSessionPurgeInterval,
   updateLocation,
   upsertSession,
 } from "./lib/db.mjs";
@@ -63,6 +64,7 @@ class RequestError extends Error {
 }
 
 await initDb();
+startSessionPurgeInterval();
 
 try {
   if ((await listLocations()).length === 0) {
@@ -280,7 +282,11 @@ function sendFile(res, filePath) {
     "Content-Type": contentType,
     "Cache-Control": cacheControl,
   });
-  res.end(readFileSync(filePath));
+  const stream = createReadStream(filePath);
+  stream.on("error", () => {
+    if (!res.writableEnded) res.end();
+  });
+  stream.pipe(res);
 }
 
 function tryServeFrontend(res, requestPath) {
