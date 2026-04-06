@@ -185,22 +185,29 @@ export async function purgeExpiredSessions(now = Date.now()) {
 }
 
 export async function getUserBySessionId(sessionId) {
-  await purgeExpiredSessions();
-
   const result = await query(
     `
       SELECT u.email, u.password_hash, u.is_admin, u.has_paid
       FROM sessions s
       JOIN users u ON u.email = s.user_email
       WHERE s.id = $1
+        AND s.expires_at > $2
     `,
-    [sessionId],
+    [sessionId, Date.now()],
   );
 
   const row = result.rows[0];
   if (!row) return null;
 
   return parseUser(row, await listScannedLocationsForUser(row.email));
+}
+
+export function startSessionPurgeInterval(intervalMs = 5 * 60 * 1000) {
+  return setInterval(() => {
+    purgeExpiredSessions().catch((err) => {
+      console.error("Session purge failed:", err);
+    });
+  }, intervalMs);
 }
 
 export async function listLocations() {
