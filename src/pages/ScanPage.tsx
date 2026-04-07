@@ -118,7 +118,7 @@ export default function ScanPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="parchment-bg stone-border rounded-lg p-8 animate-fade-in"
+          className="parchment-bg stone-border rounded-lg p-8"
         >
           <Lock className="w-12 h-12 text-medieval-gold mx-auto mb-4" />
           <h2 className="font-heading text-2xl text-foreground mb-2">{t('paywallTitle', language)}</h2>
