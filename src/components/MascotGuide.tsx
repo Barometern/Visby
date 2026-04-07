@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import balleBaggeGlad from "@/assets/balleBagge/balleBagge-glad.png";
 import balleBaggePekar from "@/assets/balleBagge/balleBagge-pekar.png";
-import balleBaggeFraga from "@/assets/balleBagge/balleBagge-fråga.png";
+import balleBaggeFraga from "@/assets/balleBagge/balleBagge-fraga.png";
 import balleBaggeSkattkarta from "@/assets/balleBagge/balleBagge-skattkarta.png";
 
 type MascotPose = "welcome" | "point" | "question" | "map";
@@ -61,10 +61,10 @@ export default function MascotGuide({
       transition={{ duration: 0.28, ease: "easeOut" }}
       className={`${positionClasses[position]} ${className}`.trim()}
     >
-      <div className={`relative ${bubbleWidthClass}`}>
+      <div className={`relative ${bubbleWidthClass}`}>  
         <div
           className={[
-            "relative rounded-[26px] border border-[#e8c98f]/26 bg-[linear-gradient(180deg,rgba(255,249,235,0.97),rgba(244,229,198,0.95))] px-4 py-3 text-[#3a2518] shadow-[0_18px_45px_rgba(64,42,24,0.18)]",
+            "relative rounded-[26px] border border-[#e8c98f]/26 bg-[linear-gradient(180deg,rgba(255,249,235,0.97),rgba(244,229,198,0.95))] px-4 py-3 text-[#3a2518] shadow-[0_18px_45px_rgba(64,42,2[...]",
             interactive ? "cursor-pointer transition-transform hover:translate-y-[-1px]" : "",
           ].join(" ")}
           onClick={interactive ? onClick : undefined}
