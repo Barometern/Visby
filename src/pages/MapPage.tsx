@@ -2,6 +2,7 @@ import { useRef, useState, type MouseEvent } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useCalibrationMaps } from "@/hooks/useCalibrationMaps";
+import MascotGuide from "@/components/MascotGuide";
 import { useGameState } from "@/lib/game-state";
 import { t, type TranslationKey } from "@/lib/i18n";
 import {
@@ -108,30 +109,31 @@ export default function MapPage() {
       </div>
 
       <div className="map-perspective relative flex flex-1 items-center justify-center px-4 pb-4 md:px-8 md:pb-6">
-        <div
-          className="parchment-map-container relative -translate-y-4 flex w-[340px] min-w-[340px] max-w-[340px] cursor-pointer flex-col overflow-visible md:-translate-y-6"
-          onClick={handleContainerClick}
-        >
-          <motion.div
-            className={`scroll-roll scroll-roll-top ${mapUnrolled ? "cursor-pointer" : ""}`}
-            style={{ position: "absolute", left: 0, right: 0, zIndex: 10 }}
-            initial={false}
-            animate={mapUnrolled ? { top: 0 } : { top: "calc(50% - 14px)" }}
-            transition={{ duration: 1.4, ease: [0.25, 1.05, 0.5, 1] }}
-            onClick={handleRollToggle}
-          />
-
-          <motion.div
-            className="parchment-torn relative h-[458px] w-full overflow-hidden"
-            initial={false}
-            animate={mapUnrolled ? { scaleY: 1, opacity: 1 } : { scaleY: 0.03, opacity: 0 }}
-            transition={{
-              scaleY: { duration: 1.4, ease: [0.25, 1.05, 0.5, 1] },
-              opacity: mapUnrolled ? { duration: 0.3, delay: 0 } : { duration: 0.3, delay: 1.0 },
-            }}
-            style={{ transformOrigin: "center center" }}
-            onClick={handleMapSurfaceClick}
+        <div className="flex flex-col items-center gap-5">
+          <div
+            className="parchment-map-container relative -translate-y-4 flex w-[340px] min-w-[340px] max-w-[340px] cursor-pointer flex-col overflow-visible md:-translate-y-6"
+            onClick={handleContainerClick}
           >
+            <motion.div
+              className={`scroll-roll scroll-roll-top ${mapUnrolled ? "cursor-pointer" : ""}`}
+              style={{ position: "absolute", left: 0, right: 0, zIndex: 10 }}
+              initial={false}
+              animate={mapUnrolled ? { top: 0 } : { top: "calc(50% - 14px)" }}
+              transition={{ duration: 1.4, ease: [0.25, 1.05, 0.5, 1] }}
+              onClick={handleRollToggle}
+            />
+
+            <motion.div
+              className="parchment-torn relative h-[458px] w-full overflow-hidden"
+              initial={false}
+              animate={mapUnrolled ? { scaleY: 1, opacity: 1 } : { scaleY: 0.03, opacity: 0 }}
+              transition={{
+                scaleY: { duration: 1.4, ease: [0.25, 1.05, 0.5, 1] },
+                opacity: mapUnrolled ? { duration: 0.3, delay: 0 } : { duration: 0.3, delay: 1.0 },
+              }}
+              style={{ transformOrigin: "center center" }}
+              onClick={handleMapSurfaceClick}
+            >
             <div
               className="absolute inset-[-2%]"
               style={{
@@ -311,34 +313,41 @@ export default function MapPage() {
                 {zoomedIn ? t("mapZoomedInBadge", language) : t("mapZoomedOutBadge", language)}
               </div>
             </div>
-          </motion.div>
+            </motion.div>
 
-          <motion.div
-            className={`scroll-roll scroll-roll-bottom ${mapUnrolled ? "cursor-pointer" : ""}`}
-            style={{ position: "absolute", left: 0, right: 0, zIndex: 10 }}
-            initial={false}
-            animate={mapUnrolled ? { top: "calc(100% - 22px)" } : { top: "calc(50% - 14px)" }}
-            transition={{ duration: 1.4, ease: [0.25, 1.05, 0.5, 1] }}
-            onClick={handleRollToggle}
-          />
+            <motion.div
+              className={`scroll-roll scroll-roll-bottom ${mapUnrolled ? "cursor-pointer" : ""}`}
+              style={{ position: "absolute", left: 0, right: 0, zIndex: 10 }}
+              initial={false}
+              animate={mapUnrolled ? { top: "calc(100% - 22px)" } : { top: "calc(50% - 14px)" }}
+              transition={{ duration: 1.4, ease: [0.25, 1.05, 0.5, 1] }}
+              onClick={handleRollToggle}
+            />
 
-          <AnimatePresence>
-            {!mapUnrolled && (
-              <motion.p
-                initial={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center font-heading text-sm tracking-wider text-medieval-gold medieval-shadow"
-              >
-                <motion.span
-                  animate={{ opacity: [0.4, 1, 0.4] }}
-                  transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
+            <AnimatePresence>
+              {!mapUnrolled && (
+                <motion.p
+                  initial={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center font-heading text-sm tracking-wider text-medieval-gold medieval-shadow"
                 >
-                  {t("tapToOpen", language)}
-                </motion.span>
-              </motion.p>
-            )}
-          </AnimatePresence>
+                  <motion.span
+                    animate={{ opacity: [0.4, 1, 0.4] }}
+                    transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
+                  >
+                    {t("tapToOpen", language)}
+                  </motion.span>
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <div className="w-full max-w-[340px]">
+            <div className="rounded-[28px] border border-[#ead7b2] bg-[rgba(255,248,236,0.95)] px-4 py-3 shadow-[0_18px_50px_rgba(95,66,40,0.08)]">
+              <MascotGuide pose="map" position="inline" text={t("mascotMapHint", language)} />
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -52,6 +52,9 @@ const translations = {
     shareButton: 'Share my achievement',
     shareCopied: 'Copied!',
     sharePuzzleText: 'I just completed the Visby Quest in Visby! 🏆 #VisbyCityWall',
+    mascotName: 'Balle Bagge',
+    mascotScanHint: 'Scan the QR code here to continue.',
+    mascotMapHint: 'Here you can see where the next clue is waiting. Head there to continue.',
 
     // Location
     readMore: 'Read More',
@@ -155,6 +158,9 @@ const translations = {
     shareButton: 'Dela mitt resultat',
     shareCopied: 'Kopierat!',
     sharePuzzleText: 'Jag har klarat Visby Quest i Visby! 🏆 #VisbyCityWall',
+    mascotName: 'Balle Bagge',
+    mascotScanHint: 'Skanna QR-koden här för att fortsätta.',
+    mascotMapHint: 'Här ser du var nästa ledtråd väntar. Ta dig dit för att fortsätta.',
 
     readMore: 'Läs Mer',
     gallery: 'Galleri',
@@ -254,6 +260,9 @@ const translations = {
     shareButton: 'Leistung teilen',
     shareCopied: 'Kopiert!',
     sharePuzzleText: 'Ich habe die Visby Quest in Visby abgeschlossen! 🏆 #VisbyCityWall',
+    mascotName: 'Balle Bagge',
+    mascotScanHint: 'Scanne hier den QR-Code, um weiterzukommen.',
+    mascotMapHint: 'Hier siehst du, wo der nächste Hinweis wartet. Geh dorthin, um fortzufahren.',
 
     readMore: 'Mehr Lesen',
     gallery: 'Galerie',

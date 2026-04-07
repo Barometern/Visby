@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import QRScanner from '@/components/QRScanner';
 import ScanRevealAnimation from '@/components/ScanRevealAnimation';
 import LocationScreen from '@/components/LocationScreen';
+import MascotGuide from '@/components/MascotGuide';
 import { playSuccessfulScanSound } from '@/lib/audio';
 import { useGameState } from '@/lib/game-state';
 import { t } from '@/lib/i18n';
@@ -127,8 +128,17 @@ export default function ScanPage() {
   return (
     <div className="container mx-auto max-w-5xl px-4 py-6 pb-24 sm:py-8">
       <section className="rounded-[2rem] border border-medieval-gold/15 bg-[linear-gradient(180deg,rgba(39,28,20,0.97),rgba(16,11,8,0.98))] p-5 shadow-[0_22px_70px_rgba(0,0,0,0.34)] sm:p-6">
-        <div className="space-y-6">
+        <div className="relative space-y-6">
           {phase === 'scanning' && <QRScanner onScan={handleScan} />}
+
+          {phase === 'scanning' && (
+            <MascotGuide
+              pose="point"
+              position="bottom-right"
+              text={t('mascotScanHint', language)}
+              className="bottom-6 right-2 z-20 sm:right-4"
+            />
+          )}
 
           <div>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-medieval-gold/20 bg-medieval-gold/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-medieval-gold">
