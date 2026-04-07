@@ -33,9 +33,6 @@ export default function AdminPage() {
   const [latInput, setLatInput] = useState('');
   const [lngInput, setLngInput] = useState('');
 
-  if (!ADMIN_ENABLED) return <Navigate to="/" replace />;
-  if (!isLoggedIn || !isAdmin) return <Navigate to="/login" replace />;
-
   const editingLoc = locations.find((location) => location.id === editingId);
   const totalScans = useMemo(
     () => locations.reduce((sum, location) => sum + location.scanCount, 0),
@@ -57,6 +54,9 @@ export default function AdminPage() {
       setLngInput('');
     }
   }, [editingLoc]);
+
+  if (!ADMIN_ENABLED) return <Navigate to="/" replace />;
+  if (!isLoggedIn || !isAdmin) return <Navigate to="/login" replace />;
 
   const updateDraft = (updater: (current: LocationData) => LocationData) => {
     setDraftLocation((current) => (current ? updater(current) : current));

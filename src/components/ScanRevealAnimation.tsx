@@ -3,70 +3,15 @@ import { useGameState } from '@/lib/game-state';
 import { t } from '@/lib/i18n';
 import { useEffect, useMemo, useState } from 'react';
 import puzzleImage from '@/assets/puzzle-placeholder.jpg';
+import { COLS, ROWS, TOTAL, PIECE_SIZE, piecePath } from '@/lib/puzzle-geometry';
 
 interface ScanRevealAnimationProps {
   pieceIndex: number;
   onComplete: () => void;
 }
 
-const COLS = 5;
-const ROWS = 3;
-const TOTAL = COLS * ROWS;
-const B = 100;
-const TAB = 26;
-const NECK = 14;
-const VW = COLS * B;
-const VH = ROWS * B;
-
-function edgeVal(col: number, row: number): 1 | -1 {
-  return (col + row) % 2 === 0 ? 1 : -1;
-}
-
-function piecePath(col: number, row: number): string {
-  const top = row === 0 ? 0 : edgeVal(col, row);
-  const right = col === COLS - 1 ? 0 : edgeVal(col, row);
-  const bottom = row === ROWS - 1 ? 0 : edgeVal(col, row);
-  const left = col === 0 ? 0 : edgeVal(col, row);
-
-  const x0 = col * B;
-  const x1 = x0 + B;
-  const y0 = row * B;
-  const y1 = y0 + B;
-  const cx = x0 + B / 2;
-  const cy = y0 + B / 2;
-
-  let d = `M ${x0} ${y0}`;
-
-  if (top) {
-    const ty = y0 - top * TAB;
-    d += ` L ${cx - NECK} ${y0}`;
-    d += ` C ${cx - NECK} ${ty} ${cx + NECK} ${ty} ${cx + NECK} ${y0}`;
-  }
-  d += ` L ${x1} ${y0}`;
-
-  if (right) {
-    const rx = x1 + right * TAB;
-    d += ` L ${x1} ${cy - NECK}`;
-    d += ` C ${rx} ${cy - NECK} ${rx} ${cy + NECK} ${x1} ${cy + NECK}`;
-  }
-  d += ` L ${x1} ${y1}`;
-
-  if (bottom) {
-    const by = y1 + bottom * TAB;
-    d += ` L ${cx + NECK} ${y1}`;
-    d += ` C ${cx + NECK} ${by} ${cx - NECK} ${by} ${cx - NECK} ${y1}`;
-  }
-  d += ` L ${x0} ${y1}`;
-
-  if (left) {
-    const lx = x0 - left * TAB;
-    d += ` L ${x0} ${cy + NECK}`;
-    d += ` C ${lx} ${cy + NECK} ${lx} ${cy - NECK} ${x0} ${cy - NECK}`;
-  }
-  d += ` L ${x0} ${y0} Z`;
-
-  return d;
-}
+const VW = COLS * PIECE_SIZE;
+const VH = ROWS * PIECE_SIZE;
 
 function playImpact() {
   try {
