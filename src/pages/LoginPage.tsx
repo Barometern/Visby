@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useGameState } from '@/lib/game-state';
 import { t } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -47,9 +48,14 @@ export default function LoginPage() {
 
   return (
     <div className="container max-w-sm mx-auto px-4 py-16">
-      <div className="parchment-bg stone-border rounded-lg p-8">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="parchment-bg stone-border rounded-lg p-8"
+      >
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-full bg-medieval-gold/20 flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 rounded-full bg-medieval-gold/20 flex items-center justify-center mx-auto mb-4 animate-float">
             <Shield className="w-8 h-8 text-medieval-gold" />
           </div>
           <h1 className="font-heading text-2xl text-foreground">
@@ -65,7 +71,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="bg-background/50 border-medieval-stone/30 font-body"
+              className="bg-background/50 border-medieval-stone/30 font-body focus:ring-2 focus:ring-medieval-gold/40 transition-all duration-200"
             />
           </div>
           <div>
@@ -75,7 +81,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="bg-background/50 border-medieval-stone/30 font-body"
+              className="bg-background/50 border-medieval-stone/30 font-body focus:ring-2 focus:ring-medieval-gold/40 transition-all duration-200"
             />
           </div>
           {isSignup && (
@@ -86,7 +92,7 @@ export default function LoginPage() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
-                className="bg-background/50 border-medieval-stone/30 font-body"
+                className="bg-background/50 border-medieval-stone/30 font-body focus:ring-2 focus:ring-medieval-gold/40 transition-all duration-200"
               />
             </div>
           )}
@@ -94,15 +100,25 @@ export default function LoginPage() {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-medieval-gold text-medieval-brown hover:bg-medieval-gold/90 font-heading"
+            className="w-full bg-medieval-gold text-medieval-brown hover:bg-medieval-gold/90 font-heading hover:scale-[1.02] active:scale-[0.98] transition-transform duration-150"
           >
             {isSubmitting ? '...' : isSignup ? t('signup', language) : t('login', language)}
           </Button>
         </form>
 
-        {error && (
-          <p className="mt-4 text-center text-sm text-red-500">{error}</p>
-        )}
+        <AnimatePresence>
+          {error && (
+            <motion.p
+              key={error}
+              className="mt-4 text-center text-sm text-red-500"
+              initial={{ x: 0 }}
+              animate={{ x: [-4, 4, -3, 3, 0] }}
+              transition={{ duration: 0.4, ease: 'easeInOut' }}
+            >
+              {error}
+            </motion.p>
+          )}
+        </AnimatePresence>
 
         <p className="text-center mt-4 font-body text-sm text-muted-foreground">
           <button
@@ -112,7 +128,7 @@ export default function LoginPage() {
             {isSignup ? t('hasAccount', language) : t('noAccount', language)}
           </button>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 }
