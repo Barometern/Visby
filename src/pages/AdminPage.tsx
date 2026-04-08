@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { BarChart3, Copy, Edit, MapPinned, Plus, RefreshCw, Trash2 } from 'lucide-react';
+import { useShallow } from 'zustand/shallow';
 import { useGameState, type LocationData } from '@/lib/game-state';
 import { t, type Language } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -23,7 +24,15 @@ import { toast } from '@/components/ui/use-toast';
 const ADMIN_ENABLED = import.meta.env.DEV || import.meta.env.VITE_ENABLE_ADMIN === 'true';
 
 export default function AdminPage() {
-  const { language, isLoggedIn, isAdmin, locations, updateLocation, addLocation, removeLocation } = useGameState();
+  const { language, isLoggedIn, isAdmin, locations, updateLocation, addLocation, removeLocation } = useGameState(useShallow((s) => ({
+    language: s.language,
+    isLoggedIn: s.isLoggedIn,
+    isAdmin: s.isAdmin,
+    locations: s.locations,
+    updateLocation: s.updateLocation,
+    addLocation: s.addLocation,
+    removeLocation: s.removeLocation,
+  })));
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editLang, setEditLang] = useState<Language>('en');
   const [isSaving, setIsSaving] = useState(false);

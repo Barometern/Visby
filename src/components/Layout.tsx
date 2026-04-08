@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Home, Puzzle, QrCode, LogIn, LogOut, Shield, Globe, Map } from 'lucide-react';
+import { useShallow } from 'zustand/shallow';
 import { useGameState } from '@/lib/game-state';
 import { t, languageNames, type Language } from '@/lib/i18n';
 import {
@@ -13,7 +14,13 @@ import { Button } from '@/components/ui/button';
 const ADMIN_ENABLED = import.meta.env.DEV || import.meta.env.VITE_ENABLE_ADMIN === 'true';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { language, setLanguage, isLoggedIn, isAdmin, logout } = useGameState();
+  const { language, setLanguage, isLoggedIn, isAdmin, logout } = useGameState(useShallow((s) => ({
+    language: s.language,
+    setLanguage: s.setLanguage,
+    isLoggedIn: s.isLoggedIn,
+    isAdmin: s.isAdmin,
+    logout: s.logout,
+  })));
   const location = useLocation();
   const isHome = location.pathname === '/';
 

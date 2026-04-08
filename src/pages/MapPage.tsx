@@ -3,6 +3,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useCalibrationMaps } from "@/hooks/useCalibrationMaps";
 import MascotGuide from "@/components/MascotGuide";
+import { useShallow } from 'zustand/shallow';
 import { useGameState } from "@/lib/game-state";
 import type { LocationData } from "@/lib/location-types";
 import { t, type TranslationKey } from "@/lib/i18n";
@@ -66,7 +67,11 @@ function buildProjectedLocationMarkers(
 }
 
 export default function MapPage() {
-  const { language, locations, scannedLocations } = useGameState();
+  const { language, locations, scannedLocations } = useGameState(useShallow((s) => ({
+    language: s.language,
+    locations: s.locations,
+    scannedLocations: s.scannedLocations,
+  })));
   const [mapUnrolled, setMapUnrolled] = useState(false);
   const [zoomedIn, setZoomedIn] = useState(false);
   const [mapMode, setMapMode] = useState<MapMode>("historic");

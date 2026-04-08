@@ -12,7 +12,7 @@ interface LocationScreenProps {
 }
 
 export default function LocationScreen({ location, pieceIndex, onClose, alreadyScanned = false }: LocationScreenProps) {
-  const { language } = useGameState();
+  const language = useGameState((s) => s.language);
   const galleryItems = location.images.length > 0 ? location.images.slice(0, 4) : [null, null];
 
   return (

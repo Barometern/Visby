@@ -6,6 +6,7 @@ import ScanRevealAnimation from '@/components/ScanRevealAnimation';
 import LocationScreen from '@/components/LocationScreen';
 import balleBaggePekar from '@/assets/balleBagge/balleBagge-pekar.png';
 import { playSuccessfulScanSound } from '@/lib/audio';
+import { useShallow } from 'zustand/shallow';
 import { useGameState } from '@/lib/game-state';
 import { t } from '@/lib/i18n';
 import { resolveScannedLocationId } from '@/lib/qr';
@@ -18,7 +19,15 @@ export default function ScanPage() {
   const {
     language, isLoggedIn, hasPaid, scannedLocations, locations,
     scanLocation, purchaseFullAccess,
-  } = useGameState();
+  } = useGameState(useShallow((s) => ({
+    language: s.language,
+    isLoggedIn: s.isLoggedIn,
+    hasPaid: s.hasPaid,
+    scannedLocations: s.scannedLocations,
+    locations: s.locations,
+    scanLocation: s.scanLocation,
+    purchaseFullAccess: s.purchaseFullAccess,
+  })));
 
   const routeLocation = useLocation();
 

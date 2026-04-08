@@ -6,7 +6,7 @@ import { t } from "@/lib/i18n";
 
 const NotFound = () => {
   const location = useLocation();
-  const { language } = useGameState();
+  const language = useGameState((s) => s.language);
 
   useEffect(() => {
     console.error("404 Error: User attempted to access non-existent route:", location.pathname);

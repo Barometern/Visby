@@ -9,7 +9,7 @@ interface QRScannerProps {
 }
 
 export default function QRScanner({ onScan }: QRScannerProps) {
-  const { language } = useGameState();
+  const language = useGameState((s) => s.language);
   const [error, setError] = useState('');
   const [isScanning, setIsScanning] = useState(false);
   const scannerRef = useRef<Html5Qrcode | null>(null);

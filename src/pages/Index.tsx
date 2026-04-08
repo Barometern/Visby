@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MascotGuide from "@/components/MascotGuide";
+import { useShallow } from 'zustand/shallow';
 import { useGameState } from "@/lib/game-state";
 import heroImage from "@/assets/hero-bg.jpg";
 import heroImageSecondary from "@/assets/hero-bg2.JPG";
@@ -182,7 +183,11 @@ function FoggyMapCard({
 }
 
 const Index = () => {
-  const { language, setLanguage, isLoggedIn } = useGameState();
+  const { language, setLanguage, isLoggedIn } = useGameState(useShallow((s) => ({
+    language: s.language,
+    setLanguage: s.setLanguage,
+    isLoggedIn: s.isLoggedIn,
+  })));
   const c = copy[language as keyof typeof copy] ?? copy.sv;
   const startHref = isLoggedIn ? "/map" : "/login";
   const howItWorksRef = useRef<HTMLElement | null>(null);

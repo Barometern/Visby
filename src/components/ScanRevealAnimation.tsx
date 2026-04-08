@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useShallow } from 'zustand/shallow';
 import { useGameState } from '@/lib/game-state';
 import { t } from '@/lib/i18n';
 import { useEffect, useMemo, useState } from 'react';
@@ -33,7 +34,10 @@ function playImpact() {
 }
 
 export default function ScanRevealAnimation({ pieceIndex, onComplete }: ScanRevealAnimationProps) {
-  const { language, unlockedPieces } = useGameState();
+  const { language, unlockedPieces } = useGameState(useShallow((s) => ({
+    language: s.language,
+    unlockedPieces: s.unlockedPieces,
+  })));
   const [landed, setLanded] = useState(false);
   const [flash, setFlash] = useState(false);
   const [readyToContinue, setReadyToContinue] = useState(false);

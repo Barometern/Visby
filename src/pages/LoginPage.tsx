@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useShallow } from 'zustand/shallow';
 import { useGameState } from '@/lib/game-state';
 import { t } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -11,7 +12,11 @@ import { Shield } from 'lucide-react';
 const ADMIN_ENABLED = import.meta.env.DEV || import.meta.env.VITE_ENABLE_ADMIN === 'true';
 
 export default function LoginPage() {
-  const { language, login, signup } = useGameState();
+  const { language, login, signup } = useGameState(useShallow((s) => ({
+    language: s.language,
+    login: s.login,
+    signup: s.signup,
+  })));
   const navigate = useNavigate();
   const [isSignup, setIsSignup] = useState(false);
   const [email, setEmail] = useState('');

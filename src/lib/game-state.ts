@@ -1,8 +1,9 @@
 // src/lib/game-state.ts
 
+import { z } from 'zod';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { api, type BackendLocation, type BackendUser } from './api';
+import { api, backendLocationSchema, type BackendUser } from './api';
 import type { Language } from './i18n';
 import type { LocationData } from './location-types';
 
@@ -12,23 +13,30 @@ const CACHE_KEY = 'visby-quest-locations-cache:v2';
 const CACHE_TTL = 1000 * 60 * 5; // 5 minutes
 
 type CachedLocations = {
-  data: BackendLocation[];
+  data: z.infer<typeof backendLocationSchema>[];
   cachedAt: number;
 };
+
+/** Schema for the full cache envelope stored in localStorage. */
+const cacheEnvelopeSchema = z.object({
+  data: z.array(backendLocationSchema),
+  cachedAt: z.number(),
+});
 
 function loadCache(): CachedLocations | null {
   try {
     const raw = localStorage.getItem(CACHE_KEY);
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as CachedLocations;
-    if (Date.now() - parsed.cachedAt > CACHE_TTL) return null;
-    return parsed;
+    const result = cacheEnvelopeSchema.safeParse(JSON.parse(raw));
+    if (!result.success) return null;
+    if (Date.now() - result.data.cachedAt > CACHE_TTL) return null;
+    return result.data;
   } catch {
     return null;
   }
 }
 
-function saveCache(data: BackendLocation[]) {
+function saveCache(data: z.infer<typeof backendLocationSchema>[]) {
   try {
     localStorage.setItem(
       CACHE_KEY,
@@ -40,10 +48,15 @@ function saveCache(data: BackendLocation[]) {
   } catch {}
 }
 
-function toLocationData(location: BackendLocation): LocationData {
-  // safer than blind cast — shallow validation
-  if (!location.id) throw new Error('Invalid location');
-  return location as LocationData;
+/**
+ * Validate and convert a raw (unknown) value into a LocationData.
+ * The schema validates the shape; the controlled cast to LocationData is safe
+ * because BackendLocation and LocationData are structurally identical at runtime
+ * (the only difference is the Record key constraint: 'string' vs Language union).
+ */
+function toLocationData(raw: unknown): LocationData {
+  const location = backendLocationSchema.parse(raw);
+  return location as unknown as LocationData;
 }
 
 function deriveUnlockedPieces(locations: LocationData[], scanned: string[]) {
@@ -162,11 +175,12 @@ export const useGameState = create<GameState>()(
       },
 
       scanLocation: async (id) => {
-        const prev = get().scannedLocations;
+        const prevScanned = get().scannedLocations;
+        const prevUnlocked = get().unlockedPieces;
 
         // ⚡ optimistic update
-        if (!prev.includes(id)) {
-          const next = [...prev, id];
+        if (!prevScanned.includes(id)) {
+          const next = [...prevScanned, id];
           set({
             scannedLocations: next,
             unlockedPieces: deriveUnlockedPieces(get().locations, next),
@@ -178,8 +192,8 @@ export const useGameState = create<GameState>()(
           applyUser(res.user, set, get);
           return { alreadyScanned: res.alreadyScanned };
         } catch (e) {
-          // rollback if needed
-          set({ scannedLocations: prev });
+          // rollback both optimistically updated fields
+          set({ scannedLocations: prevScanned, unlockedPieces: prevUnlocked });
           throw e;
         }
       },

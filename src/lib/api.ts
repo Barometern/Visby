@@ -34,7 +34,7 @@ const backendUserSchema = z.object({
 
 const localizedRecordSchema = z.record(z.string(), z.string());
 
-const backendLocationSchema = z.object({
+export const backendLocationSchema = z.object({
   id: z.string(),
   qrCode: z.string(),
   name: localizedRecordSchema,

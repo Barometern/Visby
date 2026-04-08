@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useShallow } from 'zustand/shallow';
 import { useGameState } from '@/lib/game-state';
 import { t } from '@/lib/i18n';
 import PuzzleGrid from '@/components/PuzzleGrid';
@@ -9,7 +10,10 @@ import { Button } from '@/components/ui/button';
 export default function LocationDetailPage() {
   const { locationId } = useParams<{ locationId: string }>();
   const navigate = useNavigate();
-  const { language, locations } = useGameState();
+  const { language, locations } = useGameState(useShallow((s) => ({
+    language: s.language,
+    locations: s.locations,
+  })));
 
   const location = locations.find((item) => item.id === locationId);
   const pieceIndex = locations.findIndex((item) => item.id === locationId);

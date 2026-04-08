@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import puzzleImage from "@/assets/puzzle-placeholder.jpg";
+import { useShallow } from 'zustand/shallow';
 import { useGameState } from "@/lib/game-state";
 import { COLS, PIECE_SIZE, ROWS, TOTAL, piecePath } from "@/lib/puzzle-geometry";
 
@@ -14,7 +15,10 @@ const VH = ROWS * PIECE_SIZE;
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function PuzzleGrid({ highlightPiece, interactive = true }: PuzzleGridProps) {
-  const { unlockedPieces, locations } = useGameState();
+  const { unlockedPieces, locations } = useGameState(useShallow((s) => ({
+    unlockedPieces: s.unlockedPieces,
+    locations: s.locations,
+  })));
   const navigate = useNavigate();
 
   const handleClick = (i: number) => {

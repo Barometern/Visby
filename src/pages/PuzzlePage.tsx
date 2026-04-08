@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Award, Share2 } from 'lucide-react';
 import PuzzleGrid from '@/components/PuzzleGrid';
+import { useShallow } from 'zustand/shallow';
 import { useGameState } from '@/lib/game-state';
 import { t } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -9,7 +10,10 @@ import wallTexture from '@/assets/wall-texture.jpg';
 import puzzleImage from '@/assets/puzzle-placeholder.jpg';
 
 export default function PuzzlePage() {
-  const { language, unlockedPieces } = useGameState();
+  const { language, unlockedPieces } = useGameState(useShallow((s) => ({
+    language: s.language,
+    unlockedPieces: s.unlockedPieces,
+  })));
   const total = 15;
   const isComplete = unlockedPieces.length >= total;
 
