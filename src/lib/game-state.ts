@@ -6,8 +6,10 @@ import { api, type BackendLocation, type BackendUser } from './api';
 import type { Language } from './i18n';
 import type { LocationData } from './location-types';
 
+export type { LocationData } from './location-types';
+
 const CACHE_KEY = 'visby-quest-locations-cache:v2';
-const CACHE_TTL = 1000 * 60 * 5;
+const CACHE_TTL = 1000 * 60 * 5; // 5 minutes
 
 type CachedLocations = {
   data: BackendLocation[];
@@ -18,7 +20,9 @@ function loadCache(): CachedLocations | null {
   try {
     const raw = localStorage.getItem(CACHE_KEY);
     if (!raw) return null;
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw) as CachedLocations;
+    if (Date.now() - parsed.cachedAt > CACHE_TTL) return null;
+    return parsed;
   } catch {
     return null;
   }
@@ -60,6 +64,7 @@ interface GameState {
   locationsError?: string;
   authError?: string;
 
+  isLoggedIn: boolean;
   isAdmin: boolean;
   hasPaid: boolean;
   userEmail: string;
@@ -69,20 +74,28 @@ interface GameState {
   unlockedPieces: number[];
 
   bootstrapApp: (defaults: LocationData[]) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+  purchaseFullAccess: () => Promise<void>;
   scanLocation: (id: string) => Promise<{ alreadyScanned: boolean }>;
+  updateLocation: (id: string, data: Partial<LocationData>) => Promise<void>;
+  addLocation: (data: LocationData) => Promise<void>;
+  removeLocation: (id: string) => Promise<void>;
 }
 
-function applyUser(user: BackendUser, set: any, get: any) {
+function applyUser(user: BackendUser, set: (partial: Partial<GameState>) => void, get: () => GameState) {
   const locations = get().locations;
 
   set({
     authStatus: 'loggedIn',
+    isLoggedIn: true,
     isAdmin: user.isAdmin,
     hasPaid: user.hasPaid,
     userEmail: user.email,
     scannedLocations: user.scannedLocations,
     unlockedPieces: deriveUnlockedPieces(locations, user.scannedLocations),
-    authError: null,
+    authError: undefined,
   });
 }
 
@@ -98,6 +111,7 @@ export const useGameState = create<GameState>()(
       isAdmin: false,
       hasPaid: false,
       userEmail: '',
+      isLoggedIn: false,
 
       locations: [],
       scannedLocations: [],
@@ -168,6 +182,69 @@ export const useGameState = create<GameState>()(
           set({ scannedLocations: prev });
           throw e;
         }
+      },
+
+      login: async (email, password) => {
+        const res = await api.login(email, password);
+        applyUser(res.user, set, get);
+      },
+
+      signup: async (email, password) => {
+        const res = await api.signup(email, password);
+        applyUser(res.user, set, get);
+      },
+
+      logout: async () => {
+        try {
+          await api.logout();
+        } catch {
+          // Let local cleanup happen even if the server session is already gone.
+        }
+        set({
+          authStatus: 'anonymous',
+          isLoggedIn: false,
+          isAdmin: false,
+          userEmail: '',
+          hasPaid: false,
+          unlockedPieces: [],
+          scannedLocations: [],
+          authError: undefined,
+        });
+      },
+
+      purchaseFullAccess: async () => {
+        const res = await api.purchase();
+        applyUser(res.user, set, get);
+      },
+
+      updateLocation: async (id, data) => {
+        const currentLocations = get().locations;
+        const current = currentLocations.find((loc) => loc.id === id);
+        if (!current) return;
+        const nextLocation = { ...current, ...data };
+        const res = await api.updateLocation(id, nextLocation as BackendLocation);
+        const updatedLocation = toLocationData(res.location);
+        const nextLocations = currentLocations.map((loc) =>
+          loc.id === id ? updatedLocation : loc,
+        );
+        set({
+          locations: nextLocations,
+          unlockedPieces: deriveUnlockedPieces(nextLocations, get().scannedLocations),
+        });
+      },
+
+      addLocation: async (data) => {
+        const res = await api.createLocation(data as BackendLocation);
+        set({ locations: [...get().locations, toLocationData(res.location)] });
+      },
+
+      removeLocation: async (id) => {
+        await api.deleteLocation(id);
+        const nextLocations = get().locations.filter((loc) => loc.id !== id);
+        set({
+          locations: nextLocations,
+          unlockedPieces: deriveUnlockedPieces(nextLocations, get().scannedLocations),
+        });
       },
     }),
     {
