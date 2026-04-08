@@ -23,7 +23,7 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isSignup && password !== confirmPassword) {
-      setError('Passwords do not match.');
+      setError(t('passwordsMismatch', language));
       return;
     }
 
@@ -40,7 +40,7 @@ export default function LoginPage() {
       const isAdmin = useGameState.getState().isAdmin && ADMIN_ENABLED;
       navigate(isAdmin ? '/admin' : '/puzzle');
     } catch (submitError) {
-      setError(submitError instanceof Error ? submitError.message : 'Could not authenticate.');
+      setError(submitError instanceof Error ? submitError.message : t('authError', language));
     } finally {
       setIsSubmitting(false);
     }

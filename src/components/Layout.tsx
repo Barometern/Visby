@@ -34,7 +34,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Link to="/" className="group flex items-center gap-3 min-w-0">
               <div className="min-w-0">
                 <div className="font-heading text-lg leading-none text-medieval-gold tracking-[0.08em] hover:tracking-wider transition-all duration-300">
-                  Visby Quest
+                  {t('appName', language)}
                 </div>
               </div>
             </Link>
