@@ -189,10 +189,22 @@
             drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
     transform: none;
     transition: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   .parchment-map-container:hover {
     transform: none;
+  }
+
+  .parchment-map-container,
+  .parchment-map-container * {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   /* Scroll roll cylinders */
