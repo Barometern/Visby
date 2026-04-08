@@ -8,5 +8,6 @@ const stamp = new Date().toISOString().replace(/[:.]/g, '-');
 const destination = path.join(exportDir, `locations-${stamp}.json`);
 
 mkdirSync(exportDir, { recursive: true });
-writeFileSync(destination, JSON.stringify(listLocations(), null, 2));
+const locations = await listLocations();
+writeFileSync(destination, JSON.stringify(locations, null, 2));
 console.log(destination);

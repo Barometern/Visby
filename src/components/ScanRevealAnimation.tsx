@@ -209,7 +209,7 @@ export default function ScanRevealAnimation({ pieceIndex, onComplete }: ScanReve
           animate={{ opacity: readyToContinue ? 1 : 0 }}
           className="mt-2 text-center text-xs uppercase tracking-[0.3em] text-amber-50/70"
         >
-          Tap to continue
+          {t('tapToContinue', language)}
         </motion.p>
       </div>
     </motion.div>

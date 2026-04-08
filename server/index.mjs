@@ -30,6 +30,8 @@ const SESSION_COOKIE = "visbyquest_session";
 const SESSION_TTL_MS = 1000 * 60 * 60 * 24 * 7;
 const AUTH_RATE_LIMIT_WINDOW_MS = 1000 * 60 * 15;
 const AUTH_RATE_LIMIT_MAX_ATTEMPTS = 10;
+const SCAN_RATE_LIMIT_WINDOW_MS = 1000 * 60;
+const SCAN_RATE_LIMIT_MAX_ATTEMPTS = 30;
 const IS_PROD = process.env.NODE_ENV === "production";
 const ADMIN_ENABLED = !IS_PROD || process.env.ENABLE_ADMIN === "true";
 const ADMIN_BOOTSTRAP_EMAIL = process.env.ADMIN_BOOTSTRAP_EMAIL?.trim().toLowerCase() || "";
@@ -54,6 +56,7 @@ const CONTENT_TYPES = {
 };
 
 const authAttempts = new Map();
+const scanAttempts = new Map();
 
 class RequestError extends Error {
   constructor(statusCode, message) {
@@ -80,11 +83,17 @@ try {
 
 try {
   if (ADMIN_BOOTSTRAP_EMAIL && ADMIN_BOOTSTRAP_PASSWORD) {
-    await ensureAdminUser({
-      email: ADMIN_BOOTSTRAP_EMAIL,
-      passwordHash: hashPassword(ADMIN_BOOTSTRAP_PASSWORD),
-    });
-    logInfo("admin.bootstrapped", { email: ADMIN_BOOTSTRAP_EMAIL });
+    const existingAdmin = await getUserByEmail(ADMIN_BOOTSTRAP_EMAIL);
+    const needsUpdate = !existingAdmin ||
+      !verifyPassword(ADMIN_BOOTSTRAP_PASSWORD, existingAdmin.passwordHash) ||
+      !existingAdmin.isAdmin;
+    if (needsUpdate) {
+      await ensureAdminUser({
+        email: ADMIN_BOOTSTRAP_EMAIL,
+        passwordHash: hashPassword(ADMIN_BOOTSTRAP_PASSWORD),
+      });
+      logInfo("admin.bootstrapped", { email: ADMIN_BOOTSTRAP_EMAIL });
+    }
   }
 } catch (error) {
   logError("admin.bootstrap_failed", {
@@ -216,6 +225,37 @@ function recordAuthAttempt(req, email = "") {
 
 function clearAuthAttempts(req, email = "") {
   authAttempts.delete(getAuthRateLimitKey(req, email));
+}
+
+function enforceScanRateLimit(req, res) {
+  const now = Date.now();
+  const ip = getClientIp(req);
+
+  for (const [key, entry] of scanAttempts.entries()) {
+    if (entry.resetAt <= now) scanAttempts.delete(key);
+  }
+
+  const entry = scanAttempts.get(ip);
+
+  if (!entry || entry.resetAt <= now) {
+    scanAttempts.set(ip, { attempts: 1, resetAt: now + SCAN_RATE_LIMIT_WINDOW_MS });
+    return true;
+  }
+
+  entry.attempts += 1;
+
+  if (entry.attempts <= SCAN_RATE_LIMIT_MAX_ATTEMPTS) {
+    return true;
+  }
+
+  const retryAfterSeconds = Math.max(1, Math.ceil((entry.resetAt - now) / 1000));
+  res.setHeader("Retry-After", String(retryAfterSeconds));
+  sendError(res, 429, "Too many scan attempts. Please try again later.", {
+    path: req.url,
+    retryAfterSeconds,
+    ip,
+  });
+  return false;
 }
 
 function sessionCookieHeader(sessionId, maxAgeSeconds = SESSION_TTL_MS / 1000) {
@@ -547,6 +587,8 @@ const server = createServer(async (req, res) => {
     }
 
     if (req.method === "POST" && url.pathname === "/api/progress/scan") {
+      if (!enforceScanRateLimit(req, res)) return;
+
       const result = await requireUser(req);
 
       if ("error" in result) {
