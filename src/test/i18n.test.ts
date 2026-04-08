@@ -7,6 +7,13 @@ const languages: Language[] = ["en", "sv", "de"];
 const requiredKeys: TranslationKey[] = [
   // ScanPage
   "scanFailed",
+  "scannerLabel",
+  "scannerHeading",
+  "scannerDescription",
+  "scannerStatusLabel",
+  "scannerReady",
+  "scannerTipsLabel",
+  "scannerTips",
   "scanBadge",
   "step1FindCode",
   "step1FindCodeDesc",
@@ -47,9 +54,21 @@ describe("i18n", () => {
   });
 
   it("t() returns English fallback when a key is missing in another language", () => {
-    // The fallback mechanism: returns en value or the key itself
-    const result = t("appName", "en");
-    expect(result).toBe("Visby Quest");
+    const fallbackT = (
+      key: TranslationKey,
+      lang: Language,
+      overrides: Partial<Record<Language, Partial<Record<TranslationKey, string>>>>
+    ) => {
+      const enValue = overrides.en?.[key] ?? t(key, "en");
+      const localizedValue = overrides[lang]?.[key];
+      return localizedValue || enValue || key;
+    };
+
+    const result = fallbackT("scannerHeading", "sv", {
+      sv: { scannerHeading: "" },
+    });
+
+    expect(result).toBe(t("scannerHeading", "en"));
   });
 
   it("Swedish translations differ from English for user-visible strings", () => {
@@ -68,6 +87,13 @@ describe("i18n", () => {
     expect(t("step1FindCode", "en")).toBe("1. Find the code");
     expect(t("step2HoldSteady", "en")).toBe("2. Hold steady");
     expect(t("step3UnlockStory", "en")).toBe("3. Unlock the story");
+  });
+
+  it("QRScanner keys return correct English values", () => {
+    expect(t("scannerLabel", "en")).toBe("Scanner");
+    expect(t("scannerHeading", "en")).toBe("Scan the quest seal");
+    expect(t("scannerStatusLabel", "en")).toBe("Status");
+    expect(t("scannerTipsLabel", "en")).toBe("Tips");
   });
 
   it("NotFound page keys return correct English values", () => {

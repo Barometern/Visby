@@ -107,11 +107,11 @@ export default function QRScanner({ onScan }: QRScannerProps) {
         <div>
           <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-medieval-gold/20 bg-medieval-gold/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-medieval-gold">
             <ScanLine className="h-3.5 w-3.5" />
-            Scanner
+            {t('scannerLabel', language)}
           </div>
-          <h2 className="font-heading text-xl text-amber-50">Scan the quest seal</h2>
+          <h2 className="font-heading text-xl text-amber-50">{t('scannerHeading', language)}</h2>
           <p className="mt-1 font-body text-sm leading-relaxed text-amber-100/70">
-            Center the QR code in the frame and hold still for a moment.
+            {t('scannerDescription', language)}
           </p>
         </div>
 
@@ -135,7 +135,7 @@ export default function QRScanner({ onScan }: QRScannerProps) {
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-medieval-gold/80">
-            Status
+            {t('scannerStatusLabel', language)}
           </p>
           {!isScanning && !error && (
             <p className="mt-1 font-body text-sm text-amber-100/70 animate-pulse">
@@ -144,7 +144,7 @@ export default function QRScanner({ onScan }: QRScannerProps) {
           )}
           {isScanning && !error && (
             <p className="mt-1 font-body text-sm text-amber-100/75">
-              Camera is active and ready.
+              {t('scannerReady', language)}
             </p>
           )}
           {error && (
@@ -154,10 +154,10 @@ export default function QRScanner({ onScan }: QRScannerProps) {
 
         <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-medieval-gold/80">
-            Tips
+            {t('scannerTipsLabel', language)}
           </p>
           <p className="mt-1 font-body text-sm text-amber-100/75">
-            Better light and a flat angle usually make scanning much faster.
+            {t('scannerTips', language)}
           </p>
         </div>
       </div>

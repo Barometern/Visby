@@ -158,7 +158,7 @@ export default function ScanPage() {
                 pose="point"
                 position="bottom-right"
                 text={t('mascotScanHint', language)}
-                className="bottom-6 right-2 z-20 sm:right-4"
+                className="bottom-6 z-20"
               />
             </motion.div>
           )}

@@ -28,16 +28,21 @@ const poseImages: Record<MascotPose, string> = {
 
 const positionClasses: Record<MascotPosition, string> = {
   center: "mx-auto flex max-w-[26rem] flex-col items-center text-center",
-  inline: "flex w-full items-end gap-3 text-left",
-  "bottom-left": "fixed bottom-24 left-4 z-40 flex max-w-[calc(100vw-2rem)] items-end gap-3 text-left",
-  "bottom-right": "fixed bottom-24 right-4 z-40 flex max-w-[calc(100vw-2rem)] flex-row-reverse items-end gap-3 text-left",
+  inline:
+    "flex w-full flex-col-reverse items-center gap-3 text-center sm:flex-row sm:items-end sm:text-left",
+  "bottom-left":
+    "fixed bottom-5 left-1/2 z-40 flex w-[min(100vw-1.5rem,24rem)] -translate-x-1/2 flex-col-reverse items-center gap-3 text-center sm:bottom-24 sm:left-4 sm:w-auto sm:max-w-[calc(100vw-2rem)] sm:translate-x-0 sm:flex-row sm:items-end sm:text-left",
+  "bottom-right":
+    "fixed bottom-5 left-1/2 z-40 flex w-[min(100vw-1.5rem,24rem)] -translate-x-1/2 flex-col-reverse items-center gap-3 text-center sm:bottom-24 sm:left-auto sm:right-4 sm:w-auto sm:max-w-[calc(100vw-2rem)] sm:translate-x-0 sm:flex-row-reverse sm:items-end sm:text-left",
 };
 
 const bubbleTailClasses: Record<MascotPosition, string> = {
   center: "left-1/2 top-full -translate-x-1/2 -translate-y-1/2",
-  inline: "left-8 top-full -translate-y-1/2",
-  "bottom-left": "left-8 top-full -translate-y-1/2",
-  "bottom-right": "right-0 top-1/2 translate-x-1/2 -translate-y-1/2",
+  inline: "left-1/2 top-full -translate-x-1/2 -translate-y-1/2 sm:left-8 sm:translate-x-0",
+  "bottom-left":
+    "left-1/2 top-full -translate-x-1/2 -translate-y-1/2 sm:left-8 sm:translate-x-0",
+  "bottom-right":
+    "left-1/2 top-full -translate-x-1/2 -translate-y-1/2 sm:left-auto sm:right-0 sm:top-1/2 sm:translate-x-1/2 sm:-translate-y-1/2",
 };
 
 export default function MascotGuide({
@@ -52,7 +57,9 @@ export default function MascotGuide({
 }: MascotGuideProps) {
   const imageSrc = poseImages[pose];
   const isCentered = position === "center";
-  const bubbleWidthClass = isCentered ? "max-w-[80vw] sm:max-w-[24rem]" : "max-w-[min(80vw,20rem)]";
+  const bubbleWidthClass = isCentered
+    ? "max-w-[80vw] sm:max-w-[24rem]"
+    : "w-full max-w-[22rem] sm:w-auto sm:max-w-[min(80vw,20rem)]";
 
   return (
     <motion.div
@@ -95,7 +102,9 @@ export default function MascotGuide({
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         className={[
           "select-none drop-shadow-[0_18px_28px_rgba(38,23,13,0.22)]",
-          isCentered ? "mt-2 w-[34vw] min-w-[140px] max-w-[210px]" : "w-[24vw] min-w-[96px] max-w-[148px]",
+          isCentered
+            ? "mt-2 w-[34vw] min-w-[140px] max-w-[210px]"
+            : "w-[28vw] min-w-[112px] max-w-[156px] sm:w-[24vw] sm:min-w-[96px] sm:max-w-[148px]",
         ].join(" ")}
       />
     </motion.div>
