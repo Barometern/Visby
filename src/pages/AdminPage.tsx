@@ -390,11 +390,11 @@ export default function AdminPage() {
         <TabsContent value="stats" className="mt-6">
           <div className="grid gap-3 md:grid-cols-3 mb-4">
             <div className="parchment-bg stone-border rounded-lg p-4">
-              <p className="font-body text-xs uppercase tracking-wide text-muted-foreground">Locations</p>
+              <p className="font-body text-xs uppercase tracking-wide text-muted-foreground">{t('locations', language)}</p>
               <p className="font-heading text-2xl text-medieval-gold">{locations.length}</p>
             </div>
             <div className="parchment-bg stone-border rounded-lg p-4">
-              <p className="font-body text-xs uppercase tracking-wide text-muted-foreground">Total scans</p>
+              <p className="font-body text-xs uppercase tracking-wide text-muted-foreground">{t('totalScans', language)}</p>
               <p className="font-heading text-2xl text-medieval-gold">{totalScans}</p>
             </div>
             <div className="parchment-bg stone-border rounded-lg p-4">
@@ -447,7 +447,7 @@ export default function AdminPage() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={Boolean(isDeleting)}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={Boolean(isDeleting)}>{t('cancel', language)}</AlertDialogCancel>
             <AlertDialogAction
               onClick={(event) => {
                 event.preventDefault();
