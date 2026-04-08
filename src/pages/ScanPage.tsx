@@ -91,7 +91,7 @@ export default function ScanPage() {
       return true;
     } catch (error) {
       console.error(error);
-      setScanError(error instanceof Error ? error.message : 'Scan failed.');
+      setScanError(error instanceof Error ? error.message : t('scanFailed', language));
       return false;
     }
   };
@@ -166,7 +166,7 @@ export default function ScanPage() {
           <div>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-medieval-gold/20 bg-medieval-gold/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-medieval-gold">
               <Sparkles className="h-3.5 w-3.5" />
-              Scan
+              {t('scanBadge', language)}
             </div>
 
             <h1 className="font-heading text-3xl text-amber-50 sm:text-4xl">
@@ -188,30 +188,30 @@ export default function ScanPage() {
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4 hover:-translate-y-0.5 hover:bg-white/[0.08] transition-all duration-200">
                 <div className="mb-2 flex items-center gap-2 text-medieval-gold">
                   <QrCode className="h-4 w-4" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.2em]">1. Find the code</span>
+                  <span className="text-xs font-semibold uppercase tracking-[0.2em]">{t('step1FindCode', language)}</span>
                 </div>
                 <p className="font-body text-sm text-amber-100/75">
-                  Look for the Visby Quest QR marker at the site.
+                  {t('step1FindCodeDesc', language)}
                 </p>
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4 hover:-translate-y-0.5 hover:bg-white/[0.08] transition-all duration-200">
                 <div className="mb-2 flex items-center gap-2 text-medieval-gold">
                   <MapPinned className="h-4 w-4" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.2em]">2. Hold steady</span>
+                  <span className="text-xs font-semibold uppercase tracking-[0.2em]">{t('step2HoldSteady', language)}</span>
                 </div>
                 <p className="font-body text-sm text-amber-100/75">
-                  Keep the code centered until you hear the success sound.
+                  {t('step2HoldSteadyDesc', language)}
                 </p>
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4 hover:-translate-y-0.5 hover:bg-white/[0.08] transition-all duration-200">
                 <div className="mb-2 flex items-center gap-2 text-medieval-gold">
                   <ScrollText className="h-4 w-4" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.2em]">3. Unlock the story</span>
+                  <span className="text-xs font-semibold uppercase tracking-[0.2em]">{t('step3UnlockStory', language)}</span>
                 </div>
                 <p className="font-body text-sm text-amber-100/75">
-                  Read the location info and collect the next puzzle piece.
+                  {t('step3UnlockStoryDesc', language)}
                 </p>
               </div>
             </div>

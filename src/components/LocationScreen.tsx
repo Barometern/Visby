@@ -60,7 +60,7 @@ export default function LocationScreen({ location, pieceIndex, onClose, alreadyS
                   <img src={image} alt="" className="h-full w-full object-cover" loading="lazy" />
                 ) : (
                   <div className="flex h-full items-center justify-center px-4 text-center font-body text-sm text-amber-100/55">
-                    Placeholder image
+                    {t('placeholderImage', language)}
                   </div>
                 )}
               </div>

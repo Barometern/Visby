@@ -17,9 +17,9 @@ export default function LocationDetailPage() {
   if (!location) {
     return (
       <div className="container mx-auto max-w-md px-4 py-16 text-center">
-        <p className="font-body text-muted-foreground">Location not found</p>
+        <p className="font-body text-muted-foreground">{t('locationNotFound', language)}</p>
         <Button variant="ghost" onClick={() => navigate(-1)} className="mt-4">
-          <ChevronLeft className="mr-1 h-4 w-4" /> Back
+          <ChevronLeft className="mr-1 h-4 w-4" /> {t('back', language)}
         </Button>
       </div>
     );
@@ -45,7 +45,7 @@ export default function LocationDetailPage() {
             className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-heading text-amber-50 transition-all duration-200 hover:bg-white/10 hover:gap-3"
           >
             <ChevronLeft className="h-4 w-4" />
-            Back
+            {t('back', language)}
           </button>
         </div>
 
@@ -59,7 +59,7 @@ export default function LocationDetailPage() {
                 <img src={image} alt="" className="h-full w-full object-cover hover:brightness-110 transition-all duration-300" loading="lazy" />
               ) : (
                 <div className="flex h-full items-center justify-center px-4 text-center font-body text-sm text-amber-100/55">
-                  Placeholder image
+                  {t('placeholderImage', language)}
                 </div>
               )}
             </div>
