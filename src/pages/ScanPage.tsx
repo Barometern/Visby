@@ -4,13 +4,15 @@ import { Link, useLocation } from 'react-router-dom';
 import QRScanner from '@/components/QRScanner';
 import ScanRevealAnimation from '@/components/ScanRevealAnimation';
 import LocationScreen from '@/components/LocationScreen';
-import MascotGuide from '@/components/MascotGuide';
+import balleBaggePekar from '@/assets/balleBagge/balleBagge-pekar.png';
 import { playSuccessfulScanSound } from '@/lib/audio';
 import { useGameState } from '@/lib/game-state';
 import { t } from '@/lib/i18n';
 import { resolveScannedLocationId } from '@/lib/qr';
 import { Button } from '@/components/ui/button';
 import { Lock, MapPinned, QrCode, ScrollText, Sparkles } from 'lucide-react';
+
+const SCAN_HINT_SEEN_KEY = 'visby-quest-scan-hint-seen';
 
 export default function ScanPage() {
   const {
@@ -27,11 +29,25 @@ export default function ScanPage() {
   const alreadyScannedTimerRef = useRef<number | null>(null);
 
   const [isAtTop, setIsAtTop] = useState(true);
+  const [showFirstVisitHint, setShowFirstVisitHint] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsAtTop(window.scrollY < 60);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    try {
+      const hasSeenHint = window.localStorage.getItem(SCAN_HINT_SEEN_KEY) === 'true';
+
+      if (!hasSeenHint) {
+        setShowFirstVisitHint(true);
+        window.localStorage.setItem(SCAN_HINT_SEEN_KEY, 'true');
+      }
+    } catch {
+      setShowFirstVisitHint(true);
+    }
   }, []);
 
   // Reset to scanning when navigating to this page
@@ -148,17 +164,26 @@ export default function ScanPage() {
         <div className="relative space-y-6">
           {phase === 'scanning' && <QRScanner onScan={handleScan} />}
 
-          {phase === 'scanning' && (
+          {phase === 'scanning' && showFirstVisitHint && (
             <motion.div
-              animate={{ y: isAtTop ? 0 : 120, opacity: isAtTop ? 1 : 0 }}
+              animate={{ opacity: isAtTop ? 1 : 0 }}
               transition={{ duration: 0.35, ease: 'easeInOut' }}
               style={{ pointerEvents: isAtTop ? 'auto' : 'none' }}
+              className="fixed bottom-2 left-0 z-[60] flex flex-col items-start px-1 md:hidden"
             >
-              <MascotGuide
-                pose="point"
-                position="bottom-right"
-                text={t('mascotScanHint', language)}
-                className="bottom-6 z-20"
+              <div className="relative mb-1.5 ml-1 max-w-[min(100vw-5.5rem,15rem)] rounded-[24px] border border-[#e8c98f]/26 bg-[linear-gradient(180deg,rgba(255,249,235,0.98),rgba(244,229,198,0.96))] px-4 py-3 text-left text-[#3a2518] shadow-[0_18px_45px_rgba(64,42,22,0.18)]">
+                <p className="font-body text-sm leading-6">{t('mascotScanHint', language)}</p>
+                <div className="absolute bottom-[-8px] left-8 h-4 w-4 rotate-45 border-b border-r border-[#e8c98f]/26 bg-[#f4e5c6]" />
+              </div>
+
+              <motion.img
+                src={balleBaggePekar}
+                alt=""
+                aria-hidden="true"
+                draggable={false}
+                animate={{ y: [0, -3, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                className="ml-0 w-[7.5rem] max-w-none select-none drop-shadow-[0_18px_28px_rgba(38,23,13,0.22)]"
               />
             </motion.div>
           )}
