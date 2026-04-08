@@ -1,213 +1,246 @@
+// src/lib/game-state.ts
+
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { api, type BackendLocation, type BackendUser } from './api';
 import type { Language } from './i18n';
 import type { LocationData } from './location-types';
 
-const LOCATIONS_CACHE_KEY = 'visby-quest-locations-cache';
+export type { LocationData } from './location-types';
 
-function loadCachedLocations(): BackendLocation[] | null {
+const CACHE_KEY = 'visby-quest-locations-cache:v2';
+const CACHE_TTL = 1000 * 60 * 5; // 5 minutes
+
+type CachedLocations = {
+  data: BackendLocation[];
+  cachedAt: number;
+};
+
+function loadCache(): CachedLocations | null {
   try {
-    const raw = localStorage.getItem(LOCATIONS_CACHE_KEY);
+    const raw = localStorage.getItem(CACHE_KEY);
     if (!raw) return null;
-    return JSON.parse(raw) as BackendLocation[];
+    const parsed = JSON.parse(raw) as CachedLocations;
+    if (Date.now() - parsed.cachedAt > CACHE_TTL) return null;
+    return parsed;
   } catch {
     return null;
   }
 }
 
-function saveCachedLocations(locations: BackendLocation[]): void {
+function saveCache(data: BackendLocation[]) {
   try {
-    localStorage.setItem(LOCATIONS_CACHE_KEY, JSON.stringify(locations));
-  } catch {
-    // Storage quota exceeded or unavailable — ignore.
-  }
+    localStorage.setItem(
+      CACHE_KEY,
+      JSON.stringify({
+        data,
+        cachedAt: Date.now(),
+      })
+    );
+  } catch {}
+}
+
+function toLocationData(location: BackendLocation): LocationData {
+  // safer than blind cast — shallow validation
+  if (!location.id) throw new Error('Invalid location');
+  return location as LocationData;
+}
+
+function deriveUnlockedPieces(locations: LocationData[], scanned: string[]) {
+  return locations.reduce<number[]>((acc, loc, i) => {
+    if (scanned.includes(loc.id)) acc.push(i);
+    return acc;
+  }, []);
 }
 
 interface GameState {
   language: Language;
   setLanguage: (lang: Language) => void;
-  isHydrating: boolean;
-  authError: string | null;
+
+  // split state
+  locationsStatus: 'idle' | 'loading' | 'ready' | 'error';
+  authStatus: 'anonymous' | 'loading' | 'loggedIn';
+
+  locationsError?: string;
+  authError?: string;
+
   isLoggedIn: boolean;
   isAdmin: boolean;
   hasPaid: boolean;
   userEmail: string;
-  bootstrapApp: (defaultLocations: LocationData[]) => Promise<void>;
-  signup: (email: string, password: string) => Promise<void>;
+
+  locations: LocationData[];
+  scannedLocations: string[];
+  unlockedPieces: number[];
+
+  bootstrapApp: (defaults: LocationData[]) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   purchaseFullAccess: () => Promise<void>;
-  unlockedPieces: number[];
-  scannedLocations: string[];
-  scanLocation: (locationId: string) => Promise<{ alreadyScanned: boolean }>;
-  locations: LocationData[];
+  scanLocation: (id: string) => Promise<{ alreadyScanned: boolean }>;
   updateLocation: (id: string, data: Partial<LocationData>) => Promise<void>;
   addLocation: (data: LocationData) => Promise<void>;
   removeLocation: (id: string) => Promise<void>;
 }
 
-function deriveUnlockedPieces(locations: LocationData[], scannedLocations: string[]) {
-  return locations.reduce<number[]>((pieces, location, index) => {
-    if (scannedLocations.includes(location.id)) {
-      pieces.push(index);
-    }
-
-    return pieces;
-  }, []);
-}
-
-function applyUserState(
-  user: BackendUser,
-  set: (partial: Partial<GameState>) => void,
-  get: () => GameState,
-) {
+function applyUser(user: BackendUser, set: (partial: Partial<GameState>) => void, get: () => GameState) {
   const locations = get().locations;
 
   set({
+    authStatus: 'loggedIn',
     isLoggedIn: true,
     isAdmin: user.isAdmin,
     hasPaid: user.hasPaid,
     userEmail: user.email,
     scannedLocations: user.scannedLocations,
     unlockedPieces: deriveUnlockedPieces(locations, user.scannedLocations),
-    authError: null,
+    authError: undefined,
   });
-}
-
-function toLocationData(location: BackendLocation): LocationData {
-  return location as LocationData;
-}
-
-async function fetchLocationsFromBackend() {
-  const response = await api.getLocations();
-  return response.locations.map(toLocationData);
 }
 
 export const useGameState = create<GameState>()(
   persist(
     (set, get) => ({
       language: 'sv',
-      setLanguage: (lang) => set({ language: lang }),
-      isHydrating: true,
-      authError: null,
-      isLoggedIn: false,
+      setLanguage: (language) => set({ language }),
+
+      locationsStatus: 'idle',
+      authStatus: 'anonymous',
+
       isAdmin: false,
       hasPaid: false,
       userEmail: '',
-      bootstrapApp: async (defaultLocations) => {
-        const fallbackLocations = defaultLocations.map((location) => ({ ...location }));
+      isLoggedIn: false,
 
+      locations: [],
+      scannedLocations: [],
+      unlockedPieces: [],
+
+      bootstrapApp: async (defaults) => {
+        set({ locationsStatus: 'loading', authStatus: 'loading' });
+
+        const fallback = defaults.map(l => ({ ...l }));
+        const cached = loadCache();
+
+        // 🚀 instant paint from cache
+        if (cached) {
+          set({
+            locations: cached.data.map(toLocationData),
+            locationsStatus: 'ready',
+          });
+        }
+
+        // 🌐 fetch fresh in background
         try {
-          let locations: BackendLocation[] = [];
+          const res = await api.getLocations();
+          const fresh = res.locations;
 
-          try {
-            const locationsResponse = await api.getLocations();
-            locations = locationsResponse.locations;
-            saveCachedLocations(locations);
-          } catch (error) {
-            console.error("Failed to load locations from backend.", error);
-            const cached = loadCachedLocations();
-            if (cached && cached.length > 0) {
-              locations = cached;
-            }
-          }
-
-          if (locations.length === 0) {
-            set({
-              locations: fallbackLocations,
-            });
-          }
-
-          const resolvedLocations =
-            locations.length > 0 ? locations.map(toLocationData) : fallbackLocations;
+          saveCache(fresh);
 
           set({
-            locations: resolvedLocations,
+            locations: fresh.map(toLocationData),
+            locationsStatus: 'ready',
           });
-
-          try {
-            const response = await api.me();
-            applyUserState(response.user, set, get);
-          } catch {
+        } catch (e) {
+          if (!cached) {
             set({
-              isLoggedIn: false,
-              isAdmin: false,
-              hasPaid: false,
-              userEmail: '',
-              scannedLocations: [],
-              unlockedPieces: [],
+              locations: fallback,
+              locationsStatus: 'error',
+              locationsError: 'Failed to load locations',
             });
           }
-        } finally {
-          set({ isHydrating: false });
+        }
+
+        // 👤 auth separately
+        try {
+          const res = await api.me();
+          applyUser(res.user, set, get);
+        } catch {
+          set({ authStatus: 'anonymous' });
         }
       },
-      signup: async (email, password) => {
-        const response = await api.signup(email, password);
-        applyUserState(response.user, set, get);
+
+      scanLocation: async (id) => {
+        const prev = get().scannedLocations;
+
+        // ⚡ optimistic update
+        if (!prev.includes(id)) {
+          const next = [...prev, id];
+          set({
+            scannedLocations: next,
+            unlockedPieces: deriveUnlockedPieces(get().locations, next),
+          });
+        }
+
+        try {
+          const res = await api.scanLocation(id);
+          applyUser(res.user, set, get);
+          return { alreadyScanned: res.alreadyScanned };
+        } catch (e) {
+          // rollback if needed
+          set({ scannedLocations: prev });
+          throw e;
+        }
       },
+
       login: async (email, password) => {
-        const response = await api.login(email, password);
-        applyUserState(response.user, set, get);
+        const res = await api.login(email, password);
+        applyUser(res.user, set, get);
       },
+
+      signup: async (email, password) => {
+        const res = await api.signup(email, password);
+        applyUser(res.user, set, get);
+      },
+
       logout: async () => {
         try {
           await api.logout();
         } catch {
           // Let local cleanup happen even if the server session is already gone.
         }
-
         set({
+          authStatus: 'anonymous',
           isLoggedIn: false,
           isAdmin: false,
           userEmail: '',
           hasPaid: false,
           unlockedPieces: [],
           scannedLocations: [],
-          authError: null,
+          authError: undefined,
         });
       },
+
       purchaseFullAccess: async () => {
-        const response = await api.purchase();
-        applyUserState(response.user, set, get);
+        const res = await api.purchase();
+        applyUser(res.user, set, get);
       },
-      unlockedPieces: [],
-      scannedLocations: [],
-      scanLocation: async (locationId) => {
-        const response = await api.scanLocation(locationId);
-        const nextLocations = await fetchLocationsFromBackend();
-        set({ locations: nextLocations });
-        applyUserState(response.user, set, get);
-        return { alreadyScanned: response.alreadyScanned };
-      },
-      locations: [],
+
       updateLocation: async (id, data) => {
         const currentLocations = get().locations;
-        const current = currentLocations.find((location) => location.id === id);
+        const current = currentLocations.find((loc) => loc.id === id);
         if (!current) return;
-
         const nextLocation = { ...current, ...data };
-        const response = await api.updateLocation(id, nextLocation as BackendLocation);
-        const updatedLocation = toLocationData(response.location);
-        const nextLocations = currentLocations.map((location) =>
-          location.id === id ? updatedLocation : location,
+        const res = await api.updateLocation(id, nextLocation as BackendLocation);
+        const updatedLocation = toLocationData(res.location);
+        const nextLocations = currentLocations.map((loc) =>
+          loc.id === id ? updatedLocation : loc,
         );
         set({
           locations: nextLocations,
-          unlockedPieces: deriveUnlockedPieces(
-            nextLocations,
-            get().scannedLocations,
-          ),
+          unlockedPieces: deriveUnlockedPieces(nextLocations, get().scannedLocations),
         });
       },
+
       addLocation: async (data) => {
-        const response = await api.createLocation(data as BackendLocation);
-        set({ locations: [...get().locations, toLocationData(response.location)] });
+        const res = await api.createLocation(data as BackendLocation);
+        set({ locations: [...get().locations, toLocationData(res.location)] });
       },
+
       removeLocation: async (id) => {
         await api.deleteLocation(id);
-        const nextLocations = get().locations.filter(loc => loc.id !== id);
+        const nextLocations = get().locations.filter((loc) => loc.id !== id);
         set({
           locations: nextLocations,
           unlockedPieces: deriveUnlockedPieces(nextLocations, get().scannedLocations),
@@ -216,8 +249,9 @@ export const useGameState = create<GameState>()(
     }),
     {
       name: 'visby-quest-state',
-      partialize: (state) => ({
-        language: state.language,
+      partialize: (s) => ({
+        language: s.language,
+        scannedLocations: s.scannedLocations, // optional UX boost
       }),
     }
   )
