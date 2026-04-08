@@ -1,9 +1,10 @@
-import { useRef, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useCalibrationMaps } from "@/hooks/useCalibrationMaps";
 import MascotGuide from "@/components/MascotGuide";
 import { useGameState } from "@/lib/game-state";
+import type { LocationData } from "@/lib/location-types";
 import { t, type TranslationKey } from "@/lib/i18n";
 import {
   calibrationLandmarkPoints,
@@ -23,13 +24,11 @@ import modernMapScreenshot from "@/assets/visby-modern-screenshot.png";
 const MAP_MODE_LABELS: Record<MapMode, TranslationKey> = {
   historic: "historicMapLabel",
   modernImage: "modernAerialLabel",
-  calibration: "calibrationMapLabel",
 };
 
 const MAP_MODE_BUTTON_LABELS: Record<MapMode, TranslationKey> = {
   historic: "mapModeModern",
-  modernImage: "mapModeCalibration",
-  calibration: "mapModeHistoric",
+  modernImage: "mapModeHistoric",
 };
 
 function getNextMapMode(mapMode: MapMode): MapMode {
@@ -37,12 +36,43 @@ function getNextMapMode(mapMode: MapMode): MapMode {
   return mapModes[(currentIndex + 1) % mapModes.length];
 }
 
+type ProjectedLocationMarker = {
+  id: string;
+  name: string;
+  x: number;
+  y: number;
+  isScanned: boolean;
+};
+
+function buildProjectedLocationMarkers(
+  markerMap: L.Map | null,
+  locations: LocationData[],
+  scannedLocations: string[],
+  language: keyof LocationData["name"],
+) {
+  if (!markerMap) return [];
+
+  return locations.map((location) => {
+    const point = markerMap.latLngToContainerPoint([location.coordinates.lat, location.coordinates.lng]);
+
+    return {
+      id: location.id,
+      name: location.name[language],
+      x: point.x,
+      y: point.y,
+      isScanned: scannedLocations.includes(location.id),
+    };
+  });
+}
+
 export default function MapPage() {
   const { language, locations, scannedLocations } = useGameState();
   const [mapUnrolled, setMapUnrolled] = useState(false);
   const [zoomedIn, setZoomedIn] = useState(false);
   const [mapMode, setMapMode] = useState<MapMode>("historic");
-  const [showCalibrationMarkers, setShowCalibrationMarkers] = useState(true);
+  const [projectedLocationMarkers, setProjectedLocationMarkers] = useState<ProjectedLocationMarker[]>([]);
+  const [selectedLocationId, setSelectedLocationId] = useState<string | null>(null);
+  const [hoveredLocationId, setHoveredLocationId] = useState<string | null>(null);
   const calibrationMapHostRef = useRef<HTMLDivElement | null>(null);
   const calibrationMarkerHostRef = useRef<HTMLDivElement | null>(null);
   const calibrationMapRef = useRef<L.Map | null>(null);
@@ -53,7 +83,8 @@ export default function MapPage() {
     zoomedIn ? calibrationOverlayMotionConfig.zoom : calibrationOverlayMotionConfig.default;
   const showHistoricMap = mapMode === "historic";
   const showModernImageMap = mapMode === "modernImage";
-  const showCalibrationMap = mapMode === "calibration";
+  const selectedLocation = locations.find((location) => location.id === selectedLocationId) ?? null;
+  const selectedLocationScanned = selectedLocation ? scannedLocations.includes(selectedLocation.id) : false;
 
   useCalibrationMaps({
     mapHostRef: calibrationMapHostRef,
@@ -65,8 +96,27 @@ export default function MapPage() {
     landmarkPoints: calibrationLandmarkPoints,
     zoomedIn,
     mapUnrolled,
-    showCalibrationMarkers,
+    showCalibrationMarkers: false,
   });
+
+  useEffect(() => {
+    if (!mapUnrolled) {
+      setProjectedLocationMarkers([]);
+      return;
+    }
+
+    const updateMarkerPositions = () => {
+      setProjectedLocationMarkers(
+        buildProjectedLocationMarkers(calibrationMarkerMapRef.current, locations, scannedLocations, language),
+      );
+    };
+
+    const frameId = window.requestAnimationFrame(() => {
+      updateMarkerPositions();
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [language, locations, mapUnrolled, scannedLocations, zoomedIn]);
 
   const handleRollToggle = (event: MouseEvent) => {
     if (!mapUnrolled) return;
@@ -90,11 +140,6 @@ export default function MapPage() {
   const handleMapModeCycle = (event: MouseEvent) => {
     event.stopPropagation();
     setMapMode((value) => getNextMapMode(value));
-  };
-
-  const handleCalibrationMarkerToggle = (event: MouseEvent) => {
-    event.stopPropagation();
-    setShowCalibrationMarkers((value) => !value);
   };
 
   return (
@@ -145,18 +190,13 @@ export default function MapPage() {
               }}
             />
 
-            <motion.div
-              className="pointer-events-none absolute inset-0 z-[1]"
-              initial={false}
-              animate={{
-                ...activeCalibrationOverlayMotion,
-                opacity: showCalibrationMap ? 1 : 0,
-              }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              style={{ transformOrigin: "center center" }}
-            >
-              <div ref={calibrationMapHostRef} className="h-full w-full" style={{ width: '800px', height: '656px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
-            </motion.div>
+            <div className="pointer-events-none absolute inset-0 z-0 opacity-0">
+              <div
+                ref={calibrationMapHostRef}
+                className="h-full w-full"
+                style={{ width: "800px", height: "656px", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+              />
+            </div>
 
             <motion.img
               src={centurymap}
@@ -259,17 +299,83 @@ export default function MapPage() {
               </div>
             </motion.div>
 
+            <div className="pointer-events-none absolute inset-0 z-0 opacity-0">
+              <div
+                ref={calibrationMarkerHostRef}
+                className="h-full w-full bg-transparent"
+                style={{ width: "800px", height: "656px", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+              />
+            </div>
+
             <motion.div
-              className="pointer-events-none absolute inset-0 z-[5]"
+              className="pointer-events-none absolute inset-0 z-[6]"
               initial={false}
-              animate={{
-                ...activeCalibrationOverlayMotion,
-                opacity: showCalibrationMarkers ? 1 : 0,
-              }}
+              animate={activeCalibrationOverlayMotion}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               style={{ transformOrigin: "center center" }}
             >
-              <div ref={calibrationMarkerHostRef} className="h-full w-full bg-transparent" style={{ width: '800px', height: '656px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
+              <div
+                className="absolute left-1/2 top-1/2 h-[656px] w-[800px] -translate-x-1/2 -translate-y-1/2"
+              >
+                {projectedLocationMarkers.map((marker) => (
+                  <div
+                    key={marker.id}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setSelectedLocationId(marker.id);
+                    }}
+                    onMouseEnter={() => setHoveredLocationId(marker.id)}
+                    onMouseLeave={() => setHoveredLocationId((current) => (current === marker.id ? null : current))}
+                    className="pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+                    style={{ left: `${marker.x}px`, top: `${marker.y}px` }}
+                  >
+                    {hoveredLocationId === marker.id || selectedLocationId === marker.id ? (
+                      <div
+                        className={[
+                          "absolute bottom-[calc(100%+3px)] left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border px-1 py-px text-center text-[5px] font-semibold tracking-[0.03em] shadow-[0_2px_5px_rgba(32,20,12,0.12)]",
+                          marker.isScanned
+                            ? "border-[#c8a56c]/45 bg-[linear-gradient(180deg,rgba(249,241,221,0.98),rgba(232,210,166,0.94))] text-[#5c4125]"
+                            : "border-[#7d5932]/35 bg-[linear-gradient(180deg,rgba(72,47,31,0.96),rgba(45,29,19,0.94))] text-[#f2d38e]",
+                        ].join(" ")}
+                      >
+                        {marker.isScanned ? marker.name : t("mapUnknownLocation", language)}
+                      </div>
+                    ) : null}
+
+                    <div
+                      className={[
+                        "relative flex h-2.5 w-2.5 items-center justify-center rounded-full border shadow-[0_2px_5px_rgba(32,20,12,0.16)] transition-transform duration-150 ease-out",
+                        marker.isScanned
+                          ? "border-[#916938] bg-[radial-gradient(circle_at_35%_30%,#f8eec8_0%,#dfbf79_48%,#9d6f36_100%)]"
+                          : "border-[#714823] bg-[radial-gradient(circle_at_35%_30%,#8a5533_0%,#5b351f_52%,#2e1b11_100%)]",
+                        hoveredLocationId === marker.id || selectedLocationId === marker.id
+                          ? "scale-[1.08] ring-1 ring-[#e8c879]/45"
+                          : "",
+                      ].join(" ")}
+                    >
+                      <div
+                        className={[
+                          "flex h-[6px] w-[6px] items-center justify-center rounded-full border text-[4px] font-bold leading-none",
+                          marker.isScanned
+                            ? "border-[#f5e2af]/70 bg-[rgba(97,67,31,0.18)] text-[#5c3d19]"
+                            : "border-[#cb9850]/55 bg-[rgba(24,11,5,0.22)] text-[#f4d486]",
+                        ].join(" ")}
+                      >
+                        {marker.isScanned ? "✦" : "?"}
+                      </div>
+
+                      <div
+                        className={[
+                          "pointer-events-none absolute inset-px rounded-full",
+                          marker.isScanned
+                            ? "border border-[#fff1c7]/28"
+                            : "border border-[#d8a55a]/18",
+                        ].join(" ")}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </motion.div>
 
             <div className="paper-texture-overlay" />
@@ -289,15 +395,6 @@ export default function MapPage() {
             >
               <Layers2 className="h-3.5 w-3.5" />
               {t(MAP_MODE_BUTTON_LABELS[mapMode], language)}
-            </button>
-
-            <button
-              type="button"
-              onClick={handleCalibrationMarkerToggle}
-              className="absolute right-4 top-[4.6rem] z-20 inline-flex items-center gap-2 rounded-full border border-[#c4a26c]/18 bg-[#f5e7c7]/86 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#7b5a37] shadow-[0_6px_18px_rgba(0,0,0,0.08)] transition-colors hover:bg-[#f1dfb8]"
-            >
-              <MapPinned className="h-3.5 w-3.5" />
-              {showCalibrationMarkers ? t("mapMarkersOn", language) : t("mapMarkersOff", language)}
             </button>
 
             <div className="pointer-events-none absolute bottom-4 left-4 rounded-2xl border border-[#c4a26c]/16 bg-[#f5e7c7]/88 px-3 py-2 text-xs text-[#65462b] shadow-[0_6px_18px_rgba(0,0,0,0.08)]">
@@ -342,6 +439,61 @@ export default function MapPage() {
               )}
             </AnimatePresence>
           </div>
+
+          {selectedLocation ? (
+            <motion.div
+              key={`${selectedLocation.id}-${selectedLocationScanned ? "found" : "hidden"}`}
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="relative w-full max-w-[340px] overflow-hidden rounded-[32px] border border-[#c6a06a]/50 bg-[linear-gradient(180deg,rgba(248,241,224,0.98),rgba(234,216,182,0.96))] px-5 py-5 text-[#4b3320] shadow-[0_26px_60px_rgba(74,50,29,0.18)]"
+            >
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.28),transparent_42%),linear-gradient(135deg,rgba(124,88,48,0.1),transparent_35%)]" />
+              <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.7),transparent)]" />
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#9d7340]">
+                    {selectedLocationScanned ? t("mapFoundLocation", language) : t("mapNextClue", language)}
+                  </div>
+                  <h3 className="mt-2 font-heading text-[2rem] leading-none text-[#352114]">
+                    {selectedLocationScanned ? selectedLocation.name[language] : t("mapUnknownLocation", language)}
+                  </h3>
+                </div>
+                <div
+                  className={[
+                    "rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em]",
+                    selectedLocationScanned
+                      ? "border-[#c6a469]/40 bg-[#ecd59d]/75 text-[#6e4b25]"
+                      : "border-[#7a5731]/28 bg-[#3a2719]/8 text-[#7a5731]",
+                  ].join(" ")}
+                >
+                  {selectedLocationScanned ? t("mapFoundBadge", language) : t("mapHiddenBadge", language)}
+                </div>
+              </div>
+
+              <div className="relative mt-5 rounded-[24px] border border-[#b98f53]/28 bg-[linear-gradient(180deg,rgba(255,251,240,0.76),rgba(249,241,221,0.68))] px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.32)]">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#9d7340]">
+                  {selectedLocationScanned ? t("mapStoryHeading", language) : t("mapClueHeading", language)}
+                </p>
+                <p className="mt-2 font-body text-[15px] leading-7 text-[#5b4330]">
+                  {selectedLocationScanned
+                    ? selectedLocation.description[language]
+                    : selectedLocation.clue[language]}
+                </p>
+              </div>
+
+              {selectedLocationScanned ? (
+                <div className="relative mt-3 rounded-[24px] border border-[#b98f53]/22 bg-[rgba(255,247,230,0.58)] px-4 py-4">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#9d7340]">
+                    {t("readMoreContent", language)}
+                  </p>
+                  <p className="mt-2 font-body text-[15px] leading-7 text-[#5b4330]">
+                    {selectedLocation.readMore[language]}
+                  </p>
+                </div>
+              ) : null}
+            </motion.div>
+          ) : null}
 
           <div className="w-full max-w-[340px]">
             <div className="rounded-[28px] border border-[#ead7b2] bg-[rgba(255,248,236,0.95)] px-4 py-3 shadow-[0_18px_50px_rgba(95,66,40,0.08)]">

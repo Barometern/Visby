@@ -51,16 +51,7 @@ export const calibrationWallPath: [number, number][] = [
   [57.64473411843716, 18.301079737331865],
 ];
 
-export const calibrationLandmarkPoints = [
-  { key: "cathedral", label: "Domkyrkan", lat: 57.6417814302175, lng: 18.298095643702187 },
-  { key: "harbor", label: "Visby hamn", lat: 57.637668548702116, lng: 18.28725940892796 },
-  { key: "almedalen", label: "Almedalen", lat: 57.635916689306306, lng: 18.286092763236468},
-  { key: "storatorget", label: "Stora Torget", lat: 57.64415927301605, lng: 18.297964121505366},
-  { key: "osterport", label: "Österport", lat: 57.6384611579294, lng: 18.298383603209018 },
-  { key: "customMarker1", label: "Ny markör", lat: 57.64659836400059, lng: 18.29643299895732 },
-   { key: "customMarker2", label: "Ny markör2", lat: 57.63748979470508, lng: 18.283867360559494},
-   { key: "customMarker3", label: "Ny markör3", lat: 57.63562431035566, lng: 18.29003653492442},
-] as const;
+export const calibrationLandmarkPoints = [] as const;
 
-export const mapModes = ["historic", "modernImage", "calibration"] as const;
+export const mapModes = ["historic", "modernImage"] as const;
 export type MapMode = (typeof mapModes)[number];
