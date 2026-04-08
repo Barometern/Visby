@@ -26,6 +26,14 @@ export default function ScanPage() {
   const [alreadyScannedNotice, setAlreadyScannedNotice] = useState(false);
   const alreadyScannedTimerRef = useRef<number | null>(null);
 
+  const [isAtTop, setIsAtTop] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => setIsAtTop(window.scrollY < 60);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Reset to scanning when navigating to this page
   useEffect(() => {
     setPhase('scanning');
@@ -141,12 +149,18 @@ export default function ScanPage() {
           {phase === 'scanning' && <QRScanner onScan={handleScan} />}
 
           {phase === 'scanning' && (
-            <MascotGuide
-              pose="point"
-              position="bottom-right"
-              text={t('mascotScanHint', language)}
-              className="bottom-6 right-2 z-20 sm:right-4"
-            />
+            <motion.div
+              animate={{ y: isAtTop ? 0 : 120, opacity: isAtTop ? 1 : 0 }}
+              transition={{ duration: 0.35, ease: 'easeInOut' }}
+              style={{ pointerEvents: isAtTop ? 'auto' : 'none' }}
+            >
+              <MascotGuide
+                pose="point"
+                position="bottom-right"
+                text={t('mascotScanHint', language)}
+                className="bottom-6 right-2 z-20 sm:right-4"
+              />
+            </motion.div>
           )}
 
           <div>

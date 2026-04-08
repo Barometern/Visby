@@ -37,7 +37,7 @@ const bubbleTailClasses: Record<MascotPosition, string> = {
   center: "left-1/2 top-full -translate-x-1/2 -translate-y-1/2",
   inline: "left-8 top-full -translate-y-1/2",
   "bottom-left": "left-8 top-full -translate-y-1/2",
-  "bottom-right": "right-8 top-full -translate-y-1/2",
+  "bottom-right": "right-0 top-1/2 translate-x-1/2 -translate-y-1/2",
 };
 
 export default function MascotGuide({

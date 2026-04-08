@@ -44,10 +44,9 @@ const copy = {
     finalText: "Starta nu och se hur många delar du hinner hitta.",
     finalCta: "Starta nu",
     mapAlt: "Karta över Visby",
-    mapCardLabel: "Utforska kartan",
-    mapCardHint: "Dra över kartan för att skingra dimman.",
+    mapCardTitle: "Medeltida Visby",
     mascotName: "Balle Bagge",
-    mascotStepsLine: "Jag pekar ut riktningen. Du hittar nästa kod.",
+    mascotStepsLine: "Jag pekar – följ ledtrådarna!",
     mascotWelcome: "Välkommen till skattjakten i Visby. Redo att börja?",
     mascotStart: "Starta",
   },
@@ -71,10 +70,9 @@ const copy = {
     finalText: "Start now and see how many pieces you can uncover.",
     finalCta: "Start now",
     mapAlt: "Map of Visby",
-    mapCardLabel: "Explore the map",
-    mapCardHint: "Drag across the map to clear the fog.",
+    mapCardTitle: "Medieval Visby",
     mascotName: "Balle Bagge",
-    mascotStepsLine: "I point the way. You find the next code.",
+    mascotStepsLine: "I point the way – follow the clues!",
     mascotWelcome: "Welcome to the treasure hunt in Visby. Ready to begin?",
     mascotStart: "Start",
   },
@@ -98,10 +96,9 @@ const copy = {
     finalText: "Starte jetzt und sieh, wie viele Teile du finden kannst.",
     finalCta: "Jetzt starten",
     mapAlt: "Karte von Visby",
-    mapCardLabel: "Erkunde die Karte",
-    mapCardHint: "Ziehe über die Karte, um den Nebel zu lichten.",
+    mapCardTitle: "Mittelalterliches Visby",
     mascotName: "Balle Bagge",
-    mascotStepsLine: "Ich zeige die Richtung. Du findest den nächsten Code.",
+    mascotStepsLine: "Ich zeige den Weg – folg den Hinweisen!",
     mascotWelcome: "Willkommen zur Schatzsuche in Visby. Bereit zu beginnen?",
     mascotStart: "Starten",
   },
@@ -144,21 +141,20 @@ function LanguagePicker({
 
 function FoggyMapCard({
   alt,
-  label,
-  hint,
+  title,
 }: {
   alt: string;
-  label: string;
-  hint: string;
+  title: string;
 }) {
   return (
     <div className="overflow-hidden rounded-[28px] border border-[#e4c789]/20 bg-[#1b130f]/90 p-4 shadow-[0_28px_80px_rgba(0,0,0,0.32)] backdrop-blur-sm sm:p-5 hover:brightness-105 transition-all duration-300">
       <div className="rounded-[22px] border border-[#f2d39b]/18 bg-[linear-gradient(180deg,rgba(245,227,188,0.96),rgba(220,194,149,0.94))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.24)]">
+        <div className="mb-2 text-[10px] uppercase tracking-[0.28em] text-[#f0c976]/80">{title}</div>
         <div className="relative aspect-[4/3] overflow-hidden rounded-[18px] border border-[#8a6034]/18">
           <img
             src={centurymap}
             alt={alt}
-            className="h-full w-full object-cover sepia-[0.7] saturate-[0.78] brightness-[0.84]"
+            className="h-full w-full object-cover scale-125 sepia-[0.7] saturate-[0.78] brightness-[0.84]"
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,10,7,0.06),rgba(17,10,7,0.32))]" />
           <div className="absolute left-[17%] top-[26%] h-3.5 w-3.5 rounded-full bg-[#f0b24b] shadow-[0_0_18px_rgba(240,178,75,0.9)]" />
@@ -174,10 +170,6 @@ function FoggyMapCard({
               strokeDasharray="2 4"
             />
           </svg>
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 bg-[linear-gradient(180deg,transparent,rgba(16,10,7,0.72))] px-4 pb-4 pt-10 text-[#fff1d6]">
-            <div className="text-[10px] uppercase tracking-[0.24em] text-[#f0c976]/78">{label}</div>
-            <p className="mt-2 max-w-xs text-sm leading-6 text-[#f8ecd4]/86">{hint}</p>
-          </div>
         </div>
       </div>
     </div>
@@ -286,7 +278,7 @@ const Index = () => {
                     animate={{ y: [0, -6, 0] }}
                     transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    <FoggyMapCard alt={c.mapAlt} label={c.mapCardLabel} hint={c.mapCardHint} />
+                    <FoggyMapCard alt={c.mapAlt} title={c.mapCardTitle} />
                   </motion.div>
                 </div>
               </div>
