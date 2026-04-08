@@ -7,6 +7,7 @@ import balleBaggeSkattkarta from "@/assets/balleBagge/balleBagge-skattkarta.png"
 
 type MascotPose = "welcome" | "point" | "question" | "map";
 type MascotPosition = "center" | "bottom-left" | "bottom-right" | "inline";
+type MascotVariant = "parchment" | "dark";
 
 type MascotGuideProps = {
   pose: MascotPose;
@@ -17,6 +18,7 @@ type MascotGuideProps = {
   actionLabel?: string;
   onAction?: () => void;
   className?: string;
+  variant?: MascotVariant;
 };
 
 const poseImages: Record<MascotPose, string> = {
@@ -54,12 +56,14 @@ export default function MascotGuide({
   actionLabel,
   onAction,
   className = "",
+  variant = "parchment",
 }: MascotGuideProps) {
   const imageSrc = poseImages[pose];
   const isCentered = position === "center";
   const bubbleWidthClass = isCentered
     ? "max-w-[80vw] sm:max-w-[24rem]"
     : "w-full max-w-[22rem] sm:w-auto sm:max-w-[min(80vw,20rem)]";
+  const isDark = variant === "dark";
 
   return (
     <motion.div
@@ -71,7 +75,9 @@ export default function MascotGuide({
       <div className={`relative ${bubbleWidthClass}`}>  
         <div
           className={[
-            "relative rounded-[26px] border border-[#e8c98f]/26 bg-[linear-gradient(180deg,rgba(255,249,235,0.97),rgba(244,229,198,0.95))] px-4 py-3 text-[#3a2518] shadow-[0_18px_45px_rgba(64,42,2[...] hover:shadow-[0_22px_55px_rgba(64,42,22,0.22)] transition-shadow duration-300",
+            isDark
+              ? "relative rounded-[26px] border border-[#d8b981]/40 bg-[linear-gradient(180deg,rgba(76,53,35,0.88),rgba(42,28,19,0.74))] px-4 py-3 text-[#f7ead1] shadow-[0_18px_45px_rgba(28,18,12,0.24)] backdrop-blur-[3px] transition-shadow duration-300"
+              : "relative rounded-[26px] border border-[#e8c98f]/26 bg-[linear-gradient(180deg,rgba(255,249,235,0.97),rgba(244,229,198,0.95))] px-4 py-3 text-[#3a2518] shadow-[0_18px_45px_rgba(64,42,22,0.18)] transition-shadow duration-300",
             interactive ? "cursor-pointer transition-transform hover:translate-y-[-1px]" : "",
           ].join(" ")}
           onClick={interactive ? onClick : undefined}
@@ -89,7 +95,11 @@ export default function MascotGuide({
           ) : null}
         </div>
         <div
-          className={`absolute h-4 w-4 rotate-45 border-b border-r border-[#e8c98f]/26 bg-[#f4e5c6] ${bubbleTailClasses[position]}`}
+          className={`absolute h-4 w-4 rotate-45 ${
+            isDark
+              ? "border-b border-r border-[#d8b981]/40 bg-[#5c402c]"
+              : "border-b border-r border-[#e8c98f]/26 bg-[#f4e5c6]"
+          } ${bubbleTailClasses[position]}`}
         />
       </div>
 
