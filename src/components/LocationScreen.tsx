@@ -27,16 +27,16 @@ export default function LocationScreen({ location, pieceIndex, onClose, alreadyS
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 12 }}
-          transition={{ duration: 0.22, ease: 'easeOut' }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="rounded-[1.75rem] border border-white/10 bg-[linear-gradient(180deg,rgba(38,28,20,0.98),rgba(18,13,10,0.98))] p-4 shadow-[0_20px_60px_rgba(0,0,0,0.35)] sm:p-6"
         >
           <div className="mb-4 flex items-center justify-between gap-4">
             <div>
               {alreadyScanned && (
-                <div className="mb-2 inline-flex rounded-full border border-medieval-gold/20 bg-medieval-gold/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-medieval-gold">
-                  {t('alreadyScanned', language)}
-                </div>
-              )}
+                  <div className="mb-2 inline-flex rounded-full border border-medieval-gold/20 bg-medieval-gold/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-medieval-gold animate-fade-in">
+                    {t('alreadyScanned', language)}
+                  </div>
+                )}
               <h2 className="font-heading text-2xl text-amber-50 sm:text-3xl">
                 {location.name[language]}
               </h2>
@@ -44,7 +44,7 @@ export default function LocationScreen({ location, pieceIndex, onClose, alreadyS
 
             <button
               onClick={onClose}
-              className="rounded-full border border-white/10 bg-white/5 p-3 text-amber-50 transition-colors hover:bg-white/10"
+              className="rounded-full border border-white/10 bg-white/5 p-3 text-amber-50 transition-transform duration-200 hover:scale-110 hover:rotate-6 hover:bg-white/10"
             >
               <ChevronDown className="h-5 w-5" />
             </button>
@@ -54,7 +54,7 @@ export default function LocationScreen({ location, pieceIndex, onClose, alreadyS
             {galleryItems.map((image, index) => (
               <div
                 key={index}
-                className="aspect-[4/3] overflow-hidden rounded-[1.25rem] border border-white/10 bg-[linear-gradient(145deg,rgba(92,69,45,0.88),rgba(39,28,20,0.98))]"
+                className="aspect-[4/3] overflow-hidden rounded-[1.25rem] border border-white/10 bg-[linear-gradient(145deg,rgba(92,69,45,0.88),rgba(39,28,20,0.98))] hover:scale-[1.02] transition-transform duration-300"
               >
                 {image ? (
                   <img src={image} alt="" className="h-full w-full object-cover" loading="lazy" />

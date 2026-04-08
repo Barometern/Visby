@@ -152,7 +152,7 @@ function FoggyMapCard({
   hint: string;
 }) {
   return (
-    <div className="overflow-hidden rounded-[28px] border border-[#e4c789]/20 bg-[#1b130f]/90 p-4 shadow-[0_28px_80px_rgba(0,0,0,0.32)] backdrop-blur-sm sm:p-5">
+    <div className="overflow-hidden rounded-[28px] border border-[#e4c789]/20 bg-[#1b130f]/90 p-4 shadow-[0_28px_80px_rgba(0,0,0,0.32)] backdrop-blur-sm sm:p-5 hover:brightness-105 transition-all duration-300">
       <div className="rounded-[22px] border border-[#f2d39b]/18 bg-[linear-gradient(180deg,rgba(245,227,188,0.96),rgba(220,194,149,0.94))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.24)]">
         <div className="relative aspect-[4/3] overflow-hidden rounded-[18px] border border-[#8a6034]/18">
           <img
@@ -238,7 +238,7 @@ const Index = () => {
                 <Button
                   asChild
                   size="lg"
-                  className="h-14 rounded-full border border-[#f0c976]/35 bg-[#e0a84d] px-8 text-base font-semibold text-[#2f1d11] shadow-[0_18px_36px_rgba(0,0,0,0.24)] transition-all duration-300 hover:translate-y-[-1px] hover:bg-[#ebb760]"
+                  className="h-14 rounded-full border border-[#f0c976]/35 bg-[#e0a84d] px-8 text-base font-semibold text-[#2f1d11] shadow-[0_18px_36px_rgba(0,0,0,0.24)] transition-all duration-300 hover:translate-y-[-1px] hover:bg-[#ebb760] hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <Link to={startHref}>
                     {c.heroCta}
@@ -327,9 +327,9 @@ const Index = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: 0.45, delay: index * 0.08 }}
-                className="rounded-[28px] border border-[#ead7b2] bg-white/70 p-5 shadow-[0_18px_50px_rgba(95,66,40,0.08)]"
+                className="group rounded-[28px] border border-[#ead7b2] bg-white/70 p-5 shadow-[0_18px_50px_rgba(95,66,40,0.08)] hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(95,66,40,0.14)] transition-all duration-300"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f4e0b8] text-[#9c6727] shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f4e0b8] text-[#9c6727] shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition-transform duration-300 group-hover:scale-110">
                   <Icon className="h-6 w-6" />
                 </div>
                 <div className="mt-5 text-[11px] uppercase tracking-[0.26em] text-[#b18752]">0{index + 1}</div>
@@ -351,7 +351,7 @@ const Index = () => {
               <Button
                 asChild
                 size="lg"
-                className="h-14 rounded-full border border-[#f0c976]/30 bg-[#e0a84d] px-8 text-base font-semibold text-[#2f1d11] hover:bg-[#ebb760]"
+                className="h-14 rounded-full border border-[#f0c976]/30 bg-[#e0a84d] px-8 text-base font-semibold text-[#2f1d11] hover:bg-[#ebb760] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
               >
                 <Link to={startHref}>
                   {c.finalCta}

@@ -94,7 +94,12 @@ export default function ScanPage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="container max-w-md mx-auto px-4 py-16 text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="container max-w-md mx-auto px-4 py-16 text-center"
+      >
         <QrCode className="w-16 h-16 text-medieval-gold mx-auto mb-4" />
         <h2 className="font-heading text-2xl text-foreground mb-4">{t('scanTitle', language)}</h2>
         <p className="font-body text-muted-foreground mb-6">{t('scanInstructions', language)}</p>
@@ -103,14 +108,18 @@ export default function ScanPage() {
             {t('login', language)}
           </Button>
         </Link>
-      </div>
+      </motion.div>
     );
   }
 
   if (needsPayment) {
     return (
       <div className="container max-w-md mx-auto px-4 py-16 text-center">
-        <div className="parchment-bg stone-border rounded-lg p-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="parchment-bg stone-border rounded-lg p-8"
+        >
           <Lock className="w-12 h-12 text-medieval-gold mx-auto mb-4" />
           <h2 className="font-heading text-2xl text-foreground mb-2">{t('paywallTitle', language)}</h2>
           <p className="font-body text-muted-foreground mb-6">{t('paywallDesc', language)}</p>
@@ -120,14 +129,14 @@ export default function ScanPage() {
           >
             {t('payWithKlarna', language)}
           </Button>
-        </div>
+        </motion.div>
       </div>
     );
   }
 
   return (
     <div className="container mx-auto max-w-5xl px-4 py-6 pb-24 sm:py-8">
-      <section className="rounded-[2rem] border border-medieval-gold/15 bg-[linear-gradient(180deg,rgba(39,28,20,0.97),rgba(16,11,8,0.98))] p-5 shadow-[0_22px_70px_rgba(0,0,0,0.34)] sm:p-6">
+      <section className="rounded-[2rem] border border-medieval-gold/15 bg-[linear-gradient(180deg,rgba(39,28,20,0.97),rgba(16,11,8,0.98))] p-5 shadow-[0_22px_70px_rgba(0,0,0,0.34)] sm:p-6 transition-all duration-300">
         <div className="relative space-y-6">
           {phase === 'scanning' && <QRScanner onScan={handleScan} />}
 
@@ -162,7 +171,7 @@ export default function ScanPage() {
             )}
 
             <div className="mt-6 space-y-3">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 hover:-translate-y-0.5 hover:bg-white/[0.08] transition-all duration-200">
                 <div className="mb-2 flex items-center gap-2 text-medieval-gold">
                   <QrCode className="h-4 w-4" />
                   <span className="text-xs font-semibold uppercase tracking-[0.2em]">1. Find the code</span>
@@ -172,7 +181,7 @@ export default function ScanPage() {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 hover:-translate-y-0.5 hover:bg-white/[0.08] transition-all duration-200">
                 <div className="mb-2 flex items-center gap-2 text-medieval-gold">
                   <MapPinned className="h-4 w-4" />
                   <span className="text-xs font-semibold uppercase tracking-[0.2em]">2. Hold steady</span>
@@ -182,7 +191,7 @@ export default function ScanPage() {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 hover:-translate-y-0.5 hover:bg-white/[0.08] transition-all duration-200">
                 <div className="mb-2 flex items-center gap-2 text-medieval-gold">
                   <ScrollText className="h-4 w-4" />
                   <span className="text-xs font-semibold uppercase tracking-[0.2em]">3. Unlock the story</span>
@@ -196,13 +205,21 @@ export default function ScanPage() {
         </div>
       </section>
 
-      {alreadyScannedNotice && (
-        <div className="fixed inset-x-4 top-4 z-[95] mx-auto max-w-xl rounded-2xl border border-medieval-gold/25 bg-[linear-gradient(180deg,rgba(201,168,76,0.18),rgba(67,47,29,0.92))] p-4 text-center shadow-[0_16px_40px_rgba(0,0,0,0.28)] backdrop-blur-sm">
-          <p className="font-body text-sm leading-6 text-amber-50/95">
-            {t('alreadyScanned', language)}
-          </p>
-        </div>
-      )}
+      <AnimatePresence>
+        {alreadyScannedNotice && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="fixed inset-x-4 top-4 z-[95] mx-auto max-w-xl rounded-2xl border border-medieval-gold/25 bg-[linear-gradient(180deg,rgba(201,168,76,0.18),rgba(67,47,29,0.92))] p-4 text-center shadow-[0_16px_40px_rgba(0,0,0,0.28)] backdrop-blur-sm"
+          >
+            <p className="font-body text-sm leading-6 text-amber-50/95">
+              {t('alreadyScanned', language)}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {scanError && (
         <motion.div

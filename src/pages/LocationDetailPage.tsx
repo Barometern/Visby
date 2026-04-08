@@ -32,6 +32,7 @@ export default function LocationDetailPage() {
       <motion.div
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         className="rounded-[1.75rem] border border-white/10 bg-[linear-gradient(180deg,rgba(38,28,20,0.98),rgba(18,13,10,0.98))] p-4 shadow-[0_20px_60px_rgba(0,0,0,0.34)] sm:p-6"
       >
         <div className="mb-4 flex items-center justify-between gap-4">
@@ -41,7 +42,7 @@ export default function LocationDetailPage() {
 
           <button
             onClick={() => navigate(-1)}
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-heading text-amber-50 transition-colors hover:bg-white/10"
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-heading text-amber-50 transition-all duration-200 hover:bg-white/10 hover:gap-3"
           >
             <ChevronLeft className="h-4 w-4" />
             Back
@@ -52,10 +53,10 @@ export default function LocationDetailPage() {
           {galleryItems.map((image, index) => (
             <div
               key={index}
-              className="aspect-[4/3] overflow-hidden rounded-[1.25rem] border border-white/10 bg-[linear-gradient(145deg,rgba(92,69,45,0.88),rgba(39,28,20,0.98))]"
+              className="aspect-[4/3] overflow-hidden rounded-[1.25rem] border border-white/10 bg-[linear-gradient(145deg,rgba(92,69,45,0.88),rgba(39,28,20,0.98))] hover:scale-[1.02] transition-transform duration-300"
             >
               {image ? (
-                <img src={image} alt="" className="h-full w-full object-cover" loading="lazy" />
+                <img src={image} alt="" className="h-full w-full object-cover hover:brightness-110 transition-all duration-300" loading="lazy" />
               ) : (
                 <div className="flex h-full items-center justify-center px-4 text-center font-body text-sm text-amber-100/55">
                   Placeholder image
@@ -65,7 +66,7 @@ export default function LocationDetailPage() {
           ))}
         </div>
 
-        <div className="mt-5 rounded-[1.5rem] border border-white/10 bg-white/5 p-4 sm:p-5">
+        <div className="mt-5 rounded-[1.5rem] border border-white/10 bg-white/5 p-4 sm:p-5 transition-all duration-300">
           <p className="font-body text-[15px] leading-7 text-amber-100/88">
             {location.description[language]}
           </p>

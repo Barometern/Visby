@@ -72,7 +72,7 @@ export default function PuzzlePage() {
       <div className="relative z-10 w-full max-w-md mx-auto px-4 pt-6">
 
         {/* Title – matching map page style */}
-        <div className="px-4 py-2 z-10 relative mb-1">
+        <div className="px-4 py-2 z-10 relative mb-1 animate-fade-in">
           <h1 className="font-heading text-lg text-medieval-gold medieval-shadow text-center drop-shadow-lg">
             {t('puzzleTitle', language)}
           </h1>
@@ -200,7 +200,7 @@ export default function PuzzlePage() {
             }}
             initial={{ width: 0 }}
             animate={{ width: `${(unlockedPieces.length / total) * 100}%` }}
-            transition={{ duration: 0.8 }}
+            transition={{ type: 'spring', stiffness: 120, damping: 20 }}
           />
         </div>
 
@@ -218,7 +218,7 @@ export default function PuzzlePage() {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: 'spring', stiffness: 200 }}
             >
-              <div className="w-20 h-20 rounded-full bg-medieval-gold/20 flex items-center justify-center mx-auto mb-4 gold-glow">
+              <div className="w-20 h-20 rounded-full bg-medieval-gold/20 flex items-center justify-center mx-auto mb-4 gold-glow animate-glow-pulse">
                 <Award className="w-10 h-10 text-medieval-gold" />
               </div>
               <h2 className="font-heading text-2xl text-medieval-gold medieval-shadow mb-2">
@@ -254,7 +254,7 @@ export default function PuzzlePage() {
             {confettiPieces.map((piece) => (
               <motion.div
                 key={piece.id}
-                className="absolute w-2 h-2 rounded-sm"
+                className={`absolute w-2 h-2 ${piece.id % 2 === 0 ? 'rounded-sm' : 'rounded-full'}`}
                 style={{ left: `${piece.x}%`, top: '-10px', backgroundColor: piece.color }}
                 initial={{ y: -10, rotate: 0, opacity: 1 }}
                 animate={{ y: '110vh', rotate: 540, opacity: [1, 1, 0] }}
