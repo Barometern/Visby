@@ -6,7 +6,7 @@ export function resolveScannedLocationId(decodedText: string, locations: Locatio
 
   const directMatch = locations.find((location) => {
     const qrCode = location.qrCode?.trim().toLowerCase();
-    return location.id.toLowerCase() === loweredText || qrCode === loweredText;
+    return qrCode === loweredText;
   });
 
   if (directMatch) return directMatch.id;
@@ -18,22 +18,13 @@ export function resolveScannedLocationId(decodedText: string, locations: Locatio
     if (byQuestCode) return byQuestCode.id;
   }
 
-  const locIdMatch = loweredText.match(/loc-\d+/);
-  if (locIdMatch) {
-    const byLocId = locations.find((location) => location.id.toLowerCase() === locIdMatch[0]);
-    if (byLocId) return byLocId.id;
-  }
-
   try {
     const url = new URL(normalizedText);
     const pathSegments = url.pathname.split("/").filter(Boolean);
     const lastSegment = pathSegments[pathSegments.length - 1]?.toLowerCase();
-    const locationIdParam = url.searchParams.get("locationId")?.toLowerCase();
     const qrParam = url.searchParams.get("qr")?.toLowerCase() ?? url.searchParams.get("code")?.toLowerCase();
 
     const urlMatch = locations.find((location) =>
-      location.id.toLowerCase() === lastSegment ||
-      location.id.toLowerCase() === locationIdParam ||
       location.qrCode.toLowerCase() === lastSegment ||
       location.qrCode.toLowerCase() === qrParam,
     );

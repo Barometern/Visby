@@ -81,13 +81,13 @@ export default function AdminPage() {
       await addLocation(newLoc);
       setEditingId(id);
       toast({
-        title: 'Location created',
-        description: 'The new location was added and is ready to edit.',
+        title: t('adminLocationCreated', language),
+        description: t('adminLocationCreatedDesc', language),
       });
     } catch (error) {
       toast({
-        title: 'Create failed',
-        description: error instanceof Error ? error.message : 'Could not create this location.',
+        title: t('adminCreateFailed', language),
+        description: error instanceof Error ? error.message : t('adminCreateFailedDesc', language),
         variant: 'destructive',
       });
     }
@@ -101,8 +101,8 @@ export default function AdminPage() {
 
     if (!Number.isFinite(nextLat) || !Number.isFinite(nextLng)) {
       toast({
-        title: 'Invalid coordinates',
-        description: 'Use decimal latitude/longitude values, for example 57.634437 and 18.280241.',
+        title: t('adminInvalidCoordinates', language),
+        description: t('adminInvalidCoordinatesDesc', language),
         variant: 'destructive',
       });
       return;
@@ -120,14 +120,13 @@ export default function AdminPage() {
 
       await updateLocation(editingLoc.id, nextLocation);
       toast({
-        title: 'Location saved',
-        description: `${nextLocation.name[language] || nextLocation.id} was updated.`,
+        title: t('adminLocationSaved', language),
       });
       setEditingId(null);
     } catch (error) {
       toast({
-        title: 'Save failed',
-        description: error instanceof Error ? error.message : 'Could not save this location.',
+        title: t('adminSaveFailed', language),
+        description: error instanceof Error ? error.message : t('adminSaveFailedDesc', language),
         variant: 'destructive',
       });
     } finally {
@@ -142,8 +141,7 @@ export default function AdminPage() {
     try {
       await removeLocation(deleteTarget.id);
       toast({
-        title: 'Location deleted',
-        description: `${deleteTarget.name[language] || deleteTarget.id} was removed.`,
+        title: t('adminLocationDeleted', language),
       });
       if (editingId === deleteTarget.id) {
         setEditingId(null);
@@ -151,8 +149,8 @@ export default function AdminPage() {
       setDeleteTarget(null);
     } catch (error) {
       toast({
-        title: 'Delete failed',
-        description: error instanceof Error ? error.message : 'Could not delete this location.',
+        title: t('adminDeleteFailed', language),
+        description: error instanceof Error ? error.message : t('adminDeleteFailedDesc', language),
         variant: 'destructive',
       });
     } finally {
@@ -198,11 +196,11 @@ export default function AdminPage() {
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
-                  <Label className="font-body">Location ID</Label>
+                  <Label className="font-body">{t('adminLocationId', language)}</Label>
                   <Input value={draftLocation.id} disabled className="bg-background/40 font-mono text-sm" />
                 </div>
                 <div>
-                  <Label className="font-body">QR code value</Label>
+                  <Label className="font-body">{t('adminQrCodeValue', language)}</Label>
                   <div className="flex gap-2">
                     <Input
                       value={draftLocation.qrCode}
@@ -214,7 +212,7 @@ export default function AdminPage() {
                       variant="outline"
                       onClick={async () => {
                         await navigator.clipboard.writeText(draftLocation.qrCode);
-                        toast({ title: 'QR code copied', description: draftLocation.qrCode });
+                        toast({ title: t('adminQrCopied', language), description: draftLocation.qrCode });
                       }}
                     >
                       <Copy className="w-4 h-4" />
@@ -236,7 +234,7 @@ export default function AdminPage() {
               </div>
 
               <div>
-                <Label className="font-body">Clue / riddle</Label>
+                <Label className="font-body">{t('adminClue', language)}</Label>
                 <Textarea
                   value={draftLocation.clue[editLang]}
                   onChange={(e) => updateDraft((current) => ({
@@ -272,10 +270,10 @@ export default function AdminPage() {
               </div>
 
               <div>
-                <Label className="font-body">Coordinates</Label>
+                <Label className="font-body">{t('adminCoordinates', language)}</Label>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div>
-                    <Label className="font-body text-xs text-muted-foreground">Latitude</Label>
+                    <Label className="font-body text-xs text-muted-foreground">{t('adminLatitude', language)}</Label>
                     <Input
                       type="text"
                       inputMode="decimal"
@@ -285,7 +283,7 @@ export default function AdminPage() {
                     />
                   </div>
                   <div>
-                    <Label className="font-body text-xs text-muted-foreground">Longitude</Label>
+                    <Label className="font-body text-xs text-muted-foreground">{t('adminLongitude', language)}</Label>
                     <Input
                       type="text"
                       inputMode="decimal"
@@ -298,7 +296,7 @@ export default function AdminPage() {
               </div>
 
               <div>
-                <Label className="font-body">Google Maps link</Label>
+                <Label className="font-body">{t('adminGoogleMapsLink', language)}</Label>
                 <Input
                   value={draftLocation.googleMapsUrl}
                   onChange={(e) => updateDraft((current) => ({ ...current, googleMapsUrl: e.target.value }))}
@@ -318,7 +316,7 @@ export default function AdminPage() {
                       .filter(Boolean),
                   }))}
                   className="bg-background/50 font-body min-h-[100px]"
-                  placeholder="One image URL per line"
+                  placeholder={t('adminImagesHelp', language)}
                 />
                 {draftLocation.images.length > 0 && (
                   <div className="grid grid-cols-2 gap-2 mt-3 md:grid-cols-4">
@@ -334,7 +332,7 @@ export default function AdminPage() {
               <div className="rounded-lg border border-border/60 bg-background/30 p-4">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <MapPinned className="w-4 h-4 text-medieval-gold" />
-                  Scan count is managed by the live game and updates from player scans.
+                  {t('adminScanCountNote', language)}
                 </div>
               </div>
 
@@ -344,7 +342,7 @@ export default function AdminPage() {
                   disabled={isSaving}
                   className="bg-medieval-gold text-medieval-brown hover:bg-medieval-gold/90 font-heading"
                 >
-                  {isSaving ? 'Saving...' : t('save', language)}
+                  {isSaving ? t('adminSaving', language) : t('save', language)}
                 </Button>
                 <Button variant="ghost" onClick={() => setEditingId(null)} className="font-heading">
                   {t('cancel', language)}
@@ -398,12 +396,12 @@ export default function AdminPage() {
               <p className="font-heading text-2xl text-medieval-gold">{totalScans}</p>
             </div>
             <div className="parchment-bg stone-border rounded-lg p-4">
-              <p className="font-body text-xs uppercase tracking-wide text-muted-foreground">Top location</p>
+              <p className="font-body text-xs uppercase tracking-wide text-muted-foreground">{t('adminTopLocation', language)}</p>
               <p className="font-heading text-base text-medieval-gold">
-                {mostScanned ? mostScanned.name[language] : 'No scans yet'}
+                {mostScanned ? mostScanned.name[language] : t('adminNoScans', language)}
               </p>
               <p className="font-body text-xs text-muted-foreground">
-                {mostScanned ? `${mostScanned.scanCount} total scans` : 'Waiting for first scan'}
+                {mostScanned ? `${mostScanned.scanCount} ${t('totalScans', language).toLowerCase()}` : t('adminWaitingForScan', language)}
               </p>
             </div>
           </div>
@@ -411,7 +409,7 @@ export default function AdminPage() {
           <div className="mb-4 flex items-center justify-end">
             <Button type="button" variant="outline" onClick={() => window.location.reload()} className="font-heading">
               <RefreshCw className="mr-2 h-4 w-4" />
-              Refresh stats
+              {t('adminRefreshStats', language)}
             </Button>
           </div>
 
@@ -439,11 +437,11 @@ export default function AdminPage() {
       <AlertDialog open={Boolean(deleteTarget)} onOpenChange={(open) => !open && setDeleteTarget(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete location?</AlertDialogTitle>
+            <AlertDialogTitle>{t('adminDeleteTitle', language)}</AlertDialogTitle>
             <AlertDialogDescription>
               {deleteTarget
-                ? `This will permanently remove ${deleteTarget.name[language] || deleteTarget.id} from the game.`
-                : 'This action cannot be undone.'}
+                ? t('adminDeleteConfirm', language).replace('{name}', deleteTarget.name[language] || deleteTarget.id)
+                : t('adminDeleteGeneric', language)}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -455,7 +453,7 @@ export default function AdminPage() {
               }}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isDeleting ? 'Deleting...' : 'Delete'}
+              {isDeleting ? t('adminDeleting', language) : t('delete', language)}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

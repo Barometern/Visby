@@ -19,8 +19,10 @@ export default function QRScanner({ onScan }: QRScannerProps) {
   const processingRef = useRef(false);
   const cooldownUntilRef = useRef(0);
   const lastScanTextRef = useRef('');
+  const languageRef = useRef(language);
 
   onScanRef.current = onScan;
+  languageRef.current = language;
 
   useEffect(() => {
     mountedRef.current = true;
@@ -59,7 +61,7 @@ export default function QRScanner({ onScan }: QRScannerProps) {
               scanner.stop().catch(() => {});
             } catch {
               if (mountedRef.current) {
-                setError(t('scanError', language));
+                setError(t('scanError', languageRef.current));
               }
             } finally {
               lastScanTextRef.current = normalizedText;
@@ -77,7 +79,7 @@ export default function QRScanner({ onScan }: QRScannerProps) {
         }
       } catch {
         if (mountedRef.current) {
-          setError(t('scanError', language));
+          setError(t('scanError', languageRef.current));
         }
       }
     };
@@ -99,7 +101,7 @@ export default function QRScanner({ onScan }: QRScannerProps) {
         scannerRef.current = null;
       }
     };
-  }, [language]);
+  }, []);
 
   return (
     <section className="rounded-[1.75rem] border border-medieval-gold/15 bg-[linear-gradient(180deg,rgba(37,27,20,0.94),rgba(18,13,10,0.98))] p-4 shadow-[0_16px_40px_rgba(0,0,0,0.28)]">

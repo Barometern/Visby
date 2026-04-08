@@ -179,7 +179,10 @@ export const useGameState = create<GameState>()(
           return { alreadyScanned: res.alreadyScanned };
         } catch (e) {
           // rollback if needed
-          set({ scannedLocations: prev });
+          set({
+            scannedLocations: prev,
+            unlockedPieces: deriveUnlockedPieces(get().locations, prev),
+          });
           throw e;
         }
       },
