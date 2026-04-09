@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ExternalLink, QrCode, ScrollText, X } from "lucide-react";
@@ -49,19 +50,28 @@ export default function MapClueOverlay({
     : isLocked
       ? t("mapLockedSealDescription", language)
       : location.readMore[language];
+  const [confirmMaps, setConfirmMaps] = useState(false);
+
+  useEffect(() => {
+    setConfirmMaps(false);
+  }, [isOpen, location?.id, mode]);
+
+  const handleMapsIntent = () => {
+    setConfirmMaps((value) => !value);
+  };
 
   return (
     <AnimatePresence>
       {isOpen ? (
         <motion.div
-          className="fixed inset-0 z-[120] flex items-end justify-center bg-[radial-gradient(circle_at_top,rgba(239,201,127,0.18),transparent_25%),rgba(16,11,8,0.78)] px-3 pb-3 pt-6 backdrop-blur-[10px] sm:items-center sm:px-6 sm:pb-6"
+          className="fixed inset-0 z-[120] flex items-end justify-center bg-[radial-gradient(circle_at_top,rgba(239,201,127,0.18),transparent_25%),rgba(16,11,8,0.78)] px-3 pb-2 pt-10 backdrop-blur-[10px] sm:items-center sm:px-6 sm:pb-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={backdropTransition}
         >
           <motion.div
-            className="relative w-full max-w-lg overflow-hidden rounded-[36px] border border-[#e2c58f]/18 bg-[linear-gradient(180deg,rgba(33,22,15,0.98),rgba(16,11,8,0.97))] text-[#fff1d4] shadow-[0_30px_90px_rgba(0,0,0,0.42)]"
+            className="relative max-h-[82vh] w-full max-w-[26rem] overflow-y-auto overflow-x-hidden rounded-[32px] border border-[#e2c58f]/18 bg-[linear-gradient(180deg,rgba(33,22,15,0.98),rgba(16,11,8,0.97))] text-[#fff1d4] shadow-[0_30px_90px_rgba(0,0,0,0.42)] sm:max-h-[88vh] sm:max-w-lg sm:rounded-[36px]"
             initial={{ opacity: 0, y: 42, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.98 }}
@@ -69,16 +79,16 @@ export default function MapClueOverlay({
           >
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,226,159,0.14),transparent_30%),linear-gradient(135deg,rgba(255,255,255,0.05),transparent_34%)]" />
 
-            <div className="relative px-4 pb-5 pt-4 sm:px-6 sm:pb-6 sm:pt-5">
+            <div className="relative px-4 pb-4 pt-4 sm:px-6 sm:pb-6 sm:pt-5">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <div className="inline-flex items-center gap-2 rounded-full border border-[#f0c97f]/18 bg-[#f0c97f]/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#fbebc1] [text-shadow:0_1px_2px_rgba(22,12,7,0.45)]">
                     {eyebrow}
                   </div>
-                  <h2 className="mt-3 font-display text-[2rem] leading-none text-[#fff1cf] sm:text-[2.3rem]">
+                  <h2 className="mt-3 font-display text-[1.7rem] leading-none text-[#fff1cf] sm:text-[2.3rem]">
                     {title}
                   </h2>
-                  <p className="mt-2 font-heading text-[1.15rem] leading-7 text-[#fff4d7] sm:text-[1.25rem]">
+                  <p className="mt-2 font-heading text-[1.02rem] leading-6 text-[#fff4d7] sm:text-[1.25rem] sm:leading-7">
                     {location.name[language]}
                   </p>
                 </div>
@@ -97,7 +107,7 @@ export default function MapClueOverlay({
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.08, duration: 0.32, ease: "easeOut" }}
-                className="mt-5"
+                className="mt-4"
               >
                 <MascotGuide
                   pose={isActiveClue ? "question" : "welcome"}
@@ -112,7 +122,7 @@ export default function MapClueOverlay({
                 initial={{ opacity: 0, y: 22 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.14, duration: 0.34, ease: "easeOut" }}
-                className="mt-5 rounded-[28px] border border-[#d9ba84]/18 bg-[linear-gradient(180deg,rgba(251,243,226,0.97),rgba(236,219,187,0.94))] p-4 text-[#4b3320] shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]"
+                className="mt-4 rounded-[24px] border border-[#d9ba84]/18 bg-[linear-gradient(180deg,rgba(251,243,226,0.97),rgba(236,219,187,0.94))] p-4 text-[#4b3320] shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]"
               >
                 <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#94693c]">
                   {isActiveClue
@@ -121,27 +131,63 @@ export default function MapClueOverlay({
                       ? t("mapLockedHeading", language)
                       : t("readMoreContent", language)}
                 </p>
-                <p className="mt-3 font-body text-[15px] leading-7 text-[#5b4330]">
+                <p className="mt-3 font-body text-[14px] leading-6 text-[#5b4330] sm:text-[15px] sm:leading-7">
                   {secondaryText}
                 </p>
               </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.32, ease: "easeOut" }}
-                className="mt-5 grid grid-cols-1 gap-3"
-              >
-                {isActiveClue ? (
-                  <>
+              {isActiveClue && confirmMaps ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.22, ease: "easeOut" }}
+                  className="mt-4 rounded-[22px] border border-[#e2c58f]/16 bg-[rgba(255,245,221,0.1)] p-4 text-[#fff2d8]"
+                >
+                  <p className="font-heading text-[1rem] leading-6 text-[#fff3dc]">
+                    {t("mapMapsWarningTitle", language)}
+                  </p>
+                  <p className="mt-2 font-body text-sm leading-6 text-[#f2dfb8]">
+                    {t("mapMapsWarningBody", language)}
+                  </p>
+                  <div className="mt-4 grid grid-cols-1 gap-3">
                     <Button
                       asChild
                       className="h-12 rounded-full border border-[#d5b06c]/30 bg-[#dca54a] text-sm font-semibold text-[#2f1d11] shadow-[0_14px_30px_rgba(95,66,40,0.18)] hover:bg-[#e7b35d]"
                     >
                       <a href={location.googleMapsUrl} target="_blank" rel="noreferrer">
-                        {t("mapOpenInMaps", language)}
+                        {t("mapMapsConfirm", language)}
                         <ExternalLink className="h-4 w-4" />
                       </a>
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      onClick={() => setConfirmMaps(false)}
+                      className="h-11 rounded-full text-sm font-semibold text-[#fff0c9] hover:bg-white/5 hover:text-[#fff8e7]"
+                    >
+                      {t("close", language)}
+                    </Button>
+                  </div>
+                </motion.div>
+              ) : null}
+
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.32, ease: "easeOut" }}
+                className="mt-4 grid grid-cols-1 gap-3"
+              >
+                {isActiveClue ? (
+                  <>
+                    <Button
+                      type="button"
+                      onClick={handleMapsIntent}
+                      className="h-12 rounded-full border border-[#d5b06c]/30 bg-[#dca54a] text-sm font-semibold text-[#2f1d11] shadow-[0_14px_30px_rgba(95,66,40,0.18)] hover:bg-[#e7b35d]"
+                    >
+                      <>
+                        {t("mapMapsIntent", language)}
+                        <ExternalLink className="h-4 w-4" />
+                      </>
                     </Button>
 
                     <Button

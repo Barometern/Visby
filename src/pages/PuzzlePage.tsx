@@ -172,7 +172,7 @@ export default function PuzzlePage() {
                 />
               )}
 
-              <PuzzleGrid teaseFirstPiece={isEmpty} />
+              <PuzzleGrid teaseFirstPiece={isEmpty} teaseNextLockedPiece={!isComplete} />
 
               <div
                 className="pointer-events-none absolute inset-0"

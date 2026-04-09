@@ -195,6 +195,9 @@ const Index = () => {
 
   const handleMascotStart = () => {
     howItWorksRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => {
+      window.scrollBy({ top: 88, behavior: "smooth" });
+    }, 220);
   };
 
   return (

@@ -175,41 +175,34 @@ export default function MapPage() {
     <>
       <div className="wood-table-bg relative flex min-h-screen flex-col overflow-hidden">
         <div className="relative z-10 mx-auto w-full max-w-md px-4 pt-4">
-          <div className="overflow-hidden rounded-[28px] border border-[#dfc188]/16 bg-[linear-gradient(180deg,rgba(28,20,15,0.88),rgba(15,11,8,0.8))] px-4 py-4 text-[#fff3d4] shadow-[0_22px_60px_rgba(0,0,0,0.22)] backdrop-blur-sm">
-            <div className="flex items-center justify-between gap-3 rounded-full border border-[#f0c97f]/10 bg-black/10 px-3 py-2">
-              <div className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#fff1c8] [text-shadow:0_1px_2px_rgba(12,7,4,0.55)]">
-                <Compass className="h-3.5 w-3.5" />
-                {t("mapQuestChartLabel", language)}
+          <div className="px-1 py-2 text-[#fff3d4]">
+            <div className="flex items-start justify-between gap-4">
+              <div className="min-w-0">
+                <div className="flex items-center gap-2 text-[#f7e7bc]">
+                  <Compass className="h-4 w-4 shrink-0 text-[#f0d59a] drop-shadow-[0_2px_4px_rgba(12,7,4,0.45)]" />
+                  <h1 className="font-display text-[1.9rem] leading-none tracking-[0.01em] text-[#fff2cf] [text-shadow:0_2px_6px_rgba(12,7,4,0.62)]">
+                    {t("mapQuestChartLabel", language)}
+                  </h1>
+                </div>
+                <p className="mt-1 pl-6 font-body text-[11px] uppercase tracking-[0.18em] text-[#f0ddae]/88 [text-shadow:0_1px_3px_rgba(12,7,4,0.5)]">
+                  {t("mapSealCollectionLabel", language)} {completedCount}/{locations.length}
+                </p>
               </div>
-              <div className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#f6e3b2] [text-shadow:0_1px_2px_rgba(12,7,4,0.55)]">
-                <span>{t("mapSealCollectionLabel", language)}</span>
-                <span className="rounded-full border border-[#f0c97f]/20 bg-[rgba(255,255,255,0.08)] px-2.5 py-1 text-[#fff4d7]">
-                  {completedCount}/{locations.length}
-                </span>
+
+              <div className="mt-1 shrink-0 rounded-full border border-[#f0c97f]/24 bg-[rgba(32,20,13,0.34)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#fff4d7] shadow-[0_6px_18px_rgba(0,0,0,0.14)] [text-shadow:0_1px_2px_rgba(12,7,4,0.55)]">
+                {allLocationsCompleted ? t("mapCompletedBadge", language) : t("mapActiveBadge", language)}
               </div>
             </div>
 
-            <div className="mt-4 rounded-[24px] border border-[#efd7aa]/18 bg-[linear-gradient(180deg,rgba(251,241,219,0.98),rgba(235,216,179,0.95))] px-4 py-4 text-[#4b3320] shadow-[0_18px_42px_rgba(49,31,17,0.12),inset_0_1px_0_rgba(255,255,255,0.34)]">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#9b7041]">
+            <div className="mt-3 pl-6">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#dcb779] [text-shadow:0_1px_3px_rgba(12,7,4,0.45)]">
                 {t("mapCurrentObjective", language)}
               </p>
-              <div className="mt-3 flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <h1 className="font-heading text-[2.15rem] leading-none text-[#342014]">
-                    {allLocationsCompleted
-                      ? t("mapQuestCompleteTitle", language)
-                      : activeLocation?.name[language] ?? t("mapNoObjectiveTitle", language)}
-                  </h1>
-                  <p className="mt-3 font-body text-sm leading-6 text-[#5b4330]">
-                    {allLocationsCompleted
-                      ? t("mapQuestCompleteDescription", language)
-                      : t("mapMinimalHint", language)}
-                  </p>
-                </div>
-                <div className="shrink-0 rounded-full border border-[#be975d]/28 bg-[#f7e5b8]/72 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#774d23]">
-                  {allLocationsCompleted ? t("mapCompletedBadge", language) : t("mapActiveBadge", language)}
-                </div>
-              </div>
+              <p className="mt-1 font-heading text-[1.2rem] leading-6 text-[#fff0d0] [text-shadow:0_2px_5px_rgba(12,7,4,0.58)]">
+                {allLocationsCompleted
+                  ? t("mapQuestCompleteTitle", language)
+                  : activeLocation?.name[language] ?? t("mapNoObjectiveTitle", language)}
+              </p>
             </div>
           </div>
         </div>
@@ -396,14 +389,14 @@ export default function MapPage() {
                 <div className="map-warm-light" />
                 <div className="map-vignette" />
 
-                <div className="absolute left-4 top-6 z-20 rounded-full border border-[#c4a26c]/16 bg-[#f5e7c7]/88 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7b5a37] shadow-[0_6px_18px_rgba(0,0,0,0.08)]">
+                <div className="absolute left-4 top-6 z-20 rounded-full border border-[#8f6734]/28 bg-[rgba(53,34,21,0.72)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#fff0c7] shadow-[0_8px_22px_rgba(0,0,0,0.18)] [text-shadow:0_1px_2px_rgba(10,6,4,0.6)]">
                   {t(MAP_MODE_LABELS[mapMode], language)}
                 </div>
 
                 <button
                   type="button"
                   onClick={handleMapModeCycle}
-                  className="absolute right-4 top-6 z-20 inline-flex items-center gap-2 rounded-full border border-[#c4a26c]/16 bg-[#f5e7c7]/88 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#7b5a37] shadow-[0_6px_18px_rgba(0,0,0,0.08)] transition-colors hover:bg-[#f1dfb8]"
+                  className="absolute right-4 top-6 z-20 inline-flex items-center gap-2 rounded-full border border-[#8f6734]/28 bg-[rgba(53,34,21,0.72)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#fff0c7] shadow-[0_8px_22px_rgba(0,0,0,0.18)] [text-shadow:0_1px_2px_rgba(10,6,4,0.6)] transition-colors hover:bg-[rgba(68,43,27,0.82)]"
                 >
                   <Layers2 className="h-3.5 w-3.5" />
                   {t(MAP_MODE_BUTTON_LABELS[mapMode], language)}

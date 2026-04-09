@@ -104,7 +104,7 @@ export default function QRScanner({ onScan }: QRScannerProps) {
   }, []);
 
   return (
-    <section className="rounded-[1.9rem] border border-[#d8bc8d]/26 bg-[linear-gradient(180deg,rgba(248,241,226,0.98),rgba(232,216,184,0.96))] p-4 text-[#4b3320] shadow-[0_18px_44px_rgba(58,39,21,0.16)] sm:p-5">
+    <section className="rounded-[1.9rem] border border-[#bf9961]/26 bg-[linear-gradient(180deg,rgba(230,212,181,0.74),rgba(164,122,78,0.32))] p-4 text-[#4b3320] shadow-[0_18px_44px_rgba(32,21,12,0.24)] sm:p-5">
       <div className="mb-4 flex items-start justify-between gap-4">
         <div>
           <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#d6b578]/26 bg-[#f5e7c5]/86 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#9a6b31]">
@@ -122,9 +122,9 @@ export default function QRScanner({ onScan }: QRScannerProps) {
         </div>
       </div>
 
-      <div className="relative overflow-hidden rounded-[1.55rem] border border-[#c9a76b]/28 bg-[linear-gradient(145deg,#6a4324,#4d2f1a)] p-3 shadow-[0_18px_34px_rgba(57,35,17,0.22),inset_0_1px_0_rgba(255,255,255,0.08)]">
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(145deg,rgba(255,255,255,0.06),transparent_35%),repeating-linear-gradient(90deg,rgba(87,52,25,0.16)_0px,rgba(87,52,25,0.16)_3px,rgba(56,32,17,0.08)_3px,rgba(56,32,17,0.08)_6px)] opacity-70" />
-        <div className="relative rounded-[1.2rem] border border-[#d4b37a]/28 bg-[linear-gradient(180deg,rgba(29,22,17,0.96),rgba(9,8,7,0.98))] p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+      <div className="relative overflow-hidden rounded-[1.55rem] border border-[#9c6f3f]/34 bg-[linear-gradient(145deg,#4f301a,#2d1b10)] p-3 shadow-[0_18px_34px_rgba(22,14,9,0.38),inset_0_1px_0_rgba(255,255,255,0.05)]">
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(145deg,rgba(255,255,255,0.04),transparent_35%),repeating-linear-gradient(90deg,rgba(87,52,25,0.2)_0px,rgba(87,52,25,0.2)_3px,rgba(26,16,9,0.14)_3px,rgba(26,16,9,0.14)_6px)] opacity-80" />
+        <div className="relative rounded-[1.2rem] border border-[#bf9054]/24 bg-[linear-gradient(180deg,rgba(19,15,12,0.98),rgba(3,3,3,1))] p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
           <div className="pointer-events-none absolute inset-4 rounded-[1rem] border border-medieval-gold/25" />
           <div className="pointer-events-none absolute inset-x-10 top-1/2 z-10 -translate-y-1/2">
             <div className="h-px bg-gradient-to-r from-transparent via-medieval-gold/80 to-transparent shadow-[0_0_16px_rgba(201,168,76,0.45)]" />

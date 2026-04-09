@@ -8,6 +8,7 @@ interface PuzzleGridProps {
   highlightPiece?: number;
   interactive?: boolean;
   teaseFirstPiece?: boolean;
+  teaseNextLockedPiece?: boolean;
 }
 
 const VW = COLS * PIECE_SIZE;
@@ -18,9 +19,11 @@ export default function PuzzleGrid({
   highlightPiece,
   interactive = true,
   teaseFirstPiece = false,
+  teaseNextLockedPiece = false,
 }: PuzzleGridProps) {
   const { unlockedPieces, locations } = useGameState();
   const navigate = useNavigate();
+  const nextLockedPiece = Array.from({ length: TOTAL }, (_, i) => i).find((i) => !unlockedPieces.includes(i)) ?? null;
 
   const handleClick = (i: number) => {
     if (!interactive || !unlockedPieces.includes(i)) return;
@@ -60,7 +63,7 @@ export default function PuzzleGrid({
           if (unlockedPieces.includes(i)) return null;
           const col = i % COLS;
           const row = Math.floor(i / COLS);
-          const isTeasedPiece = teaseFirstPiece && i === 0;
+          const isTeasedPiece = (teaseFirstPiece && i === 0) || (teaseNextLockedPiece && i === nextLockedPiece);
           return (
             <g key={`slot-${i}`}>
               <path
