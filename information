@@ -1,55 +1,15 @@
-Sure! Give me a second to think about what’s most important and actionable for a coding agent.
+Fix VisbyQuest
 
-Codex Instruction — Visby Quest UI Fixes
-Context: This is a mobile web app (PWA) called Visby Quest — a medieval QR code treasure hunt experience set in Visby, Sweden. The design uses a warm parchment/wood aesthetic with gold typography and a ram mascot called Balle Bagge. The following are UI improvements to implement.
+Ledtråd overlay är för högt upp/för stor.
 
-1. Empty Puzzle State (0/15)
-When the user has 0 puzzle pieces collected, the puzzle grid is completely blank and unmotivating. Fix this by:
-	∙	Rendering a blurred and darkened version of the final completed puzzle image as a background layer behind the empty grid pieces
-	∙	Opacity should be around 15–20% so it’s a subtle tease, not a spoiler
-	∙	Add a small animated Balle Bagge character or speech bubble beneath the puzzle saying something like “Skanna din första QR-kod för att börja!”
+Aktuelt mål behöver en uppdatering
 
-2. Typography System
-Currently the app uses inconsistent font styles across screens. Establish and enforce three clear type roles used consistently across all screens:
-	∙	Display — the medieval blackletter/serif font — use only for major page titles (e.g. “Skattjakt genom Visbys gränder”, “Så funkar det”, “Redo att börja?”)
-	∙	Heading — the gold serif — use for card titles, location names, section headers
-	∙	Body — the cream/light sans-serif — use for all descriptive and instructional text
-Audit every screen and make sure no heading or title uses a font outside these three roles. The “Nästa ledtråd” title and “Tornet” subtitle in particular need to align with this system.
+Även när pusslet har bitar borde en pusselbit lysa lite som när den är tom.
 
-3. Accessibility — Contrast Check
-The following colour combinations may fail WCAG AA contrast (minimum 4.5:1 for normal text, 3:1 for large text). Check and fix each:
-	∙	Gold label text on the dark brown header card (“UPPDRAGSKARTA”, “SAMLADE SIGILL”)
-	∙	Gold text on the parchment/cream card backgrounds
-	∙	The “Tillbaka till kartan” text link in gold on dark background
-Where contrast fails, either darken the background, lighten the text, or add a subtle text shadow to improve legibility without breaking the aesthetic.
+Runt om QR skannern är för ljus.
 
-4. Completion / Sharing Moment
-When the user completes all puzzle pieces (15/15), trigger a full-screen celebration screen that includes:
-	∙	The completed puzzle image revealed dramatically (animate pieces snapping together or a wax seal breaking)
-	∙	The user’s completion time displayed in a styled medieval banner
-	∙	A shareable image card that can be saved to camera roll or shared via the native share sheet — it should show the completed puzzle, “Visby Quest klar!”, the date, and completion time
-	∙	A button: “Dela din bedrift” (Share your achievement)
+”Öppna kartor” borde krävas två klick en ”varning” när man trycker. Och uppdatera texten till typ ”hittar du inte? Navigera med maps” eller så. Och sen typ ”är du säker, ledtrådarna är halva spelet” ÄJ du fattar nåt liknande.
 
-5. Map Pin Differentiation
-On the historical map, all location pins currently look very similar (gold spheres of similar size). Make the active/current target pin clearly distinct from completed and upcoming pins:
-	∙	Active pin — larger, glowing gold with a subtle pulse animation
-	∙	Completed pins — smaller, desaturated/grey-brown, no animation
-	∙	Upcoming/locked pins — small, semi-transparent gold, no animation
-This gives the user a clear visual sense of progress and direction at a glance.
+När man trycker ”Starta” i index ska man scrollas lite längre ner än vad man gör nu. 
 
-6. Scroll Affordance on Map Screen
-The “Tryck för att rulla upp” scroll handle is a nice touch but easy to miss. Make it more discoverable by:
-	∙	Adding a subtle bounce animation on first load to draw attention to it
-	∙	Ensuring the text label is always visible (currently it appears low-contrast against the wood background)
-
-7. Touch Targets — Bottom Navigation
-Increase the bottom navigation bar height to ensure all touch targets meet the minimum 44x44px (Apple HIG) recommendation. Currently the icons and labels are too tightly packed for use while walking outdoors. Add at least 10–12px additional padding top and bottom inside the nav bar.
-
-Priority Order
-	1.	Empty puzzle state (biggest UX impact)
-	2.	Completion/sharing moment (biggest business/viral impact)
-	3.	Map pin differentiation (clarity during gameplay)
-	4.	Typography audit (polish for municipality pitch)
-	5.	Contrast/accessibility (compliance for municipality pitch)
-	6.	Touch targets (quick win)
-	7.	Scroll affordance (minor polish)
+Gör ”flygbild” och historisk karta, texten på kartan i map-page synligare. 
