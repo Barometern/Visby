@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import type { LocationData } from "@/lib/location-types";
 import { t, type Language } from "@/lib/i18n";
 
-export type MapClueOverlayMode = "active" | "completed";
+export type MapClueOverlayMode = "active" | "completed" | "locked";
 
 type MapClueOverlayProps = {
   location: LocationData | null;
@@ -28,10 +28,27 @@ export default function MapClueOverlay({
   if (!location || !mode) return null;
 
   const isActiveClue = mode === "active";
-  const title = isActiveClue ? t("mapClueEventTitle", language) : t("mapStoryEventTitle", language);
-  const eyebrow = isActiveClue ? t("mapNextClue", language) : t("mapDiscoveredPlace", language);
-  const mascotText = isActiveClue ? location.clue[language] : location.description[language];
-  const secondaryText = isActiveClue ? t("mapArrivalHintText", language) : location.readMore[language];
+  const isLocked = mode === "locked";
+  const title = isActiveClue
+    ? t("mapClueEventTitle", language)
+    : isLocked
+      ? t("mapLockedHeading", language)
+      : t("mapStoryEventTitle", language);
+  const eyebrow = isActiveClue
+    ? t("mapNextClue", language)
+    : isLocked
+      ? t("mapLockedSealLabel", language)
+      : t("mapDiscoveredPlace", language);
+  const mascotText = isActiveClue
+    ? location.clue[language]
+    : isLocked
+      ? t("mapLockedTeaser", language)
+      : location.description[language];
+  const secondaryText = isActiveClue
+    ? t("mapArrivalHintText", language)
+    : isLocked
+      ? t("mapLockedSealDescription", language)
+      : location.readMore[language];
 
   return (
     <AnimatePresence>
@@ -55,13 +72,13 @@ export default function MapClueOverlay({
             <div className="relative px-4 pb-5 pt-4 sm:px-6 sm:pb-6 sm:pt-5">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[#f0c97f]/18 bg-[#f0c97f]/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#f2d799]">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-[#f0c97f]/18 bg-[#f0c97f]/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#fbebc1] [text-shadow:0_1px_2px_rgba(22,12,7,0.45)]">
                     {eyebrow}
                   </div>
                   <h2 className="mt-3 font-display text-[2rem] leading-none text-[#fff1cf] sm:text-[2.3rem]">
                     {title}
                   </h2>
-                  <p className="mt-2 font-heading text-[1.15rem] leading-7 text-[#f6e7c1] sm:text-[1.25rem]">
+                  <p className="mt-2 font-heading text-[1.15rem] leading-7 text-[#fff4d7] sm:text-[1.25rem]">
                     {location.name[language]}
                   </p>
                 </div>
@@ -98,7 +115,11 @@ export default function MapClueOverlay({
                 className="mt-5 rounded-[28px] border border-[#d9ba84]/18 bg-[linear-gradient(180deg,rgba(251,243,226,0.97),rgba(236,219,187,0.94))] p-4 text-[#4b3320] shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]"
               >
                 <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#94693c]">
-                  {isActiveClue ? t("mapClueEventSupportLabel", language) : t("readMoreContent", language)}
+                  {isActiveClue
+                    ? t("mapClueEventSupportLabel", language)
+                    : isLocked
+                      ? t("mapLockedHeading", language)
+                      : t("readMoreContent", language)}
                 </p>
                 <p className="mt-3 font-body text-[15px] leading-7 text-[#5b4330]">
                   {secondaryText}
@@ -134,7 +155,7 @@ export default function MapClueOverlay({
                       </Link>
                     </Button>
                   </>
-                ) : (
+                ) : !isLocked ? (
                   <Button
                     asChild
                     variant="outline"
@@ -145,13 +166,23 @@ export default function MapClueOverlay({
                       <ScrollText className="h-4 w-4" />
                     </Link>
                   </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={onClose}
+                    className="h-12 rounded-full border-[#d6ba8f]/20 bg-white/5 text-sm font-semibold text-[#f7ead1] hover:bg-white/10 hover:text-[#fff1d4]"
+                  >
+                    {t("mapBackToChart", language)}
+                    <ScrollText className="h-4 w-4" />
+                  </Button>
                 )}
 
                 <Button
                   type="button"
                   variant="ghost"
                   onClick={onClose}
-                  className="h-11 rounded-full text-sm font-semibold text-[#f0d9a7] hover:bg-white/5 hover:text-[#fff1cf]"
+                  className="h-11 rounded-full text-sm font-semibold text-[#fff0c9] [text-shadow:0_1px_2px_rgba(22,12,7,0.45)] hover:bg-white/5 hover:text-[#fff8e7]"
                 >
                   {t("mapBackToChart", language)}
                 </Button>

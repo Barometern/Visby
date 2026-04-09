@@ -32,7 +32,7 @@ const MAP_MODE_BUTTON_LABELS: Record<MapMode, TranslationKey> = {
   modernImage: "mapModeHistoric",
 };
 
-type MarkerState = "active" | "completed";
+type MarkerState = "active" | "completed" | "locked";
 
 type ProjectedMarker = {
   id: string;
@@ -55,15 +55,19 @@ function buildProjectedMarkers(
   if (!markerMap) return [];
 
   return locations
-    .filter((location) => scannedLocations.includes(location.id) || location.id === activeLocationId)
     .map((location) => {
       const point = markerMap.latLngToContainerPoint([location.coordinates.lat, location.coordinates.lng]);
+      const state: MarkerState = location.id === activeLocationId
+        ? "active"
+        : scannedLocations.includes(location.id)
+          ? "completed"
+          : "locked";
 
       return {
         id: location.id,
         x: point.x,
         y: point.y,
-        state: location.id === activeLocationId ? "active" : "completed",
+        state,
       } satisfies ProjectedMarker;
     });
 }
@@ -76,6 +80,7 @@ export default function MapPage() {
   const [projectedMarkers, setProjectedMarkers] = useState<ProjectedMarker[]>([]);
   const [overlayLocationId, setOverlayLocationId] = useState<string | null>(null);
   const [overlayMode, setOverlayMode] = useState<MapClueOverlayMode | null>(null);
+  const [showScrollHintPulse, setShowScrollHintPulse] = useState(true);
   const calibrationMapHostRef = useRef<HTMLDivElement | null>(null);
   const calibrationMarkerHostRef = useRef<HTMLDivElement | null>(null);
   const calibrationMapRef = useRef<L.Map | null>(null);
@@ -122,8 +127,19 @@ export default function MapPage() {
     return () => window.cancelAnimationFrame(frameId);
   }, [activeLocationId, locations, mapUnrolled, scannedLocations, zoomedIn]);
 
+  useEffect(() => {
+    if (mapUnrolled) {
+      setShowScrollHintPulse(false);
+      return;
+    }
+
+    const timer = window.setTimeout(() => setShowScrollHintPulse(false), 4200);
+    return () => window.clearTimeout(timer);
+  }, [mapUnrolled]);
+
   const openOverlayForLocation = (locationId: string) => {
-    const mode: MapClueOverlayMode = scannedLocations.includes(locationId) ? "completed" : "active";
+    const mode: MapClueOverlayMode =
+      locationId === activeLocationId ? "active" : scannedLocations.includes(locationId) ? "completed" : "locked";
     setOverlayLocationId(locationId);
     setOverlayMode(mode);
   };
@@ -161,13 +177,13 @@ export default function MapPage() {
         <div className="relative z-10 mx-auto w-full max-w-md px-4 pt-4">
           <div className="overflow-hidden rounded-[28px] border border-[#dfc188]/16 bg-[linear-gradient(180deg,rgba(28,20,15,0.88),rgba(15,11,8,0.8))] px-4 py-4 text-[#fff3d4] shadow-[0_22px_60px_rgba(0,0,0,0.22)] backdrop-blur-sm">
             <div className="flex items-center justify-between gap-3 rounded-full border border-[#f0c97f]/10 bg-black/10 px-3 py-2">
-              <div className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#f2d799]/88">
+              <div className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#fff1c8] [text-shadow:0_1px_2px_rgba(12,7,4,0.55)]">
                 <Compass className="h-3.5 w-3.5" />
                 {t("mapQuestChartLabel", language)}
               </div>
-              <div className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#f0c97f]/72">
+              <div className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#f6e3b2] [text-shadow:0_1px_2px_rgba(12,7,4,0.55)]">
                 <span>{t("mapSealCollectionLabel", language)}</span>
-                <span className="rounded-full border border-[#f0c97f]/14 bg-white/5 px-2.5 py-1 text-[#fff0ca]">
+                <span className="rounded-full border border-[#f0c97f]/20 bg-[rgba(255,255,255,0.08)] px-2.5 py-1 text-[#fff4d7]">
                   {completedCount}/{locations.length}
                 </span>
               </div>
@@ -179,12 +195,12 @@ export default function MapPage() {
               </p>
               <div className="mt-3 flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <h1 className="font-display text-[1.95rem] leading-none text-[#342014]">
+                  <h1 className="font-heading text-[2.15rem] leading-none text-[#342014]">
                     {allLocationsCompleted
                       ? t("mapQuestCompleteTitle", language)
                       : activeLocation?.name[language] ?? t("mapNoObjectiveTitle", language)}
                   </h1>
-                  <p className="mt-3 text-sm leading-6 text-[#5b4330]">
+                  <p className="mt-3 font-body text-sm leading-6 text-[#5b4330]">
                     {allLocationsCompleted
                       ? t("mapQuestCompleteDescription", language)
                       : t("mapMinimalHint", language)}
@@ -341,22 +357,32 @@ export default function MapPage() {
                         }}
                         className="pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2"
                         style={{ left: `${marker.x}px`, top: `${marker.y}px` }}
-                        aria-label={t(marker.state === "active" ? "mapOpenClue" : "mapOpenStory", language)}
+                        aria-label={t(
+                          marker.state === "active" ? "mapOpenClue" : marker.state === "completed" ? "mapOpenStory" : "mapLockedStop",
+                          language,
+                        )}
                       >
-                        <div className="relative flex h-5 w-5 items-center justify-center">
+                        <div className="relative flex h-7 w-7 items-center justify-center">
                           {marker.state === "active" ? (
                             <>
                               <motion.div
-                                className="absolute inset-0 rounded-full border border-[#f4d58f]/45"
-                                animate={{ scale: [1, 1.42, 1], opacity: [0.58, 0.08, 0.58] }}
-                                transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
+                                className="absolute inset-0 rounded-full border border-[#f4d58f]/50"
+                                animate={{ scale: [1, 1.55, 1], opacity: [0.62, 0.08, 0.62] }}
+                                transition={{ duration: 2.1, repeat: Infinity, ease: "easeOut" }}
                               />
-                              <div className="relative flex h-[15px] w-[15px] items-center justify-center rounded-full border border-[#8a6130] bg-[radial-gradient(circle_at_35%_30%,#fff2c9_0%,#e6bf71_50%,#a77131_100%)] shadow-[0_4px_10px_rgba(32,20,12,0.24)]">
-                                <div className="h-[7px] w-[7px] rounded-full bg-[rgba(92,61,25,0.88)]" />
+                              <motion.div
+                                className="absolute inset-[3px] rounded-full bg-[radial-gradient(circle,rgba(255,234,178,0.72),rgba(255,234,178,0))]"
+                                animate={{ opacity: [0.3, 0.85, 0.3] }}
+                                transition={{ duration: 1.9, repeat: Infinity, ease: "easeInOut" }}
+                              />
+                              <div className="relative flex h-[18px] w-[18px] items-center justify-center rounded-full border border-[#8a6130] bg-[radial-gradient(circle_at_35%_30%,#fff5d6_0%,#efca78_48%,#a77131_100%)] shadow-[0_6px_14px_rgba(32,20,12,0.34)]">
+                                <div className="h-[8px] w-[8px] rounded-full bg-[rgba(92,61,25,0.9)]" />
                               </div>
                             </>
+                          ) : marker.state === "completed" ? (
+                            <div className="relative flex h-[11px] w-[11px] items-center justify-center rounded-full border border-[#7d6951]/78 bg-[radial-gradient(circle_at_35%_30%,#e7ddd0_0%,#9b8a74_56%,#68584a_100%)] opacity-90 shadow-[0_3px_7px_rgba(24,18,14,0.16)]" />
                           ) : (
-                            <div className="relative flex h-[10px] w-[10px] items-center justify-center rounded-full border border-[#8f6731]/70 bg-[radial-gradient(circle_at_35%_30%,#fff3cf_0%,#dec07a_48%,#98692d_100%)] opacity-70 shadow-[0_3px_8px_rgba(32,20,12,0.18)]" />
+                            <div className="relative flex h-[9px] w-[9px] items-center justify-center rounded-full border border-[#caa66b]/42 bg-[radial-gradient(circle_at_35%_30%,#ffeab8_0%,#d9b26a_52%,#a27134_100%)] opacity-45 shadow-[0_2px_5px_rgba(32,20,12,0.12)]" />
                           )}
                         </div>
                       </button>
@@ -403,8 +429,17 @@ export default function MapPage() {
               {!mapUnrolled ? (
                 <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center font-heading text-sm tracking-wider text-medieval-gold medieval-shadow">
                   <motion.span
-                    animate={{ opacity: [0.4, 1, 0.4] }}
-                    transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
+                    className="rounded-full bg-[rgba(21,13,9,0.38)] px-4 py-2 text-[#fff0c8] [text-shadow:0_1px_3px_rgba(10,6,4,0.7)]"
+                    animate={
+                      showScrollHintPulse
+                        ? { opacity: [0.72, 1, 0.72], y: [0, -6, 0] }
+                        : { opacity: [0.82, 1, 0.82] }
+                    }
+                    transition={{
+                      repeat: Infinity,
+                      duration: showScrollHintPulse ? 1.5 : 2.2,
+                      ease: "easeInOut",
+                    }}
                   >
                     {t("tapToOpen", language)}
                   </motion.span>

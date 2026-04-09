@@ -125,7 +125,7 @@ export default function ScanPage() {
         className="container max-w-md mx-auto px-4 py-16 text-center"
       >
         <QrCode className="w-16 h-16 text-medieval-gold mx-auto mb-4" />
-        <h2 className="font-heading text-2xl text-foreground mb-4">{t('scanTitle', language)}</h2>
+        <h2 className="font-display text-2xl text-foreground mb-4">{t('scanTitle', language)}</h2>
         <p className="font-body text-muted-foreground mb-6">{t('scanInstructions', language)}</p>
         <Link to="/login">
           <Button className="bg-medieval-gold text-medieval-brown hover:bg-medieval-gold/90 font-heading">
@@ -145,7 +145,7 @@ export default function ScanPage() {
           className="parchment-bg stone-border rounded-lg p-8"
         >
           <Lock className="w-12 h-12 text-medieval-gold mx-auto mb-4" />
-          <h2 className="font-heading text-2xl text-foreground mb-2">{t('paywallTitle', language)}</h2>
+          <h2 className="font-display text-2xl text-foreground mb-2">{t('paywallTitle', language)}</h2>
           <p className="font-body text-muted-foreground mb-6">{t('paywallDesc', language)}</p>
           <Button
             className="bg-medieval-gold text-medieval-brown hover:bg-medieval-gold/90 font-heading w-full"
@@ -213,7 +213,7 @@ export default function ScanPage() {
               <div className="rounded-2xl border border-[#d7ba87]/24 bg-[rgba(255,250,240,0.55)] p-4 transition-all duration-200">
                 <div className="mb-2 flex items-center gap-2 text-[#9a6b31]">
                   <QrCode className="h-4 w-4" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.2em]">{t('step1FindCode', language)}</span>
+                  <span className="font-body text-xs font-semibold uppercase tracking-[0.2em]">{t('step1FindCode', language)}</span>
                 </div>
                 <p className="font-body text-sm text-[#5b4330]/82">
                   {t('step1FindCodeDesc', language)}
@@ -223,7 +223,7 @@ export default function ScanPage() {
               <div className="rounded-2xl border border-[#d7ba87]/24 bg-[rgba(255,250,240,0.55)] p-4 transition-all duration-200">
                 <div className="mb-2 flex items-center gap-2 text-[#9a6b31]">
                   <MapPinned className="h-4 w-4" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.2em]">{t('step2HoldSteady', language)}</span>
+                  <span className="font-body text-xs font-semibold uppercase tracking-[0.2em]">{t('step2HoldSteady', language)}</span>
                 </div>
                 <p className="font-body text-sm text-[#5b4330]/82">
                   {t('step2HoldSteadyDesc', language)}
@@ -233,7 +233,7 @@ export default function ScanPage() {
               <div className="rounded-2xl border border-[#d7ba87]/24 bg-[rgba(255,250,240,0.55)] p-4 transition-all duration-200">
                 <div className="mb-2 flex items-center gap-2 text-[#9a6b31]">
                   <ScrollText className="h-4 w-4" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.2em]">{t('step3UnlockStory', language)}</span>
+                  <span className="font-body text-xs font-semibold uppercase tracking-[0.2em]">{t('step3UnlockStory', language)}</span>
                 </div>
                 <p className="font-body text-sm text-[#5b4330]/82">
                   {t('step3UnlockStoryDesc', language)}

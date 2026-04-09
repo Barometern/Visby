@@ -111,7 +111,7 @@ export default function QRScanner({ onScan }: QRScannerProps) {
             <ScanLine className="h-3.5 w-3.5" />
             {t('scannerLabel', language)}
           </div>
-          <h2 className="font-display text-[1.6rem] leading-none text-[#342014]">{t('scannerHeading', language)}</h2>
+          <h2 className="font-heading text-[1.6rem] leading-none text-[#342014]">{t('scannerHeading', language)}</h2>
           <p className="mt-2 font-body text-sm leading-relaxed text-[#5b4330]/82">
             {t('scannerDescription', language)}
           </p>
