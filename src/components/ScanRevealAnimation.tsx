@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import { useGameState } from '@/lib/game-state';
 import { t } from '@/lib/i18n';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import puzzleImage from '@/assets/puzzle-placeholder.jpg';
-import { COLS, ROWS, TOTAL, PIECE_SIZE, piecePath } from '@/lib/puzzle-geometry';
+import { COLS, ROWS, TOTAL, PIECE_SIZE, PIECE_PATHS } from '@/lib/puzzle-geometry';
 
 interface ScanRevealAnimationProps {
   pieceIndex: number;
@@ -38,10 +38,7 @@ export default function ScanRevealAnimation({ pieceIndex, onComplete }: ScanReve
   const [flash, setFlash] = useState(false);
   const [readyToContinue, setReadyToContinue] = useState(false);
 
-  const activePath = useMemo(
-    () => piecePath(pieceIndex % COLS, Math.floor(pieceIndex / COLS)),
-    [pieceIndex],
-  );
+  const activePath = PIECE_PATHS[pieceIndex];
 
   useEffect(() => {
     const impactTimer = window.setTimeout(() => {
@@ -106,7 +103,7 @@ export default function ScanRevealAnimation({ pieceIndex, onComplete }: ScanReve
             <defs>
               {Array.from({ length: TOTAL }, (_, index) => (
                 <clipPath key={index} id={`fullscreen-piece-${index}`}>
-                  <path d={piecePath(index % COLS, Math.floor(index / COLS))} />
+                  <path d={PIECE_PATHS[index]} />
                 </clipPath>
               ))}
 
@@ -118,7 +115,7 @@ export default function ScanRevealAnimation({ pieceIndex, onComplete }: ScanReve
             {Array.from({ length: TOTAL }, (_, index) => {
               if (index === pieceIndex) return null;
 
-              const d = piecePath(index % COLS, Math.floor(index / COLS));
+              const d = PIECE_PATHS[index];
 
               if (!unlockedPieces.includes(index)) {
                 return (

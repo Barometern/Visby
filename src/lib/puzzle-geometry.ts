@@ -77,3 +77,7 @@ export function piecePath(col: number, row: number): string {
 
   return `${d} Z`;
 }
+
+export const PIECE_PATHS: string[] = Array.from({ length: TOTAL }, (_, i) =>
+  piecePath(i % COLS, Math.floor(i / COLS)),
+);

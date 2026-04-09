@@ -40,10 +40,23 @@ function saveCache(data: BackendLocation[]) {
   } catch {}
 }
 
+const LANGUAGES: Language[] = ['en', 'sv', 'de'];
+
+function toLocalized(record: Record<string, string>): Record<Language, string> {
+  return Object.fromEntries(
+    LANGUAGES.map((lang) => [lang, record[lang] ?? ''])
+  ) as Record<Language, string>;
+}
+
 function toLocationData(location: BackendLocation): LocationData {
-  // safer than blind cast — shallow validation
   if (!location.id) throw new Error('Invalid location');
-  return location as LocationData;
+  return {
+    ...location,
+    name: toLocalized(location.name),
+    description: toLocalized(location.description),
+    readMore: toLocalized(location.readMore),
+    clue: toLocalized(location.clue),
+  };
 }
 
 function deriveUnlockedPieces(locations: LocationData[], scanned: string[]) {
@@ -252,10 +265,7 @@ export const useGameState = create<GameState>()(
     }),
     {
       name: 'visby-quest-state',
-      partialize: (s) => ({
-        language: s.language,
-        scannedLocations: s.scannedLocations, // optional UX boost
-      }),
+      partialize: (s) => ({ language: s.language }),
     }
   )
 );

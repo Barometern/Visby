@@ -70,10 +70,25 @@ await initDb();
 startSessionPurgeInterval();
 
 try {
-  if ((await listLocations()).length === 0) {
-    const bundledLocations = loadBundledLocations();
+  const bundledLocations = loadBundledLocations();
+  const existingLocations = await listLocations();
+
+  if (existingLocations.length === 0) {
     const seededLocations = await seedLocations(bundledLocations);
-    logInfo("locations.seeded", { count: seededLocations.length });
+    if (seededLocations.length !== bundledLocations.length) {
+      logError("locations.seed_incomplete", {
+        expected: bundledLocations.length,
+        actual: seededLocations.length,
+      });
+    } else {
+      logInfo("locations.seeded", { count: seededLocations.length });
+    }
+  } else if (existingLocations.length < bundledLocations.length) {
+    logWarn("locations.count_mismatch", {
+      expected: bundledLocations.length,
+      actual: existingLocations.length,
+      message: "DB has fewer locations than the bundled set. Manual intervention may be needed.",
+    });
   }
 } catch (error) {
   logError("locations.seed_failed", {

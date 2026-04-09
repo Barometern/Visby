@@ -46,7 +46,7 @@ export default function ScanPage() {
         window.localStorage.setItem(SCAN_HINT_SEEN_KEY, 'true');
       }
     } catch {
-      setShowFirstVisitHint(true);
+      // If localStorage is unavailable, skip the hint rather than forcing it on every load.
     }
   }, []);
 

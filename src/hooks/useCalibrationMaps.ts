@@ -47,7 +47,7 @@ export function useCalibrationMaps({
   showCalibrationMarkers,
 }: UseCalibrationMapsArgs) {
   useEffect(() => {
-    if (!mapHostRef.current || mapRef.current) return;
+    if (!mapUnrolled || !mapHostRef.current || mapRef.current) return;
 
     const map = L.map(mapHostRef.current, {
       zoomControl: false,
@@ -76,10 +76,10 @@ export function useCalibrationMaps({
       map.remove();
       mapRef.current = null;
     };
-  }, [bounds.defaultBounds, mapHostRef, mapRef]);
+  }, [bounds.defaultBounds, mapHostRef, mapRef, mapUnrolled]);
 
   useEffect(() => {
-    if (!markerHostRef.current || markerMapRef.current) return;
+    if (!mapUnrolled || !markerHostRef.current || markerMapRef.current) return;
 
     const map = L.map(markerHostRef.current, {
       zoomControl: false,
@@ -124,7 +124,7 @@ export function useCalibrationMaps({
       map.remove();
       markerMapRef.current = null;
     };
-  }, [bounds.defaultBounds, landmarkPoints, markerHostRef, markerMapRef, wallPath, showCalibrationMarkers]);
+  }, [bounds.defaultBounds, landmarkPoints, markerHostRef, markerMapRef, wallPath, showCalibrationMarkers, mapUnrolled]);
 
   useEffect(() => {
     if (!mapUnrolled) return;
