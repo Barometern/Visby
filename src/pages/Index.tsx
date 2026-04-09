@@ -223,7 +223,7 @@ const Index = () => {
               transition={{ duration: 0.7 }}
               className="max-w-2xl"
             >
-              <h1 className="max-w-xl font-heading text-5xl leading-[0.92] text-[#fff1d3] drop-shadow-[0_10px_30px_rgba(0,0,0,0.32)] sm:text-6xl lg:text-7xl">
+              <h1 className="max-w-xl font-display text-5xl leading-[0.92] text-[#fff1d3] drop-shadow-[0_10px_30px_rgba(0,0,0,0.32)] sm:text-6xl lg:text-7xl">
                 {c.heroTitle}
               </h1>
 
@@ -313,7 +313,7 @@ const Index = () => {
             className="mx-auto max-w-2xl text-center"
           >
             <p className="text-[11px] uppercase tracking-[0.32em] text-[#e1bb7b]">{c.sectionHow}</p>
-            <h2 className="mt-3 font-heading text-4xl text-[#fff1d2] sm:text-5xl">{c.sectionHow}</h2>
+            <h2 className="mt-3 font-display text-4xl text-[#fff1d2] sm:text-5xl">{c.sectionHow}</h2>
             <p className="mt-4 text-base text-[#f2e3c4]/90 sm:text-lg">{c.sectionHowLead}</p>
           </motion.div>
 
@@ -382,7 +382,7 @@ const Index = () => {
             transition={{ duration: 0.6 }}
             className="mx-auto mt-10 max-w-3xl rounded-[30px] border border-[#f0d59a] bg-[linear-gradient(135deg,#2a1c13,#3a281c)] p-6 text-center text-[#fbf1dc] shadow-[0_26px_60px_rgba(40,25,16,0.18)]"
           >
-            <h3 className="font-heading text-3xl text-[#fff0cf] sm:text-4xl">{c.finalTitle}</h3>
+            <h3 className="font-display text-3xl text-[#fff0cf] sm:text-4xl">{c.finalTitle}</h3>
             <p className="mt-3 text-base leading-7 text-[#eadfc8]/84 sm:text-lg">{c.finalText}</p>
             <div className="mt-6">
               <Button

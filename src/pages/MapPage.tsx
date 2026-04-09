@@ -160,38 +160,37 @@ export default function MapPage() {
       <div className="wood-table-bg relative flex min-h-screen flex-col overflow-hidden">
         <div className="relative z-10 mx-auto w-full max-w-md px-4 pt-4">
           <div className="overflow-hidden rounded-[28px] border border-[#dfc188]/16 bg-[linear-gradient(180deg,rgba(28,20,15,0.88),rgba(15,11,8,0.8))] px-4 py-4 text-[#fff3d4] shadow-[0_22px_60px_rgba(0,0,0,0.22)] backdrop-blur-sm">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-[#f0c97f]/18 bg-[#f0c97f]/8 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#f2d799]">
-                  <Compass className="h-3.5 w-3.5" />
-                  {t("mapQuestChartLabel", language)}
-                </div>
-                <h1 className="mt-3 font-heading text-[1.9rem] leading-none text-[#fff1cf]">
-                  {t("mapQuestHeading", language)}
-                </h1>
+            <div className="flex items-center justify-between gap-3 rounded-full border border-[#f0c97f]/10 bg-black/10 px-3 py-2">
+              <div className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#f2d799]/88">
+                <Compass className="h-3.5 w-3.5" />
+                {t("mapQuestChartLabel", language)}
               </div>
-
-              <div className="rounded-[20px] border border-[#f0c97f]/14 bg-white/5 px-3 py-2 text-right">
-                <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#f0c97f]/74">
-                  {t("mapSealCollectionLabel", language)}
-                </div>
-                <div className="mt-1 font-heading text-2xl leading-none text-[#fff0ca]">
+              <div className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#f0c97f]/72">
+                <span>{t("mapSealCollectionLabel", language)}</span>
+                <span className="rounded-full border border-[#f0c97f]/14 bg-white/5 px-2.5 py-1 text-[#fff0ca]">
                   {completedCount}/{locations.length}
-                </div>
+                </span>
               </div>
             </div>
 
-            <div className="mt-4 rounded-[22px] border border-[#f1d49d]/14 bg-[linear-gradient(180deg,rgba(250,240,216,0.95),rgba(233,214,177,0.92))] px-4 py-3 text-[#4b3320]">
+            <div className="mt-4 rounded-[24px] border border-[#efd7aa]/18 bg-[linear-gradient(180deg,rgba(251,241,219,0.98),rgba(235,216,179,0.95))] px-4 py-4 text-[#4b3320] shadow-[0_18px_42px_rgba(49,31,17,0.12),inset_0_1px_0_rgba(255,255,255,0.34)]">
               <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#9b7041]">
                 {t("mapCurrentObjective", language)}
               </p>
-              <div className="mt-2 flex items-center justify-between gap-3">
-                <p className="font-heading text-[1.35rem] leading-none text-[#342014]">
-                  {allLocationsCompleted
-                    ? t("mapQuestCompleteTitle", language)
-                    : activeLocation?.name[language] ?? t("mapNoObjectiveTitle", language)}
-                </p>
-                <div className="rounded-full border border-[#be975d]/28 bg-[#f7e5b8]/72 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#774d23]">
+              <div className="mt-3 flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <h1 className="font-display text-[1.95rem] leading-none text-[#342014]">
+                    {allLocationsCompleted
+                      ? t("mapQuestCompleteTitle", language)
+                      : activeLocation?.name[language] ?? t("mapNoObjectiveTitle", language)}
+                  </h1>
+                  <p className="mt-3 text-sm leading-6 text-[#5b4330]">
+                    {allLocationsCompleted
+                      ? t("mapQuestCompleteDescription", language)
+                      : t("mapMinimalHint", language)}
+                  </p>
+                </div>
+                <div className="shrink-0 rounded-full border border-[#be975d]/28 bg-[#f7e5b8]/72 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#774d23]">
                   {allLocationsCompleted ? t("mapCompletedBadge", language) : t("mapActiveBadge", language)}
                 </div>
               </div>
@@ -414,27 +413,16 @@ export default function MapPage() {
             </div>
 
             <div className="w-full max-w-[340px] rounded-[26px] border border-[#e3c793]/18 bg-[linear-gradient(180deg,rgba(250,244,231,0.96),rgba(235,220,191,0.94))] px-4 py-4 text-[#4b3320] shadow-[0_18px_48px_rgba(74,50,29,0.12)]">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#9b7041]">
-                    {t("mapCurrentObjective", language)}
-                  </p>
-                  <h2 className="mt-2 font-heading text-[1.55rem] leading-none text-[#352114]">
-                    {allLocationsCompleted
-                      ? t("mapQuestCompleteTitle", language)
-                      : activeLocation?.name[language] ?? t("mapNoObjectiveTitle", language)}
-                  </h2>
-                  <p className="mt-3 text-sm leading-6 text-[#5b4330]">
-                    {allLocationsCompleted
-                      ? t("mapQuestCompleteDescription", language)
-                      : t("mapMinimalHint", language)}
-                  </p>
-                </div>
+              <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#c8a46a]/22 bg-[#f3ddb0]/72 text-[#815627]">
                   <MapPinned className="h-4 w-4" />
                 </div>
+                <p className="text-sm leading-6 text-[#5b4330]">
+                  {allLocationsCompleted
+                    ? t("mapQuestCompleteDescription", language)
+                    : t("mapTapSealHint", language)}
+                </p>
               </div>
-
               <div className="mt-4 grid grid-cols-1 gap-3">
                 {!allLocationsCompleted && activeLocation ? (
                   <Button
@@ -447,9 +435,6 @@ export default function MapPage() {
                   </Button>
                 ) : null}
 
-                <p className="text-center text-[12px] leading-6 text-[#6b4f31]">
-                  {t("mapTapSealHint", language)}
-                </p>
               </div>
             </div>
           </div>

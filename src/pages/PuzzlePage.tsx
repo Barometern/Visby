@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Award, Share2 } from 'lucide-react';
 import PuzzleGrid from '@/components/PuzzleGrid';
+import MascotGuide from '@/components/MascotGuide';
 import { useGameState } from '@/lib/game-state';
 import { t } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -12,6 +13,7 @@ export default function PuzzlePage() {
   const { language, unlockedPieces } = useGameState();
   const total = 15;
   const isComplete = unlockedPieces.length >= total;
+  const isEmpty = unlockedPieces.length === 0;
 
   const [confettiPieces, setConfettiPieces] = useState<Array<{ id: number; x: number; color: string; delay: number }>>([]);
   const [copied, setCopied] = useState(false);
@@ -167,13 +169,17 @@ export default function PuzzlePage() {
                   alt=""
                   aria-hidden="true"
                   className="absolute inset-0 h-full w-full select-none object-cover pointer-events-none"
-                  style={{ opacity: 0.07, filter: 'blur(1px) saturate(0.7)' }}
+                  style={{
+                    opacity: isEmpty ? 0.18 : 0.07,
+                    filter: isEmpty ? 'blur(2.5px) brightness(0.78) saturate(0.58)' : 'blur(1px) saturate(0.7)',
+                    transform: isEmpty ? 'scale(1.02)' : 'none',
+                  }}
                   draggable={false}
                 />
               )}
 
               {/* Puzzle grid */}
-              <PuzzleGrid />
+              <PuzzleGrid teaseFirstPiece={isEmpty} />
 
               {/* Glass reflection */}
               <div className="absolute inset-0 pointer-events-none" style={{
@@ -187,6 +193,27 @@ export default function PuzzlePage() {
         </div>
 
         {/* Progress – carved/engraved bar */}
+        {isEmpty && (
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.12, duration: 0.4 }}
+            className="mt-5"
+          >
+            <div className="rounded-[28px] border border-[#ead7b2] bg-[rgba(255,248,236,0.95)] px-4 py-3 shadow-[0_18px_50px_rgba(95,66,40,0.08)]">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#e2c58e]/30 bg-[#f4e6c3]/72 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#8a6034]">
+                <Sparkles className="h-3.5 w-3.5" />
+                Första steget
+              </div>
+              <MascotGuide
+                pose="point"
+                position="inline"
+                text="Skanna din första QR-kod för att väcka tavlan till liv. Den första biten skimrar redan och väntar på dig."
+              />
+            </div>
+          </motion.div>
+        )}
+
         <div className="mt-5 w-3/4 mx-auto h-3 rounded-sm overflow-hidden" style={{
           background: 'linear-gradient(180deg, #3a2a18, #4a3828, #3a2a18)',
           boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.05)',

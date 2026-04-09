@@ -58,10 +58,12 @@ export default function MapClueOverlay({
                   <div className="inline-flex items-center gap-2 rounded-full border border-[#f0c97f]/18 bg-[#f0c97f]/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#f2d799]">
                     {eyebrow}
                   </div>
-                  <h2 className="mt-3 font-heading text-[2rem] leading-none text-[#fff1cf] sm:text-[2.3rem]">
+                  <h2 className="mt-3 font-display text-[2rem] leading-none text-[#fff1cf] sm:text-[2.3rem]">
                     {title}
                   </h2>
-                  <p className="mt-2 text-base leading-7 text-[#f6e7c1]">{location.name[language]}</p>
+                  <p className="mt-2 font-heading text-[1.15rem] leading-7 text-[#f6e7c1] sm:text-[1.25rem]">
+                    {location.name[language]}
+                  </p>
                 </div>
 
                 <button

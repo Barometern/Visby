@@ -7,13 +7,18 @@ import { COLS, PIECE_SIZE, ROWS, TOTAL, PIECE_PATHS } from "@/lib/puzzle-geometr
 interface PuzzleGridProps {
   highlightPiece?: number;
   interactive?: boolean;
+  teaseFirstPiece?: boolean;
 }
 
 const VW = COLS * PIECE_SIZE;
 const VH = ROWS * PIECE_SIZE;
 
 // ─── Component ────────────────────────────────────────────────────────────────
-export default function PuzzleGrid({ highlightPiece, interactive = true }: PuzzleGridProps) {
+export default function PuzzleGrid({
+  highlightPiece,
+  interactive = true,
+  teaseFirstPiece = false,
+}: PuzzleGridProps) {
   const { unlockedPieces, locations } = useGameState();
   const navigate = useNavigate();
 
@@ -55,24 +60,48 @@ export default function PuzzleGrid({ highlightPiece, interactive = true }: Puzzl
           if (unlockedPieces.includes(i)) return null;
           const col = i % COLS;
           const row = Math.floor(i / COLS);
+          const isTeasedPiece = teaseFirstPiece && i === 0;
           return (
             <g key={`slot-${i}`}>
               <path
                 d={PIECE_PATHS[i]}
-                fill="rgba(74,54,36,0.07)"
-                stroke="rgba(130,110,80,0.3)"
+                fill={isTeasedPiece ? "rgba(201,168,76,0.12)" : "rgba(74,54,36,0.07)"}
+                stroke={isTeasedPiece ? "rgba(201,168,76,0.55)" : "rgba(130,110,80,0.3)"}
                 strokeWidth="1"
               />
+              {isTeasedPiece ? (
+                <path
+                  d={PIECE_PATHS[i]}
+                  fill="none"
+                  stroke="rgba(245,231,199,0.8)"
+                  strokeWidth="0.8"
+                  strokeDasharray="4 4"
+                >
+                  <animate
+                    attributeName="stroke-dashoffset"
+                    from="16"
+                    to="0"
+                    dur="1.6s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+              ) : null}
               <text
                 x={col * PIECE_SIZE + PIECE_SIZE / 2}
                 y={row * PIECE_SIZE + PIECE_SIZE / 2 + 6}
                 textAnchor="middle"
                 fontSize="16"
-                fill="rgba(130,110,80,0.28)"
-                fontFamily="Georgia, 'Times New Roman', serif"
+                fill={isTeasedPiece ? "rgba(145,104,34,0.72)" : "rgba(130,110,80,0.28)"}
+                fontFamily="'Crimson Text', serif"
+                fontWeight={isTeasedPiece ? "700" : "400"}
               >
                 {i + 1}
               </text>
+              {isTeasedPiece ? (
+                <path d={PIECE_PATHS[i]} fill="rgba(255,255,255,0.08)">
+                  <animate attributeName="opacity" values="0.18;0.42;0.18" dur="2.2s" repeatCount="indefinite" />
+                </path>
+              ) : null}
             </g>
           );
         })}

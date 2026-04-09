@@ -104,61 +104,64 @@ export default function QRScanner({ onScan }: QRScannerProps) {
   }, []);
 
   return (
-    <section className="rounded-[1.75rem] border border-medieval-gold/15 bg-[linear-gradient(180deg,rgba(37,27,20,0.94),rgba(18,13,10,0.98))] p-4 shadow-[0_16px_40px_rgba(0,0,0,0.28)]">
+    <section className="rounded-[1.9rem] border border-[#d8bc8d]/26 bg-[linear-gradient(180deg,rgba(248,241,226,0.98),rgba(232,216,184,0.96))] p-4 text-[#4b3320] shadow-[0_18px_44px_rgba(58,39,21,0.16)] sm:p-5">
       <div className="mb-4 flex items-start justify-between gap-4">
         <div>
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-medieval-gold/20 bg-medieval-gold/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-medieval-gold">
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#d6b578]/26 bg-[#f5e7c5]/86 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#9a6b31]">
             <ScanLine className="h-3.5 w-3.5" />
             {t('scannerLabel', language)}
           </div>
-          <h2 className="font-heading text-xl text-amber-50">{t('scannerHeading', language)}</h2>
-          <p className="mt-1 font-body text-sm leading-relaxed text-amber-100/70">
+          <h2 className="font-display text-[1.6rem] leading-none text-[#342014]">{t('scannerHeading', language)}</h2>
+          <p className="mt-2 font-body text-sm leading-relaxed text-[#5b4330]/82">
             {t('scannerDescription', language)}
           </p>
         </div>
 
-        <div className="rounded-full border border-white/10 bg-white/5 p-2 text-medieval-gold">
+        <div className="rounded-full border border-[#d4b37a]/24 bg-[rgba(255,249,236,0.72)] p-2 text-[#9a6b31] shadow-[0_8px_18px_rgba(95,66,40,0.08)]">
           <Camera className="h-4 w-4" />
         </div>
       </div>
 
-      <div className="relative overflow-hidden rounded-[1.35rem] border border-white/10 bg-black/50 p-2">
-        <div className="pointer-events-none absolute inset-4 rounded-[1rem] border border-medieval-gold/25" />
-        <div className="pointer-events-none absolute inset-x-10 top-1/2 z-10 -translate-y-1/2">
-          <div className="h-px bg-gradient-to-r from-transparent via-medieval-gold/80 to-transparent shadow-[0_0_16px_rgba(201,168,76,0.45)]" />
-        </div>
+      <div className="relative overflow-hidden rounded-[1.55rem] border border-[#c9a76b]/28 bg-[linear-gradient(145deg,#6a4324,#4d2f1a)] p-3 shadow-[0_18px_34px_rgba(57,35,17,0.22),inset_0_1px_0_rgba(255,255,255,0.08)]">
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(145deg,rgba(255,255,255,0.06),transparent_35%),repeating-linear-gradient(90deg,rgba(87,52,25,0.16)_0px,rgba(87,52,25,0.16)_3px,rgba(56,32,17,0.08)_3px,rgba(56,32,17,0.08)_6px)] opacity-70" />
+        <div className="relative rounded-[1.2rem] border border-[#d4b37a]/28 bg-[linear-gradient(180deg,rgba(29,22,17,0.96),rgba(9,8,7,0.98))] p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+          <div className="pointer-events-none absolute inset-4 rounded-[1rem] border border-medieval-gold/25" />
+          <div className="pointer-events-none absolute inset-x-10 top-1/2 z-10 -translate-y-1/2">
+            <div className="h-px bg-gradient-to-r from-transparent via-medieval-gold/80 to-transparent shadow-[0_0_16px_rgba(201,168,76,0.45)]" />
+          </div>
 
-        <div
-          id="qr-reader"
-          className="relative z-0 w-full overflow-hidden rounded-[1rem] bg-black/70 [&_video]:aspect-square [&_video]:w-full [&_video]:object-cover"
-        />
+          <div
+            id="qr-reader"
+            className="relative z-0 w-full overflow-hidden rounded-[1rem] bg-black/80 [&_video]:aspect-square [&_video]:w-full [&_video]:object-cover"
+          />
+        </div>
       </div>
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-medieval-gold/80">
+        <div className="rounded-2xl border border-[#d7ba87]/24 bg-[rgba(255,250,240,0.55)] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)]">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#9a6b31]">
             {t('scannerStatusLabel', language)}
           </p>
           {!isScanning && !error && (
-            <p className="mt-1 font-body text-sm text-amber-100/70 animate-pulse">
+            <p className="mt-1 font-body text-sm text-[#5b4330]/72 animate-pulse">
               {t('scanning', language)}
             </p>
           )}
           {isScanning && !error && (
-            <p className="mt-1 font-body text-sm text-amber-100/75">
+            <p className="mt-1 font-body text-sm text-[#5b4330]/82">
               {t('scannerReady', language)}
             </p>
           )}
           {error && (
-            <p className="mt-1 font-body text-sm text-red-300">{error}</p>
+            <p className="mt-1 font-body text-sm text-red-700">{error}</p>
           )}
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-medieval-gold/80">
+        <div className="rounded-2xl border border-[#d7ba87]/24 bg-[rgba(255,250,240,0.55)] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)]">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#9a6b31]">
             {t('scannerTipsLabel', language)}
           </p>
-          <p className="mt-1 font-body text-sm text-amber-100/75">
+          <p className="mt-1 font-body text-sm text-[#5b4330]/82">
             {t('scannerTips', language)}
           </p>
         </div>

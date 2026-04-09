@@ -160,7 +160,7 @@ export default function ScanPage() {
 
   return (
     <div className="container mx-auto max-w-5xl px-4 py-6 pb-24 sm:py-8">
-      <section className="rounded-[2rem] border border-medieval-gold/15 bg-[linear-gradient(180deg,rgba(39,28,20,0.97),rgba(16,11,8,0.98))] p-5 shadow-[0_22px_70px_rgba(0,0,0,0.34)] sm:p-6 transition-all duration-300">
+      <section className="rounded-[2rem] border border-[#dabc86]/22 bg-[linear-gradient(180deg,rgba(247,239,224,0.98),rgba(233,216,184,0.96))] p-5 text-[#4b3320] shadow-[0_22px_60px_rgba(74,50,29,0.16)] sm:p-6 transition-all duration-300">
         <div className="relative space-y-6">
           {phase === 'scanning' && <QRScanner onScan={handleScan} />}
 
@@ -189,53 +189,53 @@ export default function ScanPage() {
           )}
 
           <div>
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-medieval-gold/20 bg-medieval-gold/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-medieval-gold">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#d6b578]/26 bg-[#f5e7c5]/86 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#9a6b31]">
               <Sparkles className="h-3.5 w-3.5" />
               {t('scanBadge', language)}
             </div>
 
-            <h1 className="font-heading text-3xl text-amber-50 sm:text-4xl">
+            <h1 className="font-display text-3xl text-[#342014] sm:text-4xl">
               {t('scanTitle', language)}
             </h1>
 
-            <p className="mt-3 max-w-xl font-body text-base leading-relaxed text-amber-100/72">
+            <p className="mt-3 max-w-xl font-body text-base leading-relaxed text-[#5b4330]/82">
               {t('scanInstructions', language)}
             </p>
 
             {!hasPaid && (
-              <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-medieval-gold/20 bg-black/20 px-4 py-2 text-sm font-body text-medieval-gold">
+              <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#d6b578]/24 bg-[rgba(255,248,235,0.72)] px-4 py-2 text-sm font-body text-[#8d602c]">
                 <Sparkles className="h-4 w-4" />
                 {freeScansLeft} {t('freeScansLeft', language)}
               </div>
             )}
 
             <div className="mt-6 space-y-3">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 hover:-translate-y-0.5 hover:bg-white/[0.08] transition-all duration-200">
-                <div className="mb-2 flex items-center gap-2 text-medieval-gold">
+              <div className="rounded-2xl border border-[#d7ba87]/24 bg-[rgba(255,250,240,0.55)] p-4 transition-all duration-200">
+                <div className="mb-2 flex items-center gap-2 text-[#9a6b31]">
                   <QrCode className="h-4 w-4" />
                   <span className="text-xs font-semibold uppercase tracking-[0.2em]">{t('step1FindCode', language)}</span>
                 </div>
-                <p className="font-body text-sm text-amber-100/75">
+                <p className="font-body text-sm text-[#5b4330]/82">
                   {t('step1FindCodeDesc', language)}
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 hover:-translate-y-0.5 hover:bg-white/[0.08] transition-all duration-200">
-                <div className="mb-2 flex items-center gap-2 text-medieval-gold">
+              <div className="rounded-2xl border border-[#d7ba87]/24 bg-[rgba(255,250,240,0.55)] p-4 transition-all duration-200">
+                <div className="mb-2 flex items-center gap-2 text-[#9a6b31]">
                   <MapPinned className="h-4 w-4" />
                   <span className="text-xs font-semibold uppercase tracking-[0.2em]">{t('step2HoldSteady', language)}</span>
                 </div>
-                <p className="font-body text-sm text-amber-100/75">
+                <p className="font-body text-sm text-[#5b4330]/82">
                   {t('step2HoldSteadyDesc', language)}
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 hover:-translate-y-0.5 hover:bg-white/[0.08] transition-all duration-200">
-                <div className="mb-2 flex items-center gap-2 text-medieval-gold">
+              <div className="rounded-2xl border border-[#d7ba87]/24 bg-[rgba(255,250,240,0.55)] p-4 transition-all duration-200">
+                <div className="mb-2 flex items-center gap-2 text-[#9a6b31]">
                   <ScrollText className="h-4 w-4" />
                   <span className="text-xs font-semibold uppercase tracking-[0.2em]">{t('step3UnlockStory', language)}</span>
                 </div>
-                <p className="font-body text-sm text-amber-100/75">
+                <p className="font-body text-sm text-[#5b4330]/82">
                   {t('step3UnlockStoryDesc', language)}
                 </p>
               </div>
