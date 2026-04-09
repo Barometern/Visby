@@ -82,43 +82,80 @@ async function runInTransaction(work) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Schema migrations
+// Each entry runs exactly once, identified by name, in order.
+// To add a column or index: append a new { name, sql } entry — never edit
+// existing ones.
+// ---------------------------------------------------------------------------
+const MIGRATIONS = [
+  {
+    name: "001_initial_schema",
+    sql: `
+      CREATE TABLE IF NOT EXISTS users (
+        email TEXT PRIMARY KEY,
+        password_hash TEXT NOT NULL,
+        is_admin BOOLEAN NOT NULL DEFAULT FALSE,
+        has_paid BOOLEAN NOT NULL DEFAULT FALSE
+      );
+
+      CREATE TABLE IF NOT EXISTS sessions (
+        id TEXT PRIMARY KEY,
+        user_email TEXT NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+        expires_at BIGINT NOT NULL
+      );
+
+      CREATE TABLE IF NOT EXISTS locations (
+        id TEXT PRIMARY KEY,
+        qr_code TEXT NOT NULL UNIQUE,
+        name_json JSONB NOT NULL,
+        description_json JSONB NOT NULL,
+        read_more_json JSONB NOT NULL,
+        clue_json JSONB NOT NULL,
+        latitude DOUBLE PRECISION NOT NULL,
+        longitude DOUBLE PRECISION NOT NULL,
+        google_maps_url TEXT NOT NULL,
+        images_json JSONB NOT NULL,
+        scan_count INTEGER NOT NULL DEFAULT 0,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      );
+
+      CREATE TABLE IF NOT EXISTS scans (
+        user_email TEXT NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+        location_id TEXT NOT NULL REFERENCES locations(id) ON DELETE CASCADE,
+        scanned_at BIGINT NOT NULL,
+        PRIMARY KEY (user_email, location_id)
+      );
+    `,
+  },
+  // Example of how to add future schema changes:
+  // { name: "002_add_display_name", sql: `ALTER TABLE users ADD COLUMN IF NOT EXISTS display_name TEXT;` },
+];
+
 export async function initDb() {
+  // Ensure the migrations tracking table exists first.
   await query(`
-    CREATE TABLE IF NOT EXISTS users (
-      email TEXT PRIMARY KEY,
-      password_hash TEXT NOT NULL,
-      is_admin BOOLEAN NOT NULL DEFAULT FALSE,
-      has_paid BOOLEAN NOT NULL DEFAULT FALSE
-    );
-
-    CREATE TABLE IF NOT EXISTS sessions (
-      id TEXT PRIMARY KEY,
-      user_email TEXT NOT NULL REFERENCES users(email) ON DELETE CASCADE,
-      expires_at BIGINT NOT NULL
-    );
-
-    CREATE TABLE IF NOT EXISTS locations (
-      id TEXT PRIMARY KEY,
-      qr_code TEXT NOT NULL UNIQUE,
-      name_json JSONB NOT NULL,
-      description_json JSONB NOT NULL,
-      read_more_json JSONB NOT NULL,
-      clue_json JSONB NOT NULL,
-      latitude DOUBLE PRECISION NOT NULL,
-      longitude DOUBLE PRECISION NOT NULL,
-      google_maps_url TEXT NOT NULL,
-      images_json JSONB NOT NULL,
-      scan_count INTEGER NOT NULL DEFAULT 0,
-      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-    );
-
-    CREATE TABLE IF NOT EXISTS scans (
-      user_email TEXT NOT NULL REFERENCES users(email) ON DELETE CASCADE,
-      location_id TEXT NOT NULL REFERENCES locations(id) ON DELETE CASCADE,
-      scanned_at BIGINT NOT NULL,
-      PRIMARY KEY (user_email, location_id)
+    CREATE TABLE IF NOT EXISTS schema_migrations (
+      name TEXT PRIMARY KEY,
+      applied_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
   `);
+
+  for (const migration of MIGRATIONS) {
+    const existing = await query(
+      `SELECT 1 FROM schema_migrations WHERE name = $1`,
+      [migration.name],
+    );
+    if (existing.rows.length > 0) continue;
+
+    await runInTransaction(async (client) => {
+      await client.query(migration.sql);
+      await client.query(
+        `INSERT INTO schema_migrations (name) VALUES ($1)`,
+        [migration.name],
+      );
+    });
+  }
 }
 
 async function listScannedLocationsForUser(email) {

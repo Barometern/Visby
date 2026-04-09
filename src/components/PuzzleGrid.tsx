@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import puzzleImage from "@/assets/puzzle-placeholder.jpg";
 import { useGameState } from "@/lib/game-state";
-import { COLS, PIECE_SIZE, ROWS, TOTAL, piecePath } from "@/lib/puzzle-geometry";
+import { COLS, PIECE_SIZE, ROWS, TOTAL, PIECE_PATHS } from "@/lib/puzzle-geometry";
 
 interface PuzzleGridProps {
   highlightPiece?: number;
@@ -40,7 +40,7 @@ export default function PuzzleGrid({ highlightPiece, interactive = true }: Puzzl
           {/* One clipPath per piece — shared by the image + stroke layers */}
           {Array.from({ length: TOTAL }, (_, i) => (
             <clipPath key={i} id={`pc-${i}`}>
-              <path d={piecePath(i % COLS, Math.floor(i / COLS))} />
+              <path d={PIECE_PATHS[i]} />
             </clipPath>
           ))}
 
@@ -58,7 +58,7 @@ export default function PuzzleGrid({ highlightPiece, interactive = true }: Puzzl
           return (
             <g key={`slot-${i}`}>
               <path
-                d={piecePath(col, row)}
+                d={PIECE_PATHS[i]}
                 fill="rgba(74,54,36,0.07)"
                 stroke="rgba(130,110,80,0.3)"
                 strokeWidth="1"
@@ -80,10 +80,8 @@ export default function PuzzleGrid({ highlightPiece, interactive = true }: Puzzl
         {/* ── Unlocked pieces ──────────────────────────────────────────────── */}
         {Array.from({ length: TOTAL }, (_, i) => {
           if (!unlockedPieces.includes(i)) return null;
-          const col = i % COLS;
-          const row = Math.floor(i / COLS);
           const isHighlighted = highlightPiece === i;
-          const d = piecePath(col, row);
+          const d = PIECE_PATHS[i];
 
           return (
             <motion.g
