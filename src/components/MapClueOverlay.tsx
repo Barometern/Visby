@@ -1,0 +1,163 @@
+import { Link } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import { ExternalLink, QrCode, ScrollText, X } from "lucide-react";
+import MascotGuide from "@/components/MascotGuide";
+import { Button } from "@/components/ui/button";
+import type { LocationData } from "@/lib/location-types";
+import { t, type Language } from "@/lib/i18n";
+
+export type MapClueOverlayMode = "active" | "completed";
+
+type MapClueOverlayProps = {
+  location: LocationData | null;
+  language: Language;
+  mode: MapClueOverlayMode | null;
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+const backdropTransition = { duration: 0.28, ease: [0.22, 1, 0.36, 1] } as const;
+
+export default function MapClueOverlay({
+  location,
+  language,
+  mode,
+  isOpen,
+  onClose,
+}: MapClueOverlayProps) {
+  if (!location || !mode) return null;
+
+  const isActiveClue = mode === "active";
+  const title = isActiveClue ? t("mapClueEventTitle", language) : t("mapStoryEventTitle", language);
+  const eyebrow = isActiveClue ? t("mapNextClue", language) : t("mapDiscoveredPlace", language);
+  const mascotText = isActiveClue ? location.clue[language] : location.description[language];
+  const secondaryText = isActiveClue ? t("mapArrivalHintText", language) : location.readMore[language];
+
+  return (
+    <AnimatePresence>
+      {isOpen ? (
+        <motion.div
+          className="fixed inset-0 z-[120] flex items-end justify-center bg-[radial-gradient(circle_at_top,rgba(239,201,127,0.18),transparent_25%),rgba(16,11,8,0.78)] px-3 pb-3 pt-6 backdrop-blur-[10px] sm:items-center sm:px-6 sm:pb-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={backdropTransition}
+        >
+          <motion.div
+            className="relative w-full max-w-lg overflow-hidden rounded-[36px] border border-[#e2c58f]/18 bg-[linear-gradient(180deg,rgba(33,22,15,0.98),rgba(16,11,8,0.97))] text-[#fff1d4] shadow-[0_30px_90px_rgba(0,0,0,0.42)]"
+            initial={{ opacity: 0, y: 42, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 24, scale: 0.98 }}
+            transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,226,159,0.14),transparent_30%),linear-gradient(135deg,rgba(255,255,255,0.05),transparent_34%)]" />
+
+            <div className="relative px-4 pb-5 pt-4 sm:px-6 sm:pb-6 sm:pt-5">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <div className="inline-flex items-center gap-2 rounded-full border border-[#f0c97f]/18 bg-[#f0c97f]/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#f2d799]">
+                    {eyebrow}
+                  </div>
+                  <h2 className="mt-3 font-heading text-[2rem] leading-none text-[#fff1cf] sm:text-[2.3rem]">
+                    {title}
+                  </h2>
+                  <p className="mt-2 text-base leading-7 text-[#f6e7c1]">{location.name[language]}</p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[#fff1cf] transition-colors hover:bg-white/10"
+                  aria-label={t("close", language)}
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.08, duration: 0.32, ease: "easeOut" }}
+                className="mt-5"
+              >
+                <MascotGuide
+                  pose={isActiveClue ? "question" : "welcome"}
+                  position="center"
+                  text={mascotText}
+                  variant="parchment"
+                  className="mx-auto"
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 22 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.14, duration: 0.34, ease: "easeOut" }}
+                className="mt-5 rounded-[28px] border border-[#d9ba84]/18 bg-[linear-gradient(180deg,rgba(251,243,226,0.97),rgba(236,219,187,0.94))] p-4 text-[#4b3320] shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]"
+              >
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#94693c]">
+                  {isActiveClue ? t("mapClueEventSupportLabel", language) : t("readMoreContent", language)}
+                </p>
+                <p className="mt-3 font-body text-[15px] leading-7 text-[#5b4330]">
+                  {secondaryText}
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.32, ease: "easeOut" }}
+                className="mt-5 grid grid-cols-1 gap-3"
+              >
+                {isActiveClue ? (
+                  <>
+                    <Button
+                      asChild
+                      className="h-12 rounded-full border border-[#d5b06c]/30 bg-[#dca54a] text-sm font-semibold text-[#2f1d11] shadow-[0_14px_30px_rgba(95,66,40,0.18)] hover:bg-[#e7b35d]"
+                    >
+                      <a href={location.googleMapsUrl} target="_blank" rel="noreferrer">
+                        {t("mapOpenInMaps", language)}
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    </Button>
+
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="h-12 rounded-full border-[#d6ba8f]/20 bg-white/5 text-sm font-semibold text-[#f7ead1] hover:bg-white/10 hover:text-[#fff1d4]"
+                    >
+                      <Link to="/scan">
+                        {t("mapScanArrivalCta", language)}
+                        <QrCode className="h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="h-12 rounded-full border-[#d6ba8f]/20 bg-white/5 text-sm font-semibold text-[#f7ead1] hover:bg-white/10 hover:text-[#fff1d4]"
+                  >
+                    <Link to={`/location/${location.id}`}>
+                      {t("mapViewLocationDetails", language)}
+                      <ScrollText className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                )}
+
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={onClose}
+                  className="h-11 rounded-full text-sm font-semibold text-[#f0d9a7] hover:bg-white/5 hover:text-[#fff1cf]"
+                >
+                  {t("mapBackToChart", language)}
+                </Button>
+              </motion.div>
+            </div>
+          </motion.div>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
+  );
+}
