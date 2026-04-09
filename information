@@ -1,73 +1,55 @@
-Alright, putting on my lead UI designer hat. I’m going to be direct and specific. This is genuinely good work, but here’s where I’d push back in a design review:
+Sure! Give me a second to think about what’s most important and actionable for a coding agent.
 
-Visby Quest — UI Design Review
+Codex Instruction — Visby Quest UI Fixes
+Context: This is a mobile web app (PWA) called Visby Quest — a medieval QR code treasure hunt experience set in Visby, Sweden. The design uses a warm parchment/wood aesthetic with gold typography and a ram mascot called Balle Bagge. The following are UI improvements to implement.
 
-🟢 What’s Exceptional First
-Before critique, credit where it’s due. Google’s research found that users prefer design that makes them feel something, rather than emotionless, purely pragmatic interfaces ￼ — and this app absolutely delivers on that. The dark wood textures, aged parchment cards, gold typography and Balle Bagge create a cohesive emotional world that most tourism apps completely fail at. That’s genuinely hard to achieve and you’ve nailed it.
+1. Empty Puzzle State (0/15)
+When the user has 0 puzzle pieces collected, the puzzle grid is completely blank and unmotivating. Fix this by:
+	∙	Rendering a blurred and darkened version of the final completed puzzle image as a background layer behind the empty grid pieces
+	∙	Opacity should be around 15–20% so it’s a subtle tease, not a spoiler
+	∙	Add a small animated Balle Bagge character or speech bubble beneath the puzzle saying something like “Skanna din första QR-kod för att börja!”
 
-🔴 Issue 1 — Typography Inconsistency (High Priority)
-Looking across the screens, you’re mixing at least 3 different font styles:
-	∙	The medieval serif on the landing page headline (“Skattjakt genom Visbys gränder”)
-	∙	A clean modern sans-serif for body text
-	∙	A third mid-weight style in the UI cards
-Consistent UI design helps users develop mental models for how your app works — consistency is achieved with things like using one color palette, the same typography, or uniform spacing throughout. ￼
-The medieval headline font is beautiful but it only appears on the landing page. It should be used more deliberately and consistently — for all major headings — to reinforce the theme throughout. Right now the app switches personality between screens.
-Fix: Define 3 type roles — Display (medieval serif), Heading (gold serif), Body (cream sans-serif) — and stick to them rigidly.
+2. Typography System
+Currently the app uses inconsistent font styles across screens. Establish and enforce three clear type roles used consistently across all screens:
+	∙	Display — the medieval blackletter/serif font — use only for major page titles (e.g. “Skattjakt genom Visbys gränder”, “Så funkar det”, “Redo att börja?”)
+	∙	Heading — the gold serif — use for card titles, location names, section headers
+	∙	Body — the cream/light sans-serif — use for all descriptive and instructional text
+Audit every screen and make sure no heading or title uses a font outside these three roles. The “Nästa ledtråd” title and “Tornet” subtitle in particular need to align with this system.
 
-🔴 Issue 2 — Touch Target Sizes (High Priority)
-Looking at the bottom navigation bar — “Hem”, “Karta”, “Mitt Pussel”, “Skanna QR” — the icons and labels are quite small and tightly packed. Research confirms that even small interface adjustments measurably improve user trust, and proper touch target sizing is a core principle. ￼
-Apple’s own Human Interface Guidelines recommend a minimum touch target of 44x44 points. Your bottom nav looks like it’s hitting around 36px. This is especially problematic because:
-	∙	Your users are walking around cobblestone streets — one-handed, possibly in cold weather with gloves
-	∙	They’re likely distracted and excited — precision tapping is harder
-	∙	Older tourists, a key demographic, often have lower fine motor accuracy
-Fix: Increase the bottom nav height by about 12–15px and give each icon more padding.
+3. Accessibility — Contrast Check
+The following colour combinations may fail WCAG AA contrast (minimum 4.5:1 for normal text, 3:1 for large text). Check and fix each:
+	∙	Gold label text on the dark brown header card (“UPPDRAGSKARTA”, “SAMLADE SIGILL”)
+	∙	Gold text on the parchment/cream card backgrounds
+	∙	The “Tillbaka till kartan” text link in gold on dark background
+Where contrast fails, either darken the background, lighten the text, or add a subtle text shadow to improve legibility without breaking the aesthetic.
 
-🟡 Issue 3 — Visual Hierarchy on the Map Screen (Medium Priority)
-On the “Skattens rutt” / map screen, there are three competing visual zones fighting for attention simultaneously:
-	1.	The “Uppdragskarta / 0/8 Samlade sigill” header card
-	2.	The “Aktuellt mål: Kruttornet” card
-	3.	The historical map itself
-Figma’s design principle guidance says designers use hierarchy to help users recognize key information and distinguish less important elements at a glance — the strategic use of contrasting colors and spacing directs users to key elements. ￼
-Right now everything feels equally weighted. The user’s one job on this screen is to navigate to the next QR location — but that goal doesn’t visually dominate.
-Fix: Make the “Aktuellt mål” card the clear visual hero. Reduce the prominence of the progress tracker — move it to a subtle top bar rather than a large card.
+4. Completion / Sharing Moment
+When the user completes all puzzle pieces (15/15), trigger a full-screen celebration screen that includes:
+	∙	The completed puzzle image revealed dramatically (animate pieces snapping together or a wax seal breaking)
+	∙	The user’s completion time displayed in a styled medieval banner
+	∙	A shareable image card that can be saved to camera roll or shared via the native share sheet — it should show the completed puzzle, “Visby Quest klar!”, the date, and completion time
+	∙	A button: “Dela din bedrift” (Share your achievement)
 
-🟡 Issue 4 — The Empty Puzzle State (Medium Priority)
-The empty 0/15 puzzle is visually dead — a blank cream grid on a wood background. This is your biggest motivation problem. Each screen should focus on encouraging users to take one action — use consistent elements throughout your app to make it easy for users to know what to do. ￼
-The empty state is a missed opportunity. When a user first sees an empty puzzle, their reaction should be excitement — “I want to fill this!” — not blankness.
-Fix options:
-	∙	Show a very blurred/dark silhouette of the final image as a teaser
-	∙	Add a small Balle Bagge animation pointing at it saying something like “Scan your first QR to begin!”
-	∙	Add subtle shimmer or glow on piece #1 to invite the first action
+5. Map Pin Differentiation
+On the historical map, all location pins currently look very similar (gold spheres of similar size). Make the active/current target pin clearly distinct from completed and upcoming pins:
+	∙	Active pin — larger, glowing gold with a subtle pulse animation
+	∙	Completed pins — smaller, desaturated/grey-brown, no animation
+	∙	Upcoming/locked pins — small, semi-transparent gold, no animation
+This gives the user a clear visual sense of progress and direction at a glance.
 
-🟡 Issue 5 — The QR Scanner Screen Dark Theme Break (Medium Priority)
-Every other screen uses warm parchment and brown tones. The QR scanner switches to a near-black dark UI — it’s jarring and breaks the medieval immersion completely. It suddenly feels like a generic modern app.
-Design consistency is a cornerstone principle — visual elements like buttons, labels, and fonts should maintain a uniform style throughout your app so users can recognize and understand how to interact with it quickly. ￼
-I understand the dark background is probably functional for the camera viewport — but the surrounding UI chrome doesn’t need to be dark.
-Fix: Keep the camera viewfinder dark, but frame it with warm parchment UI — like a wooden “viewing window” frame around the camera. The STATUS and TIPS cards below could remain in the warm parchment style.
+6. Scroll Affordance on Map Screen
+The “Tryck för att rulla upp” scroll handle is a nice touch but easy to miss. Make it more discoverable by:
+	∙	Adding a subtle bounce animation on first load to draw attention to it
+	∙	Ensuring the text label is always visible (currently it appears low-contrast against the wood background)
 
-🟡 Issue 6 — No Loading / Transition Feedback (Medium Priority)
-I can’t verify this from screenshots, but it’s worth flagging. Animations and clear transitions between screens are key bits of feedback that create a more satisfying user experience. ￼
-When a QR code is successfully scanned, what happens? Is there a satisfying animation — a puzzle piece flying into place, a wax seal breaking, a scroll unfurling? This moment of delight is critical and often underdone.
-Fix: That QR scan success moment deserves your best animation. A puzzle piece dramatically snapping into position with a satisfying sound could be the most memorable moment in the entire experience.
+7. Touch Targets — Bottom Navigation
+Increase the bottom navigation bar height to ensure all touch targets meet the minimum 44x44px (Apple HIG) recommendation. Currently the icons and labels are too tightly packed for use while walking outdoors. Add at least 10–12px additional padding top and bottom inside the nav bar.
 
-🟢 Issue 7 — Accessibility (Lower Priority but Important for Municipality Pitch)
-If you’re pitching to Region Gotland, accessibility will come up. In 2024 there’s a significant push towards inclusive and accessible app designs — including screen reader compatibility and adaptability to various accessibility settings — such practices ensure compliance with global accessibility standards. ￼
-The gold-on-dark-brown text on several screens may not meet WCAG AA contrast ratios (4.5:1 minimum). The gold-on-parchment is probably fine, but the gold labels on the dark map header card (“UPPDRAGSKARTA”, “SAMLADE SIGILL”) are worth checking.
-Fix: Run your colour combinations through a contrast checker like Coolors or WebAIM before the pitch.
-
-Summary Table
-
-
-
-|Issue                   |Priority|Effort to Fix|
-|------------------------|--------|-------------|
-|Typography inconsistency|🔴 High  |Medium       |
-|Touch target sizes      |🔴 High  |Low          |
-|Map screen hierarchy    |🟡 Medium|Medium       |
-|Empty puzzle state      |🟡 Medium|Medium       |
-|QR scanner theme break  |🟡 Medium|Medium       |
-|Scan success animation  |🟡 Medium|High         |
-|Accessibility/contrast  |🟢 Lower |Low          |
-
-Overall this is a B+ product that could be an A with focused polish. The concept and art direction are already there — it’s the UX consistency and micro-interactions that need tightening up before a municipality pitch. They’ll have someone technical in the room who will look for exactly these things.
-Want me to go even deeper on any specific screen?​​​​​​​​​​​​​​​​
+Priority Order
+	1.	Empty puzzle state (biggest UX impact)
+	2.	Completion/sharing moment (biggest business/viral impact)
+	3.	Map pin differentiation (clarity during gameplay)
+	4.	Typography audit (polish for municipality pitch)
+	5.	Contrast/accessibility (compliance for municipality pitch)
+	6.	Touch targets (quick win)
+	7.	Scroll affordance (minor polish)
