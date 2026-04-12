@@ -184,7 +184,7 @@ export default function MapClueOverlay({
                     <Button
                       type="button"
                       onClick={handleMapsIntent}
-                      className="h-12 rounded-[6px] border border-[#d5b06c]/30 bg-[#dca54a] text-sm font-semibold text-[#2f1d11] shadow-[0_14px_30px_rgba(95,66,40,0.18)] hover:bg-[#e7b35d]"
+                      className="h-12 rounded-[6px] border border-[#d5b06c]/30 bg-[#dca54a] text-sm font-semibold text-[#2f1d11] shadow-[0_14px_30px_rgba(95,66,40,0.18),2px_3px_0px_rgba(122,82,48,0.3)] hover:bg-[#e7b35d]"
                     >
                       <>
                         {t("mapMapsIntent", language)}

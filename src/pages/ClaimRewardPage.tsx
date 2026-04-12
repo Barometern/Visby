@@ -33,16 +33,23 @@ export default function ClaimRewardPage() {
 
         {/* Certificate card */}
         <div className="relative w-full bg-[#FAF6EE] border-2 border-[#7A5230]/50 rounded-[16px] shadow-[4px_6px_0px_rgba(122,82,48,0.25)] px-8 py-10 text-center overflow-hidden">
-          {/* Decorative double-line top border */}
-          <div className="absolute top-3 left-5 right-5 h-px bg-[#7A5230]/35" />
-          <div className="absolute top-5 left-5 right-5 h-px bg-[#7A5230]/20" />
+          {/* Decorative SVG ornament — top */}
+          <svg aria-hidden="true" className="absolute top-3 left-5 right-5 w-[calc(100%-40px)]" height="8" style={{ display: 'block' }}>
+            <line x1="0" y1="2" x2="100%" y2="2" stroke="rgba(122,82,48,0.35)" strokeWidth="1" />
+            <line x1="0" y1="6" x2="100%" y2="6" stroke="rgba(122,82,48,0.18)" strokeWidth="1" />
+          </svg>
+
+          {/* VISBY QUEST eyebrow */}
+          <p className="font-body text-[10px] font-semibold uppercase tracking-[0.32em] text-[#7A5230] mt-2">
+            VISBY QUEST
+          </p>
 
           {/* Quest Complete heading */}
           <h1 className="font-display text-4xl text-[#2C1A0E] mt-2 mb-1">
             {t('puzzleComplete', language)}
           </h1>
 
-          {/* Eyebrow label */}
+          {/* Claim reward label */}
           <p className="font-body text-[10px] font-semibold uppercase tracking-[0.25em] text-[#7A5230] mt-3">
             {t('claimReward', language)}
           </p>
@@ -56,7 +63,7 @@ export default function ClaimRewardPage() {
 
           {/* Wax seal */}
           <motion.div
-            className="mx-auto mt-6 relative"
+            className="mx-auto mt-6 relative ring-2 ring-[#c9884c]/40 ring-offset-2 rounded-full"
             style={{ width: 80, height: 80 }}
             initial={{ scale: 0.7, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -103,9 +110,11 @@ export default function ClaimRewardPage() {
             {t('rewardText', language)}
           </p>
 
-          {/* Decorative double-line bottom border */}
-          <div className="absolute bottom-5 left-5 right-5 h-px bg-[#7A5230]/20" />
-          <div className="absolute bottom-3 left-5 right-5 h-px bg-[#7A5230]/35" />
+          {/* Decorative SVG ornament — bottom */}
+          <svg aria-hidden="true" className="absolute bottom-3 left-5 right-5 w-[calc(100%-40px)]" height="8" style={{ display: 'block' }}>
+            <line x1="0" y1="2" x2="100%" y2="2" stroke="rgba(122,82,48,0.18)" strokeWidth="1" />
+            <line x1="0" y1="6" x2="100%" y2="6" stroke="rgba(122,82,48,0.35)" strokeWidth="1" />
+          </svg>
         </div>
 
         {/* Back button */}

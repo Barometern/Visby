@@ -144,9 +144,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <Link key={to} to={to} className="flex min-w-0 flex-1 justify-center">
                     <div
                       className={[
-                        'flex min-h-[56px] w-full flex-col items-center justify-center px-2 py-2 transition-all duration-200',
+                        'flex min-h-[56px] w-full flex-col items-center justify-center rounded-[6px] px-2 py-2 transition-all duration-200',
                         active
-                          ? 'text-[#1C2E4A]'
+                          ? 'bg-[#1C2E4A]/8 text-[#1C2E4A]'
                           : 'text-[#2C1A0E]/50 hover:text-[#2C1A0E]',
                       ].join(' ')}
                     >
