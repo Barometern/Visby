@@ -20,7 +20,7 @@ const NotFound = () => {
       transition={{ duration: 0.5 }}
       className="flex min-h-screen items-center justify-center bg-[#F2E8D5] px-4"
     >
-      <div className="bg-[#FAF6EE] border-2 border-[#7A5230]/40 rounded-[16px] shadow-[4px_6px_0px_rgba(122,82,48,0.2)] p-10 text-center max-w-sm w-full">
+      <div className="bg-[#FAF6EE] border-2 border-[#7A5230]/40 rounded-[12px] shadow-[4px_6px_0px_rgba(122,82,48,0.2)] p-10 text-center max-w-sm w-full">
         <MascotGuide
           pose="question"
           position="center"
@@ -37,7 +37,7 @@ const NotFound = () => {
         <div className="mt-8">
           <Link
             to="/"
-            className="inline-block px-6 py-3 text-sm font-semibold bg-[#1C2E4A] text-[#F2E8D5] rounded-[6px] hover:bg-[#2A3F5F] transition-colors duration-200 shadow-[inset_0_-1px_0_rgba(0,0,0,0.2)]"
+            className="inline-block px-6 py-3 text-sm font-semibold bg-[#1C2E4A] text-[#F2E8D5] rounded-[6px] hover:bg-[#2A3F5F] transition-colors duration-200 shadow-[2px_3px_0px_rgba(28,46,74,0.4)]"
           >
             {t('returnHome', language)}
           </Link>

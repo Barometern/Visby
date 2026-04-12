@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import {
-  ArrowRight,
   Clock3,
   Gift,
   Globe,
@@ -67,9 +66,9 @@ function FoggyMapCard({
   title: string;
 }) {
   return (
-    <div className="group relative overflow-hidden rounded-[32px] border border-[#e4c789]/18 bg-[linear-gradient(145deg,rgba(19,13,9,0.92),rgba(33,22,15,0.88))] p-4 shadow-[0_28px_90px_rgba(0,0,0,0.34)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_36px_100px_rgba(0,0,0,0.4)] sm:p-5">
+    <div className="group relative overflow-hidden rounded-[12px] border border-[#e4c789]/18 bg-[linear-gradient(145deg,rgba(19,13,9,0.92),rgba(33,22,15,0.88))] p-4 shadow-[0_28px_90px_rgba(0,0,0,0.34)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_36px_100px_rgba(0,0,0,0.4)] sm:p-5">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,207,124,0.16),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.04),transparent_35%)]" />
-      <div className="relative rounded-[24px] border border-[#f2d39b]/16 bg-[linear-gradient(180deg,rgba(242,224,189,0.96),rgba(214,188,146,0.94))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.3),inset_0_-8px_18px_rgba(111,72,33,0.08)]">
+      <div className="relative rounded-[8px] border border-[#f2d39b]/16 bg-[linear-gradient(180deg,rgba(242,224,189,0.96),rgba(214,188,146,0.94))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.3),inset_0_-8px_18px_rgba(111,72,33,0.08)]">
         <div className="mb-3 flex items-center justify-between gap-3">
           <div>
             <div className="text-[10px] uppercase tracking-[0.32em] text-[#8f5e24]/82">Quest Chart</div>
@@ -82,7 +81,7 @@ function FoggyMapCard({
           </div>
         </div>
 
-        <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] border border-[#8a6034]/20 bg-[#d8be8d]">
+        <div className="relative aspect-[4/3] overflow-hidden rounded-[6px] border border-[#8a6034]/20 bg-[#d8be8d]">
           <img
             src={centurymap}
             alt={alt}
@@ -91,7 +90,7 @@ function FoggyMapCard({
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,12,8,0.04),rgba(20,12,8,0.26))]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,transparent_42%,rgba(67,43,21,0.18)_100%)]" />
 
-          <div className="absolute bottom-3 left-3 rounded-full border border-[#8e6338]/14 bg-[rgba(247,235,205,0.8)] px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-[#7c5329] shadow-[0_6px_16px_rgba(91,57,26,0.1)]">
+          <div className="absolute bottom-3 left-3 rounded-[3px] border border-[#8e6338]/14 bg-[rgba(247,235,205,0.8)] px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-[#7c5329] shadow-[0_6px_16px_rgba(91,57,26,0.1)]">
             Visby route
           </div>
         </div>
@@ -156,28 +155,28 @@ const Index = () => {
                 <Button
                   asChild
                   size="lg"
-                  className="h-14 rounded-[6px] border border-[#f0c976]/35 bg-[#e0a84d] px-8 text-base font-semibold text-[#2f1d11] shadow-[0_18px_36px_rgba(0,0,0,0.24)] transition-all duration-300 hover:translate-y-[-1px] hover:bg-[#ebb760] hover:scale-[1.02] active:scale-[0.98]"
+                  className="h-14 rounded-[6px] border border-[#f0c976]/35 bg-[#e0a84d] px-8 text-base font-semibold text-[#2f1d11] shadow-[0_18px_36px_rgba(0,0,0,0.24),2px_3px_0px_rgba(122,82,48,0.35)] transition-all duration-300 hover:translate-y-[-1px] hover:bg-[#ebb760] hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <Link to={startHref}>
                     {t('heroCta', language)}
                   </Link>
                 </Button>
 
-                <div className="inline-flex items-center gap-2 rounded-[6px] border border-white/12 bg-white/8 px-4 py-3 text-sm text-[#f7ead2] backdrop-blur-sm">
-                  <Clock3 className="h-4 w-4 text-[#f0c976]" />
+                <div className="inline-flex items-center gap-2 rounded-[6px] border border-[#7A5230]/30 bg-[#F2E8D5]/90 px-4 py-3 text-sm text-[#2C1A0E]">
+                  <Clock3 className="h-4 w-4 text-[#7A5230]" />
                   {t('heroSecondary', language)}
                 </div>
               </div>
 
               <div className="mt-7 grid max-w-xl gap-3 sm:grid-cols-2">
-                <div className="rounded-[6px] border border-white/10 bg-[#130d0a]/45 px-4 py-3 text-[#fff4de] backdrop-blur-sm">
-                  <div className="flex items-center gap-2 text-[#f0c976]">
+                <div className="rounded-[6px] border border-[#7A5230]/30 bg-[#F2E8D5]/90 px-4 py-3 text-[#2C1A0E]">
+                  <div className="flex items-center gap-2 text-[#7A5230]">
                     <Users className="h-4 w-4" />
                     <span className="text-sm font-semibold">{t('socialProof', language)}</span>
                   </div>
                 </div>
-                <div className="rounded-[6px] border border-white/10 bg-[#130d0a]/45 px-4 py-3 text-[#fff4de] backdrop-blur-sm">
-                  <div className="text-sm font-semibold text-[#f0c976]">{t('curiosity', language)}</div>
+                <div className="rounded-[6px] border border-[#7A5230]/30 bg-[#F2E8D5]/90 px-4 py-3 text-[#2C1A0E]">
+                  <div className="text-sm font-semibold text-[#7A5230]">{t('curiosity', language)}</div>
                 </div>
               </div>
             </motion.div>
@@ -188,24 +187,22 @@ const Index = () => {
               transition={{ duration: 0.8 }}
               className="relative"
             >
-              <div className="rounded-[34px] border border-white/10 bg-[#120c09]/40 p-4 shadow-[0_26px_70px_rgba(0,0,0,0.2)] backdrop-blur-sm sm:p-5">
-                <MascotGuide
-                  pose="welcome"
-                  position="center"
-                  text={t('mascotWelcome', language)}
-                  actionLabel={t('mascotStart', language)}
-                  onAction={handleMascotStart}
-                  className="pb-2"
-                />
+              <MascotGuide
+                pose="welcome"
+                position="center"
+                text={t('mascotWelcome', language)}
+                actionLabel={t('mascotStart', language)}
+                onAction={handleMascotStart}
+                className="pb-2"
+              />
 
-                <div className="mt-4">
-                  <motion.div
-                    animate={{ y: [0, -6, 0] }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <FoggyMapCard alt={t('indexMapAlt', language)} title={t('indexMapCardTitle', language)} />
-                  </motion.div>
-                </div>
+              <div className="mt-4">
+                <motion.div
+                  animate={{ y: [0, -6, 0] }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <FoggyMapCard alt={t('indexMapAlt', language)} title={t('indexMapCardTitle', language)} />
+                </motion.div>
               </div>
             </motion.div>
           </div>
@@ -245,7 +242,7 @@ const Index = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.5 }}
-            className="mx-auto mb-6 max-w-2xl rounded-[28px] border border-[#d8b981]/40 bg-[linear-gradient(180deg,rgba(76,53,35,0.4),rgba(42,28,19,0.32))] px-4 py-3 text-[#f7ead1] shadow-[0_14px_36px_rgba(95,66,40,0.12)] backdrop-blur-[3px]"
+            className="mx-auto mb-6 max-w-2xl rounded-[10px] border border-[#d8b981]/40 bg-[linear-gradient(180deg,rgba(76,53,35,0.4),rgba(42,28,19,0.32))] px-4 py-3 text-[#f7ead1] shadow-[0_14px_36px_rgba(95,66,40,0.12)]"
           >
               <MascotGuide pose="point" position="inline" text={t('mascotStepsLine', language)} variant="dark" />
             </motion.div>
@@ -267,7 +264,7 @@ const Index = () => {
                     ].join(" ")}
                   >
                     <div className={isEven ? "md:col-start-1" : "md:col-start-3"}>
-                      <div className="group rounded-[30px] border border-[#cfaf7a]/38 bg-[linear-gradient(180deg,rgba(78,54,35,0.42),rgba(43,28,19,0.34))] p-5 shadow-[0_18px_45px_rgba(95,66,40,0.14)] backdrop-blur-[3px] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(95,66,40,0.18)]">
+                      <div className="group rounded-[10px] border border-[#cfaf7a]/38 bg-[linear-gradient(180deg,rgba(78,54,35,0.42),rgba(43,28,19,0.34))] p-5 shadow-[0_18px_45px_rgba(95,66,40,0.14)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(95,66,40,0.18)]">
                         <div className="flex items-start gap-4">
                           <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-[#e0c386] bg-[linear-gradient(180deg,#f7e5bd,#ebcb88)] text-[#8f5e24] shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] transition-transform duration-300 group-hover:scale-105">
                             <Icon className="h-6 w-6" />
@@ -302,7 +299,7 @@ const Index = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6 }}
-            className="mx-auto mt-10 max-w-3xl rounded-[30px] border border-[#f0d59a] bg-[linear-gradient(135deg,#2a1c13,#3a281c)] p-6 text-center text-[#fbf1dc] shadow-[0_26px_60px_rgba(40,25,16,0.18)]"
+            className="mx-auto mt-10 max-w-3xl rounded-[12px] border border-[#f0d59a] bg-[linear-gradient(135deg,#2a1c13,#3a281c)] p-6 text-center text-[#fbf1dc] shadow-[0_26px_60px_rgba(40,25,16,0.18)]"
           >
             <h3 className="font-display text-3xl text-[#fff0cf] sm:text-4xl">{t('finalTitle', language)}</h3>
             <p className="mt-3 text-base leading-7 text-[#eadfc8]/84 sm:text-lg">{t('finalText', language)}</p>
@@ -310,11 +307,10 @@ const Index = () => {
               <Button
                 asChild
                 size="lg"
-                className="h-14 rounded-full border border-[#f0c976]/30 bg-[#e0a84d] px-8 text-base font-semibold text-[#2f1d11] hover:bg-[#ebb760] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                className="h-14 rounded-[6px] border border-[#f0c976]/30 bg-[#e0a84d] px-8 text-base font-semibold text-[#2f1d11] shadow-[2px_3px_0px_rgba(122,82,48,0.35)] hover:bg-[#ebb760] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
               >
                 <Link to={startHref}>
                   {t('finalCta', language)}
-                  <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
             </div>

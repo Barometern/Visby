@@ -202,7 +202,7 @@ export default function ScanPage() {
             )}
 
             <div className="mt-6 space-y-3">
-              <div className="bg-[#FAF6EE] border border-[#7A5230]/30 rounded-[12px] p-4 transition-all duration-200">
+              <div className="bg-[#FAF6EE] border border-[#7A5230]/30 rounded-[8px] p-4 transition-all duration-200">
                 <div className="mb-2 flex items-center gap-2 text-[#7A5230]">
                   <QrCode className="h-4 w-4" />
                   <span className="font-body text-xs font-semibold uppercase tracking-[0.2em]">{t('step1FindCode', language)}</span>
@@ -212,7 +212,7 @@ export default function ScanPage() {
                 </p>
               </div>
 
-              <div className="bg-[#FAF6EE] border border-[#7A5230]/30 rounded-[12px] p-4 transition-all duration-200">
+              <div className="bg-[#FAF6EE] border border-[#7A5230]/30 rounded-[8px] p-4 transition-all duration-200">
                 <div className="mb-2 flex items-center gap-2 text-[#7A5230]">
                   <MapPinned className="h-4 w-4" />
                   <span className="font-body text-xs font-semibold uppercase tracking-[0.2em]">{t('step2HoldSteady', language)}</span>
@@ -222,7 +222,7 @@ export default function ScanPage() {
                 </p>
               </div>
 
-              <div className="bg-[#FAF6EE] border border-[#7A5230]/30 rounded-[12px] p-4 transition-all duration-200">
+              <div className="bg-[#FAF6EE] border border-[#7A5230]/30 rounded-[8px] p-4 transition-all duration-200">
                 <div className="mb-2 flex items-center gap-2 text-[#7A5230]">
                   <ScrollText className="h-4 w-4" />
                   <span className="font-body text-xs font-semibold uppercase tracking-[0.2em]">{t('step3UnlockStory', language)}</span>
@@ -243,9 +243,9 @@ export default function ScanPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="fixed inset-x-4 top-4 z-[95] mx-auto max-w-xl rounded-[12px] border border-[#C9A84C]/40 bg-[#FAF6EE] p-4 text-center shadow-[4px_6px_0px_rgba(122,82,48,0.2)]"
+            className="fixed inset-x-4 top-4 z-[95] mx-auto max-w-xl rounded-[8px] bg-[#1C2E4A] p-4 text-center shadow-[4px_6px_0px_rgba(28,46,74,0.3)]"
           >
-            <p className="font-body text-sm leading-6 text-[#2C1A0E]">
+            <p className="font-body text-sm leading-6 text-[#FAF6EE]">
               {t('alreadyScanned', language)}
             </p>
           </motion.div>

@@ -189,7 +189,7 @@ export default function MapPage() {
                 </p>
               </div>
 
-              <div className="mt-1 shrink-0 rounded-full border border-[#f0c97f]/24 bg-[rgba(32,20,13,0.34)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#fff4d7] shadow-[0_6px_18px_rgba(0,0,0,0.14)] [text-shadow:0_1px_2px_rgba(12,7,4,0.55)]">
+              <div className="mt-1 shrink-0 rounded-[4px] border border-[#f0c97f]/24 bg-[#1C2E4A]/80 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#fff4d7] shadow-[0_6px_18px_rgba(0,0,0,0.14)] [text-shadow:0_1px_2px_rgba(12,7,4,0.55)]">
                 {allLocationsCompleted ? t("mapCompletedBadge", language) : t("mapActiveBadge", language)}
               </div>
             </div>
@@ -359,30 +359,17 @@ export default function MapPage() {
                           {marker.state === "active" ? (
                             <>
                               <motion.div
-                                className="absolute inset-0 rounded-full border border-[#8B1A1A]/60"
-                                animate={{ scale: [1, 1.55, 1], opacity: [0.62, 0.08, 0.62] }}
+                                className="absolute rounded-full border border-[#8B1A1A]/50"
+                                style={{ width: 16, height: 16 }}
+                                animate={{ scale: [1, 1.8, 1], opacity: [0.55, 0.06, 0.55] }}
                                 transition={{ duration: 2.1, repeat: Infinity, ease: "easeOut" }}
                               />
-                              <div
-                                className="relative rounded-full bg-[#8B1A1A]"
-                                style={{
-                                  width: 14,
-                                  height: 14,
-                                  border: "1.5px solid #f2d0a0",
-                                  filter: "drop-shadow(0 0 6px rgba(139,26,26,0.5))",
-                                }}
-                              />
+                              <div className="rounded-full bg-[#8B1A1A] h-[10px] w-[10px] border border-[#f2d0a0]/60" />
                             </>
                           ) : marker.state === "completed" ? (
-                            <div
-                              className="rounded-full bg-[#7A5230]"
-                              style={{ width: 10, height: 10, border: "1px solid #c9a84c", opacity: 0.85 }}
-                            />
+                            <div className="rounded-full bg-[#7A5230] h-[8px] w-[8px] border border-[#c9a84c]/50 opacity-75" />
                           ) : (
-                            <div
-                              className="rounded-full"
-                              style={{ width: 8, height: 8, border: "1.5px solid #7A5230", background: "transparent", opacity: 0.4 }}
-                            />
+                            <div className="rounded-full h-[6px] w-[6px] border border-[#7A5230]/40 opacity-35" />
                           )}
                         </div>
                       </button>
@@ -396,20 +383,20 @@ export default function MapPage() {
                 <div className="map-warm-light" />
                 <div className="map-vignette" />
 
-                <div className="absolute left-4 top-6 z-20 rounded-full border border-[#8f6734]/28 bg-[rgba(53,34,21,0.72)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#fff0c7] shadow-[0_8px_22px_rgba(0,0,0,0.18)] [text-shadow:0_1px_2px_rgba(10,6,4,0.6)]">
+                <div className="absolute left-4 top-6 z-20 rounded-[4px] border border-[#7A5230]/30 bg-[#F2E8D5]/90 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#2C1A0E] shadow-[0_4px_10px_rgba(0,0,0,0.14)]">
                   {t(MAP_MODE_LABELS[mapMode], language)}
                 </div>
 
                 <button
                   type="button"
                   onClick={handleMapModeCycle}
-                  className="absolute right-4 top-6 z-20 inline-flex items-center gap-2 rounded-full border border-[#8f6734]/28 bg-[rgba(53,34,21,0.72)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#fff0c7] shadow-[0_8px_22px_rgba(0,0,0,0.18)] [text-shadow:0_1px_2px_rgba(10,6,4,0.6)] transition-colors hover:bg-[rgba(68,43,27,0.82)]"
+                  className="absolute right-4 top-6 z-20 inline-flex items-center gap-2 rounded-[4px] border border-[#7A5230]/30 bg-[#F2E8D5]/90 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#2C1A0E] shadow-[0_4px_10px_rgba(0,0,0,0.14)] transition-colors hover:bg-[#F2E8D5]"
                 >
                   <Layers2 className="h-3.5 w-3.5" />
                   {t(MAP_MODE_BUTTON_LABELS[mapMode], language)}
                 </button>
 
-                <div className="pointer-events-none absolute bottom-4 left-4 rounded-2xl border border-[#c4a26c]/16 bg-[#f5e7c7]/88 px-3 py-2 text-[11px] text-[#65462b] shadow-[0_6px_18px_rgba(0,0,0,0.08)]">
+                <div className="pointer-events-none absolute bottom-4 left-4 rounded-[4px] border border-[#7A5230]/30 bg-[#F2E8D5]/90 px-3 py-2 text-[11px] text-[#2C1A0E] shadow-[0_4px_10px_rgba(0,0,0,0.08)]">
                   <div className="flex items-center gap-2 font-semibold">
                     {zoomedIn ? <ZoomOut className="h-3.5 w-3.5" /> : <ZoomIn className="h-3.5 w-3.5" />}
                     {zoomedIn ? t("mapZoomOutHint", language) : t("mapZoomInHint", language)}
@@ -429,7 +416,7 @@ export default function MapPage() {
               {!mapUnrolled ? (
                 <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center font-heading text-sm tracking-wider text-medieval-gold medieval-shadow">
                   <motion.span
-                    className="rounded-full bg-[rgba(21,13,9,0.38)] px-4 py-2 text-[#fff0c8] [text-shadow:0_1px_3px_rgba(10,6,4,0.7)]"
+                    className="rounded-[4px] bg-[rgba(21,13,9,0.38)] px-4 py-2 text-[#fff0c8] [text-shadow:0_1px_3px_rgba(10,6,4,0.7)]"
                     animate={
                       showScrollHintPulse
                         ? { opacity: [0.72, 1, 0.72], y: [0, -6, 0] }
@@ -447,9 +434,9 @@ export default function MapPage() {
               ) : null}
             </div>
 
-            <div className="w-full max-w-[340px] rounded-[26px] border border-[#e3c793]/18 bg-[linear-gradient(180deg,rgba(250,244,231,0.96),rgba(235,220,191,0.94))] px-4 py-4 text-[#4b3320] shadow-[0_18px_48px_rgba(74,50,29,0.12)]">
+            <div className="w-full max-w-[340px] rounded-[10px] border border-[#e3c793]/18 bg-[linear-gradient(180deg,rgba(250,244,231,0.96),rgba(235,220,191,0.94))] px-4 py-4 text-[#4b3320] shadow-[0_18px_48px_rgba(74,50,29,0.12)]">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#c8a46a]/22 bg-[#f3ddb0]/72 text-[#815627]">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[8px] border border-[#c8a46a]/22 bg-[#f3ddb0]/72 text-[#815627]">
                   <MapPinned className="h-4 w-4" />
                 </div>
                 <p className="text-sm leading-6 text-[#5b4330]">
@@ -463,7 +450,7 @@ export default function MapPage() {
                   <Button
                     type="button"
                     onClick={() => openOverlayForLocation(activeLocation.id)}
-                    className="h-12 rounded-full border border-[#d5b06c]/30 bg-[#dca54a] text-sm font-semibold text-[#2f1d11] shadow-[0_14px_30px_rgba(95,66,40,0.18)] hover:bg-[#e7b35d]"
+                    className="h-12 rounded-[6px] border border-[#d5b06c]/30 bg-[#dca54a] text-sm font-semibold text-[#2f1d11] shadow-[0_14px_30px_rgba(95,66,40,0.18),2px_3px_0px_rgba(122,82,48,0.35)] hover:bg-[#e7b35d]"
                   >
                     <ScrollText className="h-4 w-4" />
                     {t("mapOpenClue", language)}
