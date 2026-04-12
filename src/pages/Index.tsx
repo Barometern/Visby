@@ -37,7 +37,7 @@ function LanguagePicker({
         <Button
           variant="ghost"
           size="sm"
-          className="h-10 rounded-full border border-white/12 bg-black/20 px-4 text-[#fff1d6] backdrop-blur-sm hover:bg-black/30 hover:text-white"
+          className="h-10 rounded-[6px] border border-white/12 bg-black/20 px-4 text-[#fff1d6] backdrop-blur-sm hover:bg-black/30 hover:text-white"
         >
           <Globe className="mr-2 h-4 w-4 text-[#f0c976]" />
           <span className="text-xs font-semibold tracking-[0.18em]">{language.toUpperCase()}</span>
@@ -156,28 +156,27 @@ const Index = () => {
                 <Button
                   asChild
                   size="lg"
-                  className="h-14 rounded-full border border-[#f0c976]/35 bg-[#e0a84d] px-8 text-base font-semibold text-[#2f1d11] shadow-[0_18px_36px_rgba(0,0,0,0.24)] transition-all duration-300 hover:translate-y-[-1px] hover:bg-[#ebb760] hover:scale-[1.02] active:scale-[0.98]"
+                  className="h-14 rounded-[6px] border border-[#f0c976]/35 bg-[#e0a84d] px-8 text-base font-semibold text-[#2f1d11] shadow-[0_18px_36px_rgba(0,0,0,0.24)] transition-all duration-300 hover:translate-y-[-1px] hover:bg-[#ebb760] hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <Link to={startHref}>
                     {t('heroCta', language)}
-                    <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
 
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/8 px-4 py-3 text-sm text-[#f7ead2] backdrop-blur-sm">
+                <div className="inline-flex items-center gap-2 rounded-[6px] border border-white/12 bg-white/8 px-4 py-3 text-sm text-[#f7ead2] backdrop-blur-sm">
                   <Clock3 className="h-4 w-4 text-[#f0c976]" />
                   {t('heroSecondary', language)}
                 </div>
               </div>
 
               <div className="mt-7 grid max-w-xl gap-3 sm:grid-cols-2">
-                <div className="rounded-2xl border border-white/10 bg-[#130d0a]/45 px-4 py-3 text-[#fff4de] backdrop-blur-sm">
+                <div className="rounded-[6px] border border-white/10 bg-[#130d0a]/45 px-4 py-3 text-[#fff4de] backdrop-blur-sm">
                   <div className="flex items-center gap-2 text-[#f0c976]">
                     <Users className="h-4 w-4" />
                     <span className="text-sm font-semibold">{t('socialProof', language)}</span>
                   </div>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-[#130d0a]/45 px-4 py-3 text-[#fff4de] backdrop-blur-sm">
+                <div className="rounded-[6px] border border-white/10 bg-[#130d0a]/45 px-4 py-3 text-[#fff4de] backdrop-blur-sm">
                   <div className="text-sm font-semibold text-[#f0c976]">{t('curiosity', language)}</div>
                 </div>
               </div>
