@@ -359,30 +359,17 @@ export default function MapPage() {
                           {marker.state === "active" ? (
                             <>
                               <motion.div
-                                className="absolute inset-0 rounded-full border border-[#8B1A1A]/60"
-                                animate={{ scale: [1, 1.55, 1], opacity: [0.62, 0.08, 0.62] }}
+                                className="absolute rounded-full border border-[#8B1A1A]/50"
+                                style={{ width: 16, height: 16 }}
+                                animate={{ scale: [1, 1.8, 1], opacity: [0.55, 0.06, 0.55] }}
                                 transition={{ duration: 2.1, repeat: Infinity, ease: "easeOut" }}
                               />
-                              <div
-                                className="relative rounded-full bg-[#8B1A1A]"
-                                style={{
-                                  width: 14,
-                                  height: 14,
-                                  border: "1.5px solid #f2d0a0",
-                                  filter: "drop-shadow(0 0 6px rgba(139,26,26,0.5))",
-                                }}
-                              />
+                              <div className="rounded-full bg-[#8B1A1A] h-[10px] w-[10px] border border-[#f2d0a0]/60" />
                             </>
                           ) : marker.state === "completed" ? (
-                            <div
-                              className="rounded-full bg-[#7A5230]"
-                              style={{ width: 10, height: 10, border: "1px solid #c9a84c", opacity: 0.85 }}
-                            />
+                            <div className="rounded-full bg-[#7A5230] h-[8px] w-[8px] border border-[#c9a84c]/50 opacity-75" />
                           ) : (
-                            <div
-                              className="rounded-full"
-                              style={{ width: 8, height: 8, border: "1.5px solid #7A5230", background: "transparent", opacity: 0.4 }}
-                            />
+                            <div className="rounded-full h-[6px] w-[6px] border border-[#7A5230]/40 opacity-35" />
                           )}
                         </div>
                       </button>
