@@ -6,6 +6,16 @@
 
 @layer base {
   :root {
+    /* Design token palette */
+    --parchment: #F2E8D5;
+    --parchment-light: #FAF6EE;
+    --ink: #2C1A0E;
+    --wood: #7A5230;
+    --navy: #1C2E4A;
+    --navy-light: #2A3F5F;
+    --gold: #C9A84C;
+    --seal-red: #8B1A1A;
+
     --background: 35 30% 92%;
     --foreground: 25 40% 15%;
 
@@ -134,7 +144,7 @@
   }
 
   .btn-gold {
-    @apply rounded-full font-semibold;
+    @apply rounded-[6px] font-semibold;
     background: hsl(var(--medieval-gold));
     color: hsl(var(--medieval-brown));
     box-shadow: 0 4px 14px hsl(var(--medieval-gold) / 0.35);

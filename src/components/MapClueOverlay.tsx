@@ -82,7 +82,7 @@ export default function MapClueOverlay({
             <div className="relative flex min-h-0 flex-1 flex-col px-4 pb-4 pt-4 sm:px-6 sm:pb-6 sm:pt-5">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[#f0c97f]/18 bg-[#f0c97f]/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#fbebc1] [text-shadow:0_1px_2px_rgba(22,12,7,0.45)]">
+                  <div className="inline-flex items-center gap-2 rounded-[4px] border border-[#7A5230]/30 bg-[#f0c97f]/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#fbebc1] [text-shadow:0_1px_2px_rgba(22,12,7,0.45)]">
                     {eyebrow}
                   </div>
                   <h2 className="mt-3 font-display text-[1.7rem] leading-none text-[#fff1cf] sm:text-[2.3rem]">
@@ -96,7 +96,7 @@ export default function MapClueOverlay({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[#fff1cf] transition-colors hover:bg-white/10"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-[8px] border border-[#7A5230]/30 bg-white/5 text-[#fff1cf] transition-colors hover:bg-white/10"
                   aria-label={t("close", language)}
                 >
                   <X className="h-5 w-5" />
@@ -114,6 +114,7 @@ export default function MapClueOverlay({
                     position="center"
                     text={mascotText}
                     variant="parchment"
+                    lambSuffix={isActiveClue}
                     className="mx-auto"
                   />
                 </motion.div>
@@ -122,7 +123,7 @@ export default function MapClueOverlay({
                   initial={{ opacity: 0, y: 22 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.14, duration: 0.34, ease: "easeOut" }}
-                  className="mt-4 rounded-[24px] border border-[#d9ba84]/18 bg-[linear-gradient(180deg,rgba(251,243,226,0.97),rgba(236,219,187,0.94))] p-4 text-[#4b3320] shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]"
+                  className="mt-4 rounded-[24px] border border-[#7A5230]/30 bg-[linear-gradient(180deg,rgba(251,243,226,0.97),rgba(236,219,187,0.94))] p-4 text-[#4b3320] shadow-[4px_6px_0px_rgba(122,82,48,0.2)] shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]"
                 >
                   <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#94693c]">
                     {isActiveClue
@@ -141,7 +142,7 @@ export default function MapClueOverlay({
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.22, ease: "easeOut" }}
-                    className="mt-4 rounded-[22px] border border-[#e2c58f]/16 bg-[rgba(255,245,221,0.1)] p-4 text-[#fff2d8]"
+                    className="mt-4 rounded-[22px] border border-[#7A5230]/25 bg-[rgba(255,245,221,0.1)] p-4 text-[#fff2d8]"
                   >
                     <p className="font-heading text-[1rem] leading-6 text-[#fff3dc]">
                       {t("mapMapsWarningTitle", language)}
@@ -152,7 +153,7 @@ export default function MapClueOverlay({
                     <div className="mt-4 grid grid-cols-1 gap-3">
                       <Button
                         asChild
-                        className="h-12 rounded-full border border-[#d5b06c]/30 bg-[#dca54a] text-sm font-semibold text-[#2f1d11] shadow-[0_14px_30px_rgba(95,66,40,0.18)] hover:bg-[#e7b35d]"
+                        className="h-12 rounded-[6px] border border-[#d5b06c]/30 bg-[#dca54a] text-sm font-semibold text-[#2f1d11] shadow-[0_14px_30px_rgba(95,66,40,0.18)] hover:bg-[#e7b35d]"
                       >
                         <a href={location.googleMapsUrl} target="_blank" rel="noreferrer">
                           {t("mapMapsConfirm", language)}
@@ -163,7 +164,7 @@ export default function MapClueOverlay({
                         type="button"
                         variant="ghost"
                         onClick={() => setConfirmMaps(false)}
-                        className="h-11 rounded-full text-sm font-semibold text-[#fff0c9] hover:bg-white/5 hover:text-[#fff8e7]"
+                        className="h-11 rounded-[6px] text-sm font-semibold text-[#fff0c9] hover:bg-white/5 hover:text-[#fff8e7]"
                       >
                         {t("close", language)}
                       </Button>
@@ -183,7 +184,7 @@ export default function MapClueOverlay({
                     <Button
                       type="button"
                       onClick={handleMapsIntent}
-                      className="h-12 rounded-full border border-[#d5b06c]/30 bg-[#dca54a] text-sm font-semibold text-[#2f1d11] shadow-[0_14px_30px_rgba(95,66,40,0.18)] hover:bg-[#e7b35d]"
+                      className="h-12 rounded-[6px] border border-[#d5b06c]/30 bg-[#dca54a] text-sm font-semibold text-[#2f1d11] shadow-[0_14px_30px_rgba(95,66,40,0.18)] hover:bg-[#e7b35d]"
                     >
                       <>
                         {t("mapMapsIntent", language)}
@@ -194,7 +195,7 @@ export default function MapClueOverlay({
                     <Button
                       asChild
                       variant="outline"
-                      className="h-12 rounded-full border-[#d6ba8f]/20 bg-white/5 text-sm font-semibold text-[#f7ead1] hover:bg-white/10 hover:text-[#fff1d4]"
+                      className="h-12 rounded-[6px] border-[#7A5230]/30 bg-white/5 text-sm font-semibold text-[#f7ead1] hover:bg-white/10 hover:text-[#fff1d4]"
                     >
                       <Link to="/scan">
                         {t("mapScanArrivalCta", language)}
@@ -206,7 +207,7 @@ export default function MapClueOverlay({
                   <Button
                     asChild
                     variant="outline"
-                    className="h-12 rounded-full border-[#d6ba8f]/20 bg-white/5 text-sm font-semibold text-[#f7ead1] hover:bg-white/10 hover:text-[#fff1d4]"
+                    className="h-12 rounded-[6px] border-[#7A5230]/30 bg-white/5 text-sm font-semibold text-[#f7ead1] hover:bg-white/10 hover:text-[#fff1d4]"
                   >
                     <Link to={`/location/${location.id}`}>
                       {t("mapViewLocationDetails", language)}
@@ -218,7 +219,7 @@ export default function MapClueOverlay({
                     type="button"
                     variant="outline"
                     onClick={onClose}
-                    className="h-12 rounded-full border-[#d6ba8f]/20 bg-white/5 text-sm font-semibold text-[#f7ead1] hover:bg-white/10 hover:text-[#fff1d4]"
+                    className="h-12 rounded-[6px] border-[#7A5230]/30 bg-white/5 text-sm font-semibold text-[#f7ead1] hover:bg-white/10 hover:text-[#fff1d4]"
                   >
                     {t("mapBackToChart", language)}
                     <ScrollText className="h-4 w-4" />
@@ -229,7 +230,7 @@ export default function MapClueOverlay({
                   type="button"
                   variant="ghost"
                   onClick={onClose}
-                  className="h-11 rounded-full text-sm font-semibold text-[#fff0c9] [text-shadow:0_1px_2px_rgba(22,12,7,0.45)] hover:bg-white/5 hover:text-[#fff8e7]"
+                  className="h-11 rounded-[6px] text-sm font-semibold text-[#fff0c9] [text-shadow:0_1px_2px_rgba(22,12,7,0.45)] hover:bg-white/5 hover:text-[#fff8e7]"
                 >
                   {t("mapBackToChart", language)}
                 </Button>

@@ -175,7 +175,7 @@ export default function PuzzleCompletionOverlay({
             <div className="relative px-4 pb-5 pt-4 sm:px-6 sm:pb-6 sm:pt-5">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[#f0c97f]/22 bg-[#f0c97f]/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#f7e6bb] [text-shadow:0_1px_2px_rgba(22,12,7,0.45)]">
+                  <div className="inline-flex items-center gap-2 rounded-[4px] border border-[#f0c97f]/22 bg-[#f0c97f]/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#f7e6bb] [text-shadow:0_1px_2px_rgba(22,12,7,0.45)]">
                     <Sparkles className="h-3.5 w-3.5" />
                     {t("puzzleCompletionEyebrow", language)}
                   </div>
@@ -187,7 +187,7 @@ export default function PuzzleCompletionOverlay({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[#fff1cf] transition-colors hover:bg-white/10"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-[8px] border border-[#7A5230]/30 bg-white/5 text-[#fff1cf] transition-colors hover:bg-white/10"
                   aria-label={t("close", language)}
                 >
                   <X className="h-5 w-5" />
@@ -284,7 +284,7 @@ export default function PuzzleCompletionOverlay({
                   type="button"
                   onClick={() => void handleShare()}
                   disabled={shareBusy}
-                  className="h-12 rounded-full border border-[#d5b06c]/30 bg-[#dca54a] text-sm font-semibold text-[#2f1d11] shadow-[0_14px_30px_rgba(95,66,40,0.18)] hover:bg-[#e7b35d]"
+                  className="h-12 rounded-[6px] border border-[#d5b06c]/30 bg-[#1C2E4A] text-sm font-semibold text-[#F2E8D5] shadow-[inset_0_-1px_0_rgba(0,0,0,0.2)] hover:bg-[#2A3F5F]"
                 >
                   <Share2 className="h-4 w-4" />
                   {shareFeedback === "done" ? t("shareCopied", language) : t("shareButton", language)}
@@ -295,7 +295,7 @@ export default function PuzzleCompletionOverlay({
                   variant="outline"
                   onClick={handleDownload}
                   disabled={shareBusy}
-                  className="h-12 rounded-full border-[#d6ba8f]/20 bg-white/5 text-sm font-semibold text-[#f7ead1] hover:bg-white/10 hover:text-[#fff1d4]"
+                  className="h-12 rounded-[6px] border-[#7A5230]/30 bg-white/5 text-sm font-semibold text-[#f7ead1] hover:bg-white/10 hover:text-[#fff1d4]"
                 >
                   <Download className="h-4 w-4" />
                   {t("shareSaveCard", language)}
