@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useGameState } from '@/lib/game-state';
 import { t } from '@/lib/i18n';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import puzzleImage from '@/assets/puzzle-placeholder.jpg';
 import { COLS, ROWS, TOTAL, PIECE_SIZE, PIECE_PATHS } from '@/lib/puzzle-geometry';
 
@@ -70,6 +70,17 @@ export default function ScanRevealAnimation({ pieceIndex, onComplete }: ScanReve
       window.clearTimeout(readyTimer);
     };
   }, []);
+
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && readyToContinue) onCompleteRef.current();
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [readyToContinue]);
 
   const handleContinue = () => {
     if (!readyToContinue) return;

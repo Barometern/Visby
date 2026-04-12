@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Award, Share2, Sparkles } from "lucide-react";
 import PuzzleGrid from "@/components/PuzzleGrid";
@@ -9,11 +10,12 @@ import { t } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import wallTexture from "@/assets/wall-texture.jpg";
 import puzzleImage from "@/assets/puzzle-placeholder.jpg";
+import { TOTAL } from "@/lib/puzzle-geometry";
 
 export default function PuzzlePage() {
   const { language, unlockedPieces, questStartedAt, questCompletedAt } = useGameState();
-  const total = 15;
-  const isComplete = unlockedPieces.length >= total;
+  const navigate = useNavigate();
+  const isComplete = unlockedPieces.length >= TOTAL;
   const isEmpty = unlockedPieces.length === 0;
 
   const [confettiPieces, setConfettiPieces] = useState<Array<{ id: number; x: number; color: string; delay: number }>>([]);
@@ -86,7 +88,7 @@ export default function PuzzlePage() {
             {t("puzzleTitle", language)}
           </h1>
           <p className="mt-1 text-center font-body text-sm text-amber-100/82">
-            <span className="font-bold text-medieval-gold">{unlockedPieces.length}</span> / {total}{" "}
+            <span className="font-bold text-medieval-gold">{unlockedPieces.length}</span> / {TOTAL}{" "}
             {t("piecesCollected", language)}
           </p>
         </div>
@@ -157,7 +159,7 @@ export default function PuzzlePage() {
                 style={{ background: "linear-gradient(180deg, rgba(255,245,220,0.15) 0%, transparent 30%)" }}
               />
 
-              {unlockedPieces.length < total && (
+              {unlockedPieces.length < TOTAL && (
                 <img
                   src={puzzleImage}
                   alt=""
@@ -221,7 +223,7 @@ export default function PuzzlePage() {
               boxShadow: "inset 0 1px 0 rgba(255,255,255,0.3), 0 0 8px rgba(201,168,76,0.3)",
             }}
             initial={{ width: 0 }}
-            animate={{ width: `${(unlockedPieces.length / total) * 100}%` }}
+            animate={{ width: `${(unlockedPieces.length / TOTAL) * 100}%` }}
             transition={{ type: "spring", stiffness: 120, damping: 20 }}
           />
         </div>
@@ -241,7 +243,7 @@ export default function PuzzlePage() {
             </h2>
             <p className="mb-6 font-body text-[#5b4330]">{t("rewardText", language)}</p>
             <div className="grid gap-3">
-              <Button className="gold-glow bg-medieval-gold font-heading text-medieval-brown hover:bg-medieval-gold/90">
+              <Button className="gold-glow bg-medieval-gold font-heading text-medieval-brown hover:bg-medieval-gold/90" onClick={() => navigate('/claim-reward')}>
                 <Sparkles className="mr-2 h-4 w-4" />
                 {t("claimReward", language)}
               </Button>

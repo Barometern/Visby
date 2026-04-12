@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Layout from "@/components/Layout";
 import AppBootstrap from "@/components/AppBootstrap";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
 import PuzzlePage from "./pages/PuzzlePage";
 import ScanPage from "./pages/ScanPage";
@@ -12,6 +13,7 @@ import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 import LocationDetailPage from "./pages/LocationDetailPage";
 import MapPage from "./pages/MapPage";
+import ClaimRewardPage from "./pages/ClaimRewardPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +26,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Layout>
+          <ErrorBoundary>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/puzzle" element={<PuzzlePage />} />
@@ -32,8 +35,10 @@ const App = () => (
             <Route path="/login" element={<LoginPage />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/location/:locationId" element={<LocationDetailPage />} />
+            <Route path="/claim-reward" element={<ClaimRewardPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </ErrorBoundary>
         </Layout>
       </BrowserRouter>
     </TooltipProvider>

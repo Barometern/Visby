@@ -207,6 +207,42 @@ const translations = {
     adminDeleteTitle: 'Delete location?',
     adminDeleteConfirm: 'This will permanently remove {name} from the game.',
     adminDeleteGeneric: 'This action cannot be undone.',
+
+    // Accessibility
+    close: 'Close',
+    togglePassword: 'Toggle password visibility',
+
+    // Loading / empty states
+    loadingLocations: 'Loading locations\u2026',
+    mapNoLocations: 'No locations available',
+
+    // Index page
+    stepLabel: 'Step 0{n}',
+    heroTitle: 'Treasure hunt through Visby',
+    heroSubtitle: 'Find QR codes around Visby, unlock puzzle pieces, and see if you can uncover the full reward before everyone else.',
+    heroCta: 'Start hunt',
+    heroSecondary: 'Takes only minutes to begin',
+    socialProof: '100+ players',
+    curiosity: 'Can you find every piece?',
+    sectionHow: 'How it works',
+    sectionHowLead: 'Three quick steps and you are in.',
+    step1Title: 'Find QR codes',
+    step1Text: 'Spot the next location and scan in seconds.',
+    step2Title: 'Collect puzzle pieces',
+    step2Text: 'Each scan reveals another part of the image.',
+    step3Title: 'Get the prize',
+    step3Text: 'Complete the puzzle and unlock the reward.',
+    finalTitle: 'Ready to begin?',
+    finalText: 'Start now and see how many pieces you can uncover.',
+    finalCta: 'Start now',
+    indexMapAlt: 'Map of Visby',
+    indexMapCardTitle: 'Medieval Visby',
+    mascotStepsLine: 'I point the way \u2013 follow the clues!',
+    mascotWelcome: 'Welcome to the treasure hunt in Visby. Ready to begin?',
+    mascotStart: 'Start',
+
+    // Puzzle page
+    puzzleStartHint: 'Scan QR codes to unlock puzzle pieces',
   },
   sv: {
     home: 'Hem',
@@ -404,6 +440,42 @@ const translations = {
     adminDeleteTitle: 'Radera plats?',
     adminDeleteConfirm: 'Detta tar permanent bort {name} från spelet.',
     adminDeleteGeneric: 'Denna åtgärd kan inte ångras.',
+
+    // Accessibility
+    close: 'Stäng',
+    togglePassword: 'Växla lösenordsvisning',
+
+    // Loading / empty states
+    loadingLocations: 'Laddar platser\u2026',
+    mapNoLocations: 'Inga platser tillgängliga',
+
+    // Index page
+    stepLabel: 'Steg 0{n}',
+    heroTitle: 'Skattjakt genom Visbys gränder',
+    heroSubtitle: 'Leta QR-koder runt Visby, lås upp pusselbitar och se om du kan hitta hela belöningen före alla andra.',
+    heroCta: 'Börja jakten',
+    heroSecondary: 'Tar bara några minuter att börja',
+    socialProof: '100+ deltagare',
+    curiosity: 'Kan du hitta alla delar?',
+    sectionHow: 'Så funkar det',
+    sectionHowLead: 'Tre enkla steg och jakten är igång.',
+    step1Title: 'Leta QR-koder',
+    step1Text: 'Hitta nästa plats och skanna på sekunder.',
+    step2Title: 'Samla pusselbitar',
+    step2Text: 'Varje scan avslöjar en ny del av bilden.',
+    step3Title: 'Få pris',
+    step3Text: 'Fyll pusslet och lås upp belöningen.',
+    finalTitle: 'Redo att börja?',
+    finalText: 'Starta nu och se hur många delar du hinner hitta.',
+    finalCta: 'Starta nu',
+    indexMapAlt: 'Karta över Visby',
+    indexMapCardTitle: 'Medeltida Visby',
+    mascotStepsLine: 'Jag pekar \u2013 följ ledtrådarna!',
+    mascotWelcome: 'Välkommen till skattjakten i Visby. Redo att börja?',
+    mascotStart: 'Starta',
+
+    // Puzzle page
+    puzzleStartHint: 'Skanna QR-koder för att låsa upp pusselbitar',
   },
   de: {
     home: 'Startseite',
@@ -601,6 +673,42 @@ const translations = {
     adminDeleteTitle: 'Standort löschen?',
     adminDeleteConfirm: 'Dies entfernt {name} dauerhaft aus dem Spiel.',
     adminDeleteGeneric: 'Diese Aktion kann nicht rückgängig gemacht werden.',
+
+    // Accessibility
+    close: 'Schließen',
+    togglePassword: 'Passwort-Sichtbarkeit umschalten',
+
+    // Loading / empty states
+    loadingLocations: 'Lade Standorte\u2026',
+    mapNoLocations: 'Keine Standorte verfügbar',
+
+    // Index page
+    stepLabel: 'Schritt 0{n}',
+    heroTitle: 'Schatzsuche durch Visbys Gassen',
+    heroSubtitle: 'Finde QR-Codes in Visby, schalte Puzzleteile frei und entdecke, ob du die Belohnung vor allen anderen findest.',
+    heroCta: 'Jagd starten',
+    heroSecondary: 'Der Einstieg dauert nur wenige Minuten',
+    socialProof: '100+ Teilnehmer',
+    curiosity: 'Findest du alle Teile?',
+    sectionHow: 'So funktioniert es',
+    sectionHowLead: 'Drei schnelle Schritte und es geht los.',
+    step1Title: 'QR-Codes finden',
+    step1Text: 'Finde den nächsten Ort und scanne sofort.',
+    step2Title: 'Puzzleteile sammeln',
+    step2Text: 'Jeder Scan enthüllt einen neuen Bildteil.',
+    step3Title: 'Preis erhalten',
+    step3Text: 'Vervollständige das Puzzle und schalte die Belohnung frei.',
+    finalTitle: 'Bereit loszulegen?',
+    finalText: 'Starte jetzt und sieh, wie viele Teile du finden kannst.',
+    finalCta: 'Jetzt starten',
+    indexMapAlt: 'Karte von Visby',
+    indexMapCardTitle: 'Mittelalterliches Visby',
+    mascotStepsLine: 'Ich zeige den Weg \u2013 folg den Hinweisen!',
+    mascotWelcome: 'Willkommen zur Schatzsuche in Visby. Bereit zu beginnen?',
+    mascotStart: 'Starten',
+
+    // Puzzle page
+    puzzleStartHint: 'Scanne QR-Codes, um Puzzleteile freizuschalten',
   },
 } as const;
 

@@ -122,7 +122,9 @@ export default function LoginPage() {
 
         <p className="text-center mt-4 font-body text-sm text-muted-foreground">
           <button
+            type="button"
             onClick={() => setIsSignup(!isSignup)}
+            aria-label={isSignup ? t('hasAccount', language) : t('noAccount', language)}
             className="text-medieval-gold hover:underline"
           >
             {isSignup ? t('hasAccount', language) : t('noAccount', language)}

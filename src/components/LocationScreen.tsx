@@ -43,7 +43,9 @@ export default function LocationScreen({ location, pieceIndex, onClose, alreadyS
             </div>
 
             <button
+              type="button"
               onClick={onClose}
+              aria-label={t('close', language)}
               className="rounded-full border border-white/10 bg-white/5 p-3 text-amber-50 transition-transform duration-200 hover:scale-110 hover:rotate-6 hover:bg-white/10"
             >
               <ChevronDown className="h-5 w-5" />
