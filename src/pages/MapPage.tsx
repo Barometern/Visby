@@ -359,23 +359,30 @@ export default function MapPage() {
                           {marker.state === "active" ? (
                             <>
                               <motion.div
-                                className="absolute inset-0 rounded-full border border-[#f4d58f]/50"
+                                className="absolute inset-0 rounded-full border border-[#8B1A1A]/60"
                                 animate={{ scale: [1, 1.55, 1], opacity: [0.62, 0.08, 0.62] }}
                                 transition={{ duration: 2.1, repeat: Infinity, ease: "easeOut" }}
                               />
-                              <motion.div
-                                className="absolute inset-[3px] rounded-full bg-[radial-gradient(circle,rgba(255,234,178,0.72),rgba(255,234,178,0))]"
-                                animate={{ opacity: [0.3, 0.85, 0.3] }}
-                                transition={{ duration: 1.9, repeat: Infinity, ease: "easeInOut" }}
+                              <div
+                                className="relative rounded-full bg-[#8B1A1A]"
+                                style={{
+                                  width: 14,
+                                  height: 14,
+                                  border: "1.5px solid #f2d0a0",
+                                  filter: "drop-shadow(0 0 6px rgba(139,26,26,0.5))",
+                                }}
                               />
-                              <div className="relative flex h-[18px] w-[18px] items-center justify-center rounded-full border border-[#8a6130] bg-[radial-gradient(circle_at_35%_30%,#fff5d6_0%,#efca78_48%,#a77131_100%)] shadow-[0_6px_14px_rgba(32,20,12,0.34)]">
-                                <div className="h-[8px] w-[8px] rounded-full bg-[rgba(92,61,25,0.9)]" />
-                              </div>
                             </>
                           ) : marker.state === "completed" ? (
-                            <div className="relative flex h-[11px] w-[11px] items-center justify-center rounded-full border border-[#7d6951]/78 bg-[radial-gradient(circle_at_35%_30%,#e7ddd0_0%,#9b8a74_56%,#68584a_100%)] opacity-90 shadow-[0_3px_7px_rgba(24,18,14,0.16)]" />
+                            <div
+                              className="rounded-full bg-[#7A5230]"
+                              style={{ width: 10, height: 10, border: "1px solid #c9a84c", opacity: 0.85 }}
+                            />
                           ) : (
-                            <div className="relative flex h-[9px] w-[9px] items-center justify-center rounded-full border border-[#caa66b]/42 bg-[radial-gradient(circle_at_35%_30%,#ffeab8_0%,#d9b26a_52%,#a27134_100%)] opacity-45 shadow-[0_2px_5px_rgba(32,20,12,0.12)]" />
+                            <div
+                              className="rounded-full"
+                              style={{ width: 8, height: 8, border: "1.5px solid #7A5230", background: "transparent", opacity: 0.4 }}
+                            />
                           )}
                         </div>
                       </button>

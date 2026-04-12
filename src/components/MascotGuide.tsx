@@ -49,11 +49,7 @@ const bubbleTailClasses: Record<MascotPosition, string> = {
 };
 
 function applyLambSuffix(text: string): string {
-  const trimmed = text.trimEnd();
-  if (/[.!?]$/.test(trimmed)) {
-    return trimmed.replace(/([.!?])$/, (_, p: string) => `, lamb${p}`);
-  }
-  return trimmed + ", lamb.";
+  return text.replace(/[.!?…]+\s*$/, '') + ', lamb.';
 }
 
 export default function MascotGuide({

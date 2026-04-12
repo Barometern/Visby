@@ -226,14 +226,13 @@ export default function MapClueOverlay({
                   </Button>
                 )}
 
-                <Button
+                <button
                   type="button"
-                  variant="ghost"
                   onClick={onClose}
-                  className="h-11 rounded-[6px] text-sm font-semibold text-[#fff0c9] [text-shadow:0_1px_2px_rgba(22,12,7,0.45)] hover:bg-white/5 hover:text-[#fff8e7]"
+                  className="py-2 text-sm font-semibold text-[#fff0c9] [text-shadow:0_1px_2px_rgba(22,12,7,0.45)] hover:underline transition-all duration-150"
                 >
                   {t("mapBackToChart", language)}
-                </Button>
+                </button>
               </motion.div>
             </div>
           </motion.div>
