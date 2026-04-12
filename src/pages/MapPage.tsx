@@ -333,13 +333,6 @@ export default function MapPage() {
                       event.stopPropagation();
                       setSelectedLocationId(marker.id);
                     }}
-                    onKeyDown={(event) => {
-                      if (event.key === 'Enter' || event.key === ' ') {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        setSelectedLocationId(marker.id);
-                      }
-                    }}
                     onMouseEnter={() => setHoveredLocationId(marker.id)}
                     onMouseLeave={() => setHoveredLocationId((current) => (current === marker.id ? null : current))}
                     className="pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer border-0 bg-transparent p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e8c879]/70 focus-visible:ring-offset-0 rounded-full"
