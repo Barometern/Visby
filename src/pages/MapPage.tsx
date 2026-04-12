@@ -455,68 +455,87 @@ export default function MapPage() {
             </AnimatePresence>
           </div>
 
-          {selectedLocation ? (
-            <motion.div
-              key={`${selectedLocation.id}-${selectedLocationScanned ? "found" : "hidden"}`}
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-full max-w-[340px] overflow-hidden rounded-[32px] border border-[#c6a06a]/50 bg-[linear-gradient(180deg,rgba(248,241,224,0.98),rgba(234,216,182,0.96))] px-5 py-5 text-[#4b3320] shadow-[0_26px_60px_rgba(74,50,29,0.18)]"
-            >
+          {!selectedLocation && (
+            <div className="w-full max-w-[340px]">
+              <div className="rounded-[28px] border border-[#ead7b2] bg-[rgba(255,248,236,0.95)] px-4 py-3 shadow-[0_18px_50px_rgba(95,66,40,0.08)]">
+                <MascotGuide pose="map" position="inline" text={t("mascotMapHint", language)} />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Selected location — fixed bottom sheet, always above the nav bar */}
+      <AnimatePresence>
+        {selectedLocation && (
+          <motion.div
+            key={`${selectedLocation.id}-${selectedLocationScanned ? "found" : "hidden"}`}
+            initial={{ opacity: 0, y: 60 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 60 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed bottom-20 left-0 right-0 z-50 px-4"
+          >
+            <div className="relative mx-auto w-full max-w-[400px] overflow-hidden rounded-[32px] border border-[#c6a06a]/50 bg-[linear-gradient(180deg,rgba(248,241,224,0.98),rgba(234,216,182,0.96))] px-5 py-5 text-[#4b3320] shadow-[0_26px_60px_rgba(74,50,29,0.32)]">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.28),transparent_42%),linear-gradient(135deg,rgba(124,88,48,0.1),transparent_35%)]" />
               <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.7),transparent)]" />
+
               <div className="flex items-start justify-between gap-3">
-                <div>
+                <div className="min-w-0">
                   <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#9d7340]">
                     {selectedLocationScanned ? t("mapFoundLocation", language) : t("mapNextClue", language)}
                   </div>
-                  <h3 className="mt-2 font-heading text-[2rem] leading-none text-[#352114]">
+                  <h3 className="mt-1 font-heading text-[1.75rem] leading-none text-[#352114]">
                     {selectedLocationScanned ? selectedLocation.name[language] : t("mapUnknownLocation", language)}
                   </h3>
                 </div>
-                <div
-                  className={[
-                    "rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em]",
-                    selectedLocationScanned
-                      ? "border-[#c6a469]/40 bg-[#ecd59d]/75 text-[#6e4b25]"
-                      : "border-[#7a5731]/28 bg-[#3a2719]/8 text-[#7a5731]",
-                  ].join(" ")}
-                >
-                  {selectedLocationScanned ? t("mapFoundBadge", language) : t("mapHiddenBadge", language)}
+                <div className="flex shrink-0 items-center gap-2">
+                  <div
+                    className={[
+                      "rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em]",
+                      selectedLocationScanned
+                        ? "border-[#c6a469]/40 bg-[#ecd59d]/75 text-[#6e4b25]"
+                        : "border-[#7a5731]/28 bg-[#3a2719]/8 text-[#7a5731]",
+                    ].join(" ")}
+                  >
+                    {selectedLocationScanned ? t("mapFoundBadge", language) : t("mapHiddenBadge", language)}
+                  </div>
+                  <button
+                    type="button"
+                    aria-label={t("close", language)}
+                    onClick={() => setSelectedLocationId(null)}
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#b98f53]/30 bg-[#e8d5a8]/60 text-[#7b5a37] hover:bg-[#e8d5a8]"
+                  >
+                    ×
+                  </button>
                 </div>
               </div>
 
-              <div className="relative mt-5 rounded-[24px] border border-[#b98f53]/28 bg-[linear-gradient(180deg,rgba(255,251,240,0.76),rgba(249,241,221,0.68))] px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.32)]">
+              <div className="relative mt-4 rounded-[24px] border border-[#b98f53]/28 bg-[linear-gradient(180deg,rgba(255,251,240,0.76),rgba(249,241,221,0.68))] px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.32)]">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#9d7340]">
                   {selectedLocationScanned ? t("mapStoryHeading", language) : t("mapClueHeading", language)}
                 </p>
-                <p className="mt-2 font-body text-[15px] leading-7 text-[#5b4330]">
+                <p className="mt-2 font-body text-[14px] leading-6 text-[#5b4330]">
                   {selectedLocationScanned
                     ? selectedLocation.description[language]
                     : selectedLocation.clue[language]}
                 </p>
               </div>
 
-              {selectedLocationScanned ? (
+              {selectedLocationScanned && (
                 <div className="relative mt-3 rounded-[24px] border border-[#b98f53]/22 bg-[rgba(255,247,230,0.58)] px-4 py-4">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#9d7340]">
                     {t("readMoreContent", language)}
                   </p>
-                  <p className="mt-2 font-body text-[15px] leading-7 text-[#5b4330]">
+                  <p className="mt-2 font-body text-[14px] leading-6 text-[#5b4330]">
                     {selectedLocation.readMore[language]}
                   </p>
                 </div>
-              ) : null}
-            </motion.div>
-          ) : null}
-
-          <div className="w-full max-w-[340px]">
-            <div className="rounded-[28px] border border-[#ead7b2] bg-[rgba(255,248,236,0.95)] px-4 py-3 shadow-[0_18px_50px_rgba(95,66,40,0.08)]">
-              <MascotGuide pose="map" position="inline" text={t("mascotMapHint", language)} />
+              )}
             </div>
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
