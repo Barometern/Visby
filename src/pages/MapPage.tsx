@@ -116,7 +116,7 @@ export default function MapPage() {
     });
 
     return () => window.cancelAnimationFrame(frameId);
-  }, [language, locations, mapUnrolled, scannedLocations]);
+  }, [language, locations, mapUnrolled, scannedLocations, zoomedIn]);
 
   const handleRollToggle = (event: MouseEvent) => {
     if (!mapUnrolled) return;
@@ -325,23 +325,24 @@ export default function MapPage() {
                   </div>
                 )}
                 {projectedLocationMarkers.map((marker) => (
-                  <div
+                  <button
                     key={marker.id}
-                    role="button"
-                    tabIndex={0}
+                    type="button"
+                    aria-label={marker.isScanned ? marker.name : t("mapUnknownLocation", language)}
                     onClick={(event) => {
                       event.stopPropagation();
                       setSelectedLocationId(marker.id);
                     }}
                     onKeyDown={(event) => {
                       if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
                         event.stopPropagation();
                         setSelectedLocationId(marker.id);
                       }
                     }}
                     onMouseEnter={() => setHoveredLocationId(marker.id)}
                     onMouseLeave={() => setHoveredLocationId((current) => (current === marker.id ? null : current))}
-                    className="pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+                    className="pointer-events-auto absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer border-0 bg-transparent p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e8c879]/70 focus-visible:ring-offset-0 rounded-full"
                     style={{ left: `${marker.x}px`, top: `${marker.y}px` }}
                   >
                     {hoveredLocationId === marker.id || selectedLocationId === marker.id ? (
@@ -388,7 +389,7 @@ export default function MapPage() {
                         ].join(" ")}
                       />
                     </div>
-                  </div>
+                  </button>
                 ))}
               </div>
             </motion.div>
