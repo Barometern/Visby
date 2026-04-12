@@ -33,7 +33,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="container flex h-16 items-center justify-between gap-4 px-4">
             <Link to="/" className="group flex items-center gap-3 min-w-0">
               <div className="min-w-0">
-                <div className="font-heading text-lg leading-none text-medieval-gold tracking-[0.08em] hover:tracking-wider transition-all duration-300">
+                <div className="font-display text-lg leading-none text-medieval-gold tracking-[0.08em] hover:tracking-wider transition-all duration-300">
                   {t('appName', language)}
                 </div>
               </div>
@@ -112,13 +112,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </header>
       )}
 
-      <main className={isHome ? 'min-h-screen' : 'flex-1 pb-24 md:pb-0'}>
+      <main className={isHome ? 'min-h-screen' : 'flex-1 pb-36 md:pb-0'}>
         {children}
       </main>
 
       {!isHome && (
-        <nav className="fixed inset-x-0 bottom-0 z-50 px-3 pb-3 md:hidden">
-          <div className="mx-auto max-w-md rounded-[1.6rem] border border-medieval-stone/20 bg-background/88 p-2 backdrop-blur-2xl shadow-[0_-4px_24px_rgba(0,0,0,0.12)]">
+        <nav className="fixed inset-x-0 bottom-0 z-50 px-3 pt-2 md:hidden">
+          <div className="mx-auto max-w-md rounded-t-[1.85rem] border border-b-0 border-medieval-stone/20 bg-background/92 px-3 pb-3.5 pt-3.5 backdrop-blur-2xl shadow-[0_-8px_28px_rgba(0,0,0,0.14)]">
             <div className="flex items-center justify-around gap-1">
               {navItems.map(({ to, icon: Icon, label }) => {
                 const active = isActive(to);
@@ -127,14 +127,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <Link key={to} to={to} className="flex min-w-0 flex-1 justify-center">
                     <div
                       className={[
-                        'flex w-full flex-col items-center rounded-2xl px-2 py-2.5 transition-all duration-200',
+                        'flex min-h-[64px] w-full flex-col items-center justify-center rounded-2xl px-3 py-3.5 transition-all duration-200',
                         active
                           ? 'bg-medieval-gold/15 text-medieval-gold'
-                          : 'text-muted-foreground',
+                          : 'text-muted-foreground hover:bg-black/5',
                       ].join(' ')}
                     >
-                      <Icon className="h-5 w-5" />
-                      <span className="mt-1 text-[10px] font-medium">{label}</span>
+                      <Icon className="h-6 w-6" />
+                      <span className="mt-1.5 font-body text-[11px] font-medium leading-none">{label}</span>
                     </div>
                   </Link>
                 );

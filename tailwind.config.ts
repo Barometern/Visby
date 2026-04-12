@@ -15,8 +15,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ["MedievalSharp", "cursive"],
-        body: ["Crimson Text", "serif"],
+        display: ["MedievalSharp", "cursive"],
+        heading: ["Crimson Text", "serif"],
+        body: ['"Source Sans 3"', "ui-sans-serif", "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

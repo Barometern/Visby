@@ -85,6 +85,8 @@ interface GameState {
   locations: LocationData[];
   scannedLocations: string[];
   unlockedPieces: number[];
+  questStartedAt: number | null;
+  questCompletedAt: number | null;
 
   bootstrapApp: (defaults: LocationData[]) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
@@ -97,8 +99,29 @@ interface GameState {
   removeLocation: (id: string) => Promise<void>;
 }
 
+function deriveQuestTimestamps(
+  existingStart: number | null,
+  existingComplete: number | null,
+  scanned: string[],
+  totalLocations: number,
+) {
+  const hasProgress = scanned.length > 0;
+  const isComplete = totalLocations > 0 && scanned.length >= totalLocations;
+
+  return {
+    questStartedAt: hasProgress ? existingStart ?? Date.now() : null,
+    questCompletedAt: isComplete ? existingComplete ?? Date.now() : null,
+  };
+}
+
 function applyUser(user: BackendUser, set: (partial: Partial<GameState>) => void, get: () => GameState) {
   const locations = get().locations;
+  const timestamps = deriveQuestTimestamps(
+    get().questStartedAt,
+    get().questCompletedAt,
+    user.scannedLocations,
+    locations.length,
+  );
 
   set({
     authStatus: 'loggedIn',
@@ -108,6 +131,7 @@ function applyUser(user: BackendUser, set: (partial: Partial<GameState>) => void
     userEmail: user.email,
     scannedLocations: user.scannedLocations,
     unlockedPieces: deriveUnlockedPieces(locations, user.scannedLocations),
+    ...timestamps,
     authError: undefined,
   });
 }
@@ -129,6 +153,8 @@ export const useGameState = create<GameState>()(
       locations: [],
       scannedLocations: [],
       unlockedPieces: [],
+      questStartedAt: null,
+      questCompletedAt: null,
 
       bootstrapApp: async (defaults) => {
         set({ locationsStatus: 'loading', authStatus: 'loading' });
@@ -180,9 +206,16 @@ export const useGameState = create<GameState>()(
         // ⚡ optimistic update
         if (!prev.includes(id)) {
           const next = [...prev, id];
+          const timestamps = deriveQuestTimestamps(
+            get().questStartedAt,
+            get().questCompletedAt,
+            next,
+            get().locations.length,
+          );
           set({
             scannedLocations: next,
             unlockedPieces: deriveUnlockedPieces(get().locations, next),
+            ...timestamps,
           });
         }
 
@@ -195,6 +228,12 @@ export const useGameState = create<GameState>()(
           set({
             scannedLocations: prev,
             unlockedPieces: deriveUnlockedPieces(get().locations, prev),
+            ...deriveQuestTimestamps(
+              get().questStartedAt,
+              get().questCompletedAt,
+              prev,
+              get().locations.length,
+            ),
           });
           throw e;
         }
@@ -224,6 +263,8 @@ export const useGameState = create<GameState>()(
           hasPaid: false,
           unlockedPieces: [],
           scannedLocations: [],
+          questStartedAt: null,
+          questCompletedAt: null,
           authError: undefined,
         });
       },
@@ -265,7 +306,11 @@ export const useGameState = create<GameState>()(
     }),
     {
       name: 'visby-quest-state',
-      partialize: (s) => ({ language: s.language }),
+      partialize: (s) => ({
+        language: s.language,
+        questStartedAt: s.questStartedAt,
+        questCompletedAt: s.questCompletedAt,
+      }),
     }
   )
 );
