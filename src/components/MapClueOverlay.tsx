@@ -64,7 +64,7 @@ export default function MapClueOverlay({
     <AnimatePresence>
       {isOpen ? (
         <motion.div
-          className="fixed inset-0 z-[120] flex items-end justify-center bg-[radial-gradient(circle_at_top,rgba(239,201,127,0.18),transparent_25%),rgba(16,11,8,0.78)] px-3 pb-2 pt-10 backdrop-blur-[10px] sm:items-center sm:px-6 sm:pb-6"
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-[radial-gradient(circle_at_top,rgba(239,201,127,0.18),transparent_25%),rgba(16,11,8,0.78)] px-3 pb-6 pt-6 backdrop-blur-[10px] sm:px-6 sm:pb-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
