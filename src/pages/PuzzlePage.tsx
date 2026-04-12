@@ -194,8 +194,8 @@ export default function PuzzlePage() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="mt-5"
           >
-            <div className="rounded-[28px] border border-[#ead7b2] bg-[rgba(255,248,236,0.95)] px-4 py-3 shadow-[0_18px_50px_rgba(95,66,40,0.08)]">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#e2c58e]/30 bg-[#f4e6c3]/72 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#8a6034]">
+            <div className="rounded-[16px] border-2 border-[#7A5230]/40 bg-[#F2E8D5] px-4 py-4 shadow-[4px_6px_0px_rgba(122,82,48,0.2)]">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-[4px] border border-[#7A5230]/30 bg-[#FAF6EE] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7A5230]">
                 <Sparkles className="h-3.5 w-3.5" />
                 Första steget
               </div>
@@ -203,6 +203,7 @@ export default function PuzzlePage() {
                 pose="point"
                 position="inline"
                 text="Skanna din första QR-kod för att väcka tavlan till liv. Den första biten skimrar redan och väntar på dig."
+                lambSuffix={true}
               />
             </div>
           </motion.div>
@@ -230,26 +231,29 @@ export default function PuzzlePage() {
 
         {isComplete && (
           <motion.div
-            className="mt-8 rounded-[30px] border border-[#e8cd97]/32 bg-[linear-gradient(135deg,rgba(245,238,220,0.95),rgba(235,225,200,0.95))] p-8 text-center shadow-[0_18px_48px_rgba(0,0,0,0.24)]"
+            className="mt-8 rounded-[16px] border-2 border-[#C9A84C]/50 bg-[#F2E8D5] p-8 text-center shadow-[4px_6px_0px_rgba(122,82,48,0.3)]"
             initial={{ scale: 0.92, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", stiffness: 170, damping: 18 }}
           >
-            <div className="gold-glow animate-glow-pulse mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-medieval-gold/20">
-              <Award className="h-10 w-10 text-medieval-gold" />
+            <div className="gold-glow animate-glow-pulse mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-[12px] bg-[#C9A84C]/20">
+              <Award className="h-10 w-10 text-[#C9A84C]" />
             </div>
-            <h2 className="mb-2 font-heading text-2xl text-[#6f4925]">
+            <h2 className="mb-2 font-heading text-2xl text-[#2C1A0E]">
               {t("puzzleComplete", language)}
             </h2>
-            <p className="mb-6 font-body text-[#5b4330]">{t("rewardText", language)}</p>
+            <p className="mb-6 font-body text-[#2C1A0E]/70">{t("rewardText", language)}</p>
             <div className="grid gap-3">
-              <Button className="gold-glow bg-medieval-gold font-heading text-medieval-brown hover:bg-medieval-gold/90" onClick={() => navigate('/claim-reward')}>
+              <Button
+                className="bg-[#1C2E4A] text-[#F2E8D5] rounded-[6px] hover:bg-[#2A3F5F] font-heading shadow-[inset_0_-1px_0_rgba(0,0,0,0.2)] transition-colors duration-200"
+                onClick={() => navigate('/claim-reward')}
+              >
                 <Sparkles className="mr-2 h-4 w-4" />
                 {t("claimReward", language)}
               </Button>
               <Button
                 variant="outline"
-                className="border-medieval-gold/40 font-heading text-[#6f4925] hover:bg-medieval-gold/10"
+                className="border-[#1C2E4A] text-[#1C2E4A] rounded-[6px] font-heading hover:bg-[#1C2E4A]/5"
                 onClick={() => setShowCompletionOverlay(true)}
               >
                 <Share2 className="mr-2 h-4 w-4" />

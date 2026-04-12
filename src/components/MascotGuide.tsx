@@ -19,6 +19,7 @@ type MascotGuideProps = {
   onAction?: () => void;
   className?: string;
   variant?: MascotVariant;
+  lambSuffix?: boolean;
 };
 
 const poseImages: Record<MascotPose, string> = {
@@ -47,6 +48,14 @@ const bubbleTailClasses: Record<MascotPosition, string> = {
     "left-1/2 top-full -translate-x-1/2 -translate-y-1/2 sm:left-auto sm:right-0 sm:top-1/2 sm:translate-x-1/2 sm:-translate-y-1/2",
 };
 
+function applyLambSuffix(text: string): string {
+  const trimmed = text.trimEnd();
+  if (/[.!?]$/.test(trimmed)) {
+    return trimmed.replace(/([.!?])$/, (_, p: string) => `, lamb${p}`);
+  }
+  return trimmed + ", lamb.";
+}
+
 export default function MascotGuide({
   pose,
   text,
@@ -57,6 +66,7 @@ export default function MascotGuide({
   onAction,
   className = "",
   variant = "parchment",
+  lambSuffix = false,
 }: MascotGuideProps) {
   const imageSrc = poseImages[pose];
   const isCentered = position === "center";
@@ -64,6 +74,7 @@ export default function MascotGuide({
     ? "max-w-[80vw] sm:max-w-[24rem]"
     : "w-full max-w-[22rem] sm:w-auto sm:max-w-[min(80vw,20rem)]";
   const isDark = variant === "dark";
+  const displayText = lambSuffix ? applyLambSuffix(text) : text;
 
   return (
     <motion.div
@@ -72,7 +83,7 @@ export default function MascotGuide({
       transition={{ duration: 0.28, ease: "easeOut" }}
       className={`${positionClasses[position]} ${className}`.trim()}
     >
-      <div className={`relative ${bubbleWidthClass}`}>  
+      <div className={`relative ${bubbleWidthClass}`}>
         <div
           className={[
             isDark
@@ -82,13 +93,13 @@ export default function MascotGuide({
           ].join(" ")}
           onClick={interactive ? onClick : undefined}
         >
-          <p className="font-body text-sm leading-6 sm:text-[15px]">{text}</p>
+          <p className="font-body text-sm leading-6 sm:text-[15px]">{displayText}</p>
           {actionLabel && onAction ? (
             <Button
               type="button"
               size="sm"
               onClick={onAction}
-              className="mt-3 h-10 rounded-full bg-[#dca54a] px-5 text-sm font-semibold text-[#2f1d11] hover:bg-[#e7b35d] hover:scale-[1.03] active:scale-[0.97] transition-transform duration-150"
+              className="mt-3 h-10 rounded-[6px] bg-[#dca54a] px-5 text-sm font-semibold text-[#2f1d11] hover:bg-[#e7b35d] hover:scale-[1.03] active:scale-[0.97] transition-transform duration-150"
             >
               {actionLabel}
             </Button>

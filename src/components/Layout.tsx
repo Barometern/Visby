@@ -27,19 +27,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const isActive = (to: string) => location.pathname === to;
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-[#F2E8D5] text-[#2C1A0E]">
       {!isHome && (
-        <header className="sticky top-0 z-50 border-b border-[#c9a84c]/12 bg-[rgba(14,9,6,0.86)] backdrop-blur-xl shadow-sm transition-all duration-300">
+        <header className="sticky top-0 z-50 border-b-2 border-[#7A5230]/40 bg-[#F2E8D5] shadow-sm transition-all duration-300">
           <div className="container flex h-16 items-center justify-between gap-4 px-4">
             <Link to="/" className="group flex items-center gap-3 min-w-0">
               <div className="min-w-0">
-                <div className="font-display text-lg leading-none text-medieval-gold tracking-[0.08em] hover:tracking-wider transition-all duration-300">
+                <div className="font-display text-lg leading-none text-[#2C1A0E] tracking-[0.12em] hover:tracking-wider transition-all duration-300">
                   {t('appName', language)}
                 </div>
               </div>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-1 rounded-full border border-white/10 bg-white/5 p-1">
+            <nav className="hidden md:flex items-center gap-1">
               {navItems.map(({ to, icon: Icon, label }) => {
                 const active = isActive(to);
 
@@ -48,10 +48,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     key={to}
                     to={to}
                     className={[
-                      'relative flex items-center gap-2 rounded-full px-4 py-2 text-sm transition-all duration-200 hover:scale-[1.03]',
+                      'relative flex items-center gap-2 px-4 py-5 text-sm transition-all duration-200',
                       active
-                        ? 'bg-medieval-gold text-black'
-                        : 'text-[#f0ddb0]/70 hover:bg-white/8 hover:text-[#fff1d4]',
+                        ? 'text-[#1C2E4A] font-semibold border-b-2 border-[#1C2E4A]'
+                        : 'text-[#2C1A0E]/60 hover:text-[#2C1A0E]',
                     ].join(' ')}
                   >
                     <Icon className="h-4 w-4" />
@@ -64,7 +64,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="flex items-center gap-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="h-9 rounded-full px-3 text-[#f0ddb0]/70 hover:text-[#fff1d4]">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-9 rounded-[4px] border border-[#7A5230]/40 px-3 text-[#2C1A0E]/70 hover:text-[#2C1A0E] hover:bg-[#7A5230]/5"
+                  >
                     <Globe className="mr-2 h-4 w-4" />
                     <span className="text-xs font-semibold tracking-[0.18em]">
                       {language.toUpperCase()}
@@ -87,19 +91,32 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
               {ADMIN_ENABLED && isAdmin && (
                 <Link to="/admin">
-                  <Button variant="ghost" size="sm" className="h-9 w-9 rounded-full text-[#f0ddb0]/70 hover:text-[#fff1d4]">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-9 w-9 rounded-[4px] text-[#2C1A0E]/70 hover:text-[#2C1A0E]"
+                  >
                     <Shield className="h-4 w-4" />
                   </Button>
                 </Link>
               )}
 
               {isLoggedIn ? (
-                <Button variant="ghost" size="sm" onClick={() => void logout()} className="h-9 w-9 rounded-full text-[#f0ddb0]/70 hover:text-[#fff1d4]">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => void logout()}
+                  className="h-9 w-9 rounded-[4px] text-[#2C1A0E]/70 hover:text-[#2C1A0E]"
+                >
                   <LogOut className="h-4 w-4" />
                 </Button>
               ) : (
                 <Link to="/login">
-                  <Button variant="ghost" size="sm" className="h-9 rounded-full px-3 text-[#f0ddb0]/70 hover:text-[#fff1d4]">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-9 rounded-[4px] px-3 text-[#2C1A0E]/70 hover:text-[#2C1A0E]"
+                  >
                     <LogIn className="mr-2 h-4 w-4" />
                     <span className="hidden sm:inline text-xs font-medium">
                       {t('login', language)}
@@ -117,8 +134,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </main>
 
       {!isHome && (
-        <nav className="fixed inset-x-0 bottom-0 z-50 px-3 pt-2 md:hidden">
-          <div className="mx-auto max-w-md rounded-t-[1.85rem] border border-b-0 border-medieval-stone/20 bg-background/92 px-3 pb-3.5 pt-3.5 backdrop-blur-2xl shadow-[0_-8px_28px_rgba(0,0,0,0.14)]">
+        <nav className="fixed inset-x-0 bottom-0 z-50 md:hidden">
+          <div className="mx-auto max-w-md border-t-2 border-[#7A5230]/40 bg-[#F2E8D5] px-3 pb-3.5 pt-3.5 shadow-[0_-8px_28px_rgba(0,0,0,0.08)]">
             <div className="flex items-center justify-around gap-1">
               {navItems.map(({ to, icon: Icon, label }) => {
                 const active = isActive(to);
@@ -127,14 +144,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <Link key={to} to={to} className="flex min-w-0 flex-1 justify-center">
                     <div
                       className={[
-                        'flex min-h-[64px] w-full flex-col items-center justify-center rounded-2xl px-3 py-3.5 transition-all duration-200',
+                        'flex min-h-[56px] w-full flex-col items-center justify-center px-2 py-2 transition-all duration-200',
                         active
-                          ? 'bg-medieval-gold/15 text-medieval-gold'
-                          : 'text-muted-foreground hover:bg-black/5',
+                          ? 'text-[#1C2E4A]'
+                          : 'text-[#2C1A0E]/50 hover:text-[#2C1A0E]',
                       ].join(' ')}
                     >
-                      <Icon className="h-6 w-6" />
-                      <span className="mt-1.5 font-body text-[11px] font-medium leading-none">{label}</span>
+                      <Icon className="h-5 w-5" />
+                      <span
+                        className={`mt-1 font-body text-[11px] leading-none ${
+                          active ? 'font-semibold' : 'font-medium'
+                        }`}
+                      >
+                        {label}
+                      </span>
                     </div>
                   </Link>
                 );
