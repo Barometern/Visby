@@ -64,14 +64,14 @@ export default function MapClueOverlay({
     <AnimatePresence>
       {isOpen ? (
         <motion.div
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-[radial-gradient(circle_at_top,rgba(239,201,127,0.18),transparent_25%),rgba(16,11,8,0.78)] px-3 pb-6 pt-6 backdrop-blur-[10px] sm:px-6 sm:pb-6"
+          className="fixed inset-0 z-[120] flex items-stretch justify-center bg-[radial-gradient(circle_at_top,rgba(239,201,127,0.18),transparent_25%),rgba(16,11,8,0.78)] backdrop-blur-[10px]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={backdropTransition}
         >
           <motion.div
-            className="relative flex h-[72vh] min-h-[32rem] w-full max-w-[26rem] flex-col overflow-hidden rounded-[32px] border border-[#e2c58f]/18 bg-[linear-gradient(180deg,rgba(33,22,15,0.98),rgba(16,11,8,0.97))] text-[#fff1d4] shadow-[0_30px_90px_rgba(0,0,0,0.42)] sm:h-[46rem] sm:max-h-[88vh] sm:max-w-lg sm:rounded-[36px]"
+            className="relative flex h-full w-full flex-col overflow-hidden border-0 bg-[linear-gradient(180deg,rgba(33,22,15,0.98),rgba(16,11,8,0.97))] text-[#fff1d4]"
             initial={{ opacity: 0, y: 42, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.98 }}
