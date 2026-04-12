@@ -153,7 +153,7 @@ export default function MapPage() {
         </p>
       </div>
 
-      <div className="map-perspective relative flex flex-1 items-center justify-center px-4 pb-4 md:px-8 md:pb-6">
+      <div className={`map-perspective relative flex flex-1 items-center px-4 pb-4 md:px-8 md:pb-6 ${selectedLocation ? "justify-start pt-3" : "justify-center"}`}>
         <div className="flex flex-col items-center gap-5">
           <div
             className="parchment-map-container relative -translate-y-4 flex w-[340px] min-w-[340px] max-w-[340px] cursor-pointer flex-col overflow-visible md:-translate-y-6"
@@ -474,7 +474,7 @@ export default function MapPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 60 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed bottom-20 left-0 right-0 z-50 px-4"
+            className="fixed bottom-[4.5rem] left-0 right-0 z-50 px-4"
           >
             <div className="relative mx-auto w-full max-w-[400px] overflow-hidden rounded-[32px] border border-[#c6a06a]/50 bg-[linear-gradient(180deg,rgba(248,241,224,0.98),rgba(234,216,182,0.96))] px-5 py-5 text-[#4b3320] shadow-[0_26px_60px_rgba(74,50,29,0.32)]">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.28),transparent_42%),linear-gradient(135deg,rgba(124,88,48,0.1),transparent_35%)]" />
