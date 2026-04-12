@@ -39,7 +39,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </div>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-1 rounded-full border border-medieval-stone/20 bg-black/5 p-1">
+            <nav className="hidden md:flex items-center gap-1 rounded-full border border-white/10 bg-white/5 p-1">
               {navItems.map(({ to, icon: Icon, label }) => {
                 const active = isActive(to);
 
@@ -51,7 +51,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       'relative flex items-center gap-2 rounded-full px-4 py-2 text-sm transition-all duration-200 hover:scale-[1.03]',
                       active
                         ? 'bg-medieval-gold text-black'
-                        : 'text-muted-foreground hover:bg-black/5 hover:text-foreground',
+                        : 'text-[#f0ddb0]/70 hover:bg-white/8 hover:text-[#fff1d4]',
                     ].join(' ')}
                   >
                     <Icon className="h-4 w-4" />
@@ -64,7 +64,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="flex items-center gap-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="h-9 rounded-full px-3">
+                  <Button variant="ghost" size="sm" className="h-9 rounded-full px-3 text-[#f0ddb0]/70 hover:text-[#fff1d4]">
                     <Globe className="mr-2 h-4 w-4" />
                     <span className="text-xs font-semibold tracking-[0.18em]">
                       {language.toUpperCase()}
@@ -87,19 +87,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
               {ADMIN_ENABLED && isAdmin && (
                 <Link to="/admin">
-                  <Button variant="ghost" size="sm" className="h-9 w-9 rounded-full">
+                  <Button variant="ghost" size="sm" className="h-9 w-9 rounded-full text-[#f0ddb0]/70 hover:text-[#fff1d4]">
                     <Shield className="h-4 w-4" />
                   </Button>
                 </Link>
               )}
 
               {isLoggedIn ? (
-                <Button variant="ghost" size="sm" onClick={() => void logout()} className="h-9 w-9 rounded-full">
+                <Button variant="ghost" size="sm" onClick={() => void logout()} className="h-9 w-9 rounded-full text-[#f0ddb0]/70 hover:text-[#fff1d4]">
                   <LogOut className="h-4 w-4" />
                 </Button>
               ) : (
                 <Link to="/login">
-                  <Button variant="ghost" size="sm" className="h-9 rounded-full px-3">
+                  <Button variant="ghost" size="sm" className="h-9 rounded-full px-3 text-[#f0ddb0]/70 hover:text-[#fff1d4]">
                     <LogIn className="mr-2 h-4 w-4" />
                     <span className="hidden sm:inline text-xs font-medium">
                       {t('login', language)}
