@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Award, Share2 } from 'lucide-react';
 import PuzzleGrid from '@/components/PuzzleGrid';
@@ -7,11 +8,12 @@ import { t } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import wallTexture from '@/assets/wall-texture.jpg';
 import puzzleImage from '@/assets/puzzle-placeholder.jpg';
+import { TOTAL } from '@/lib/puzzle-geometry';
 
 export default function PuzzlePage() {
   const { language, unlockedPieces } = useGameState();
-  const total = 15;
-  const isComplete = unlockedPieces.length >= total;
+  const navigate = useNavigate();
+  const isComplete = unlockedPieces.length >= TOTAL;
 
   const [confettiPieces, setConfettiPieces] = useState<Array<{ id: number; x: number; color: string; delay: number }>>([]);
   const [copied, setCopied] = useState(false);
@@ -78,7 +80,7 @@ export default function PuzzlePage() {
           </h1>
           <p className="text-center text-xs font-body text-amber-200/70 mt-0.5">
             <span className="text-medieval-gold font-bold">{unlockedPieces.length}</span>{' '}
-            / {total} {t('piecesCollected', language)}
+            / {TOTAL} {t('piecesCollected', language)}
           </p>
         </div>
 
@@ -161,7 +163,7 @@ export default function PuzzlePage() {
               }} />
 
               {/* Faint preview of complete puzzle – hints at destination */}
-              {unlockedPieces.length < total && (
+              {unlockedPieces.length < TOTAL && (
                 <img
                   src={puzzleImage}
                   alt=""
@@ -199,10 +201,17 @@ export default function PuzzlePage() {
               boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.3), 0 0 8px rgba(201,168,76,0.3)',
             }}
             initial={{ width: 0 }}
-            animate={{ width: `${(unlockedPieces.length / total) * 100}%` }}
+            animate={{ width: `${(unlockedPieces.length / TOTAL) * 100}%` }}
             transition={{ type: 'spring', stiffness: 120, damping: 20 }}
           />
         </div>
+
+        {/* Empty state hint */}
+        {unlockedPieces.length === 0 && (
+          <p className="mt-4 text-center font-body text-sm text-amber-200/60">
+            {t('puzzleStartHint', language)}
+          </p>
+        )}
 
         {/* Completion */}
         <AnimatePresence>
@@ -230,7 +239,10 @@ export default function PuzzlePage() {
               <p className="font-body text-muted-foreground mb-6">
                 {t('rewardText', language)}
               </p>
-              <Button className="bg-medieval-gold text-medieval-brown hover:bg-medieval-gold/90 font-heading gold-glow">
+              <Button
+                className="bg-medieval-gold text-medieval-brown hover:bg-medieval-gold/90 font-heading gold-glow"
+                onClick={() => navigate('/claim-reward')}
+              >
                 <Sparkles className="w-4 h-4 mr-2" />
                 {t('claimReward', language)}
               </Button>

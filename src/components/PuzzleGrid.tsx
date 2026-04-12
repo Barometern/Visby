@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import puzzleImage from "@/assets/puzzle-placeholder.jpg";
@@ -13,7 +14,7 @@ const VW = COLS * PIECE_SIZE;
 const VH = ROWS * PIECE_SIZE;
 
 // ─── Component ────────────────────────────────────────────────────────────────
-export default function PuzzleGrid({ highlightPiece, interactive = true }: PuzzleGridProps) {
+function PuzzleGrid({ highlightPiece, interactive = true }: PuzzleGridProps) {
   const { unlockedPieces, locations } = useGameState();
   const navigate = useNavigate();
 
@@ -129,3 +130,5 @@ export default function PuzzleGrid({ highlightPiece, interactive = true }: Puzzl
     </div>
   );
 }
+
+export default memo(PuzzleGrid);

@@ -116,7 +116,7 @@ export default function MapPage() {
     });
 
     return () => window.cancelAnimationFrame(frameId);
-  }, [language, locations, mapUnrolled, scannedLocations, zoomedIn]);
+  }, [language, locations, mapUnrolled, scannedLocations]);
 
   const handleRollToggle = (event: MouseEvent) => {
     if (!mapUnrolled) return;
@@ -317,12 +317,27 @@ export default function MapPage() {
               <div
                 className="absolute left-1/2 top-1/2 h-[656px] w-[800px] -translate-x-1/2 -translate-y-1/2"
               >
+                {mapUnrolled && locations.length === 0 && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <p className="rounded-full bg-[#f5e7c7]/90 px-4 py-2 text-xs font-semibold text-[#7b5a37] shadow-sm">
+                      {t('mapNoLocations', language)}
+                    </p>
+                  </div>
+                )}
                 {projectedLocationMarkers.map((marker) => (
                   <div
                     key={marker.id}
+                    role="button"
+                    tabIndex={0}
                     onClick={(event) => {
                       event.stopPropagation();
                       setSelectedLocationId(marker.id);
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.stopPropagation();
+                        setSelectedLocationId(marker.id);
+                      }
                     }}
                     onMouseEnter={() => setHoveredLocationId(marker.id)}
                     onMouseLeave={() => setHoveredLocationId((current) => (current === marker.id ? null : current))}

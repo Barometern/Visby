@@ -16,94 +16,13 @@ import { useGameState } from "@/lib/game-state";
 import heroImage from "@/assets/hero-bg.jpg";
 import heroImageSecondary from "@/assets/hero-bg2.JPG";
 import centurymap from "@/assets/18th-century-map-of-visby-sweden-375758-1024.png";
-import { languageNames, type Language } from "@/lib/i18n";
+import { languageNames, t, type Language } from "@/lib/i18n";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-const copy = {
-  sv: {
-    heroTitle: "Skattjakt genom Visbys gränder",
-    heroSubtitle:
-      "Leta QR-koder runt Visby, lås upp pusselbitar och se om du kan hitta hela belöningen före alla andra.",
-    heroCta: "Börja jakten",
-    heroSecondary: "Tar bara några minuter att börja",
-    socialProof: "100+ deltagare",
-    curiosity: "Kan du hitta alla delar?",
-    sectionHow: "Så funkar det",
-    sectionHowLead: "Tre enkla steg och jakten är igång.",
-    step1Title: "Leta QR-koder",
-    step1Text: "Hitta nästa plats och skanna på sekunder.",
-    step2Title: "Samla pusselbitar",
-    step2Text: "Varje scan avslöjar en ny del av bilden.",
-    step3Title: "Få pris",
-    step3Text: "Fyll pusslet och lås upp belöningen.",
-    finalTitle: "Redo att börja?",
-    finalText: "Starta nu och se hur många delar du hinner hitta.",
-    finalCta: "Starta nu",
-    mapAlt: "Karta över Visby",
-    mapCardTitle: "Medeltida Visby",
-    mascotName: "Balle Bagge",
-    mascotStepsLine: "Jag pekar – följ ledtrådarna!",
-    mascotWelcome: "Välkommen till skattjakten i Visby. Redo att börja?",
-    mascotStart: "Starta",
-  },
-  en: {
-    heroTitle: "Treasure hunt through Visby",
-    heroSubtitle:
-      "Find QR codes around Visby, unlock puzzle pieces, and see if you can uncover the full reward before everyone else.",
-    heroCta: "Start hunt",
-    heroSecondary: "Takes only minutes to begin",
-    socialProof: "100+ players",
-    curiosity: "Can you find every piece?",
-    sectionHow: "How it works",
-    sectionHowLead: "Three quick steps and you are in.",
-    step1Title: "Find QR codes",
-    step1Text: "Spot the next location and scan in seconds.",
-    step2Title: "Collect puzzle pieces",
-    step2Text: "Each scan reveals another part of the image.",
-    step3Title: "Get the prize",
-    step3Text: "Complete the puzzle and unlock the reward.",
-    finalTitle: "Ready to begin?",
-    finalText: "Start now and see how many pieces you can uncover.",
-    finalCta: "Start now",
-    mapAlt: "Map of Visby",
-    mapCardTitle: "Medieval Visby",
-    mascotName: "Balle Bagge",
-    mascotStepsLine: "I point the way – follow the clues!",
-    mascotWelcome: "Welcome to the treasure hunt in Visby. Ready to begin?",
-    mascotStart: "Start",
-  },
-  de: {
-    heroTitle: "Schatzsuche durch Visbys Gassen",
-    heroSubtitle:
-      "Finde QR-Codes in Visby, schalte Puzzleteile frei und entdecke, ob du die Belohnung vor allen anderen findest.",
-    heroCta: "Jagd starten",
-    heroSecondary: "Der Einstieg dauert nur wenige Minuten",
-    socialProof: "100+ Teilnehmer",
-    curiosity: "Findest du alle Teile?",
-    sectionHow: "So funktioniert es",
-    sectionHowLead: "Drei schnelle Schritte und es geht los.",
-    step1Title: "QR-Codes finden",
-    step1Text: "Finde den nächsten Ort und scanne sofort.",
-    step2Title: "Puzzleteile sammeln",
-    step2Text: "Jeder Scan enthüllt einen neuen Bildteil.",
-    step3Title: "Preis erhalten",
-    step3Text: "Vervollständige das Puzzle und schalte die Belohnung frei.",
-    finalTitle: "Bereit loszulegen?",
-    finalText: "Starte jetzt und sieh, wie viele Teile du finden kannst.",
-    finalCta: "Jetzt starten",
-    mapAlt: "Karte von Visby",
-    mapCardTitle: "Mittelalterliches Visby",
-    mascotName: "Balle Bagge",
-    mascotStepsLine: "Ich zeige den Weg – folg den Hinweisen!",
-    mascotWelcome: "Willkommen zur Schatzsuche in Visby. Bereit zu beginnen?",
-    mascotStart: "Starten",
-  },
-} as const;
 
 function LanguagePicker({
   language,
@@ -183,14 +102,13 @@ function FoggyMapCard({
 
 const Index = () => {
   const { language, setLanguage, isLoggedIn } = useGameState();
-  const c = copy[language as keyof typeof copy] ?? copy.sv;
   const startHref = isLoggedIn ? "/map" : "/login";
   const howItWorksRef = useRef<HTMLElement | null>(null);
 
   const steps = [
-    { icon: Search, title: c.step1Title, text: c.step1Text },
-    { icon: Puzzle, title: c.step2Title, text: c.step2Text },
-    { icon: Gift, title: c.step3Title, text: c.step3Text },
+    { icon: Search, title: t('step1Title', language), text: t('step1Text', language) },
+    { icon: Puzzle, title: t('step2Title', language), text: t('step2Text', language) },
+    { icon: Gift, title: t('step3Title', language), text: t('step3Text', language) },
   ];
 
   const handleMascotStart = () => {
@@ -224,11 +142,11 @@ const Index = () => {
               className="max-w-2xl"
             >
               <h1 className="max-w-xl font-heading text-5xl leading-[0.92] text-[#fff1d3] drop-shadow-[0_10px_30px_rgba(0,0,0,0.32)] sm:text-6xl lg:text-7xl">
-                {c.heroTitle}
+                {t('heroTitle', language)}
               </h1>
 
               <p className="mt-5 max-w-xl text-lg leading-8 text-[#fff1d6]/92 sm:text-xl">
-                {c.heroSubtitle}
+                {t('heroSubtitle', language)}
               </p>
 
               <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
@@ -238,14 +156,14 @@ const Index = () => {
                   className="h-14 rounded-full border border-[#f0c976]/35 bg-[#e0a84d] px-8 text-base font-semibold text-[#2f1d11] shadow-[0_18px_36px_rgba(0,0,0,0.24)] transition-all duration-300 hover:translate-y-[-1px] hover:bg-[#ebb760] hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <Link to={startHref}>
-                    {c.heroCta}
+                    {t('heroCta', language)}
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
 
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/8 px-4 py-3 text-sm text-[#f7ead2] backdrop-blur-sm">
                   <Clock3 className="h-4 w-4 text-[#f0c976]" />
-                  {c.heroSecondary}
+                  {t('heroSecondary', language)}
                 </div>
               </div>
 
@@ -253,11 +171,11 @@ const Index = () => {
                 <div className="rounded-2xl border border-white/10 bg-[#130d0a]/45 px-4 py-3 text-[#fff4de] backdrop-blur-sm">
                   <div className="flex items-center gap-2 text-[#f0c976]">
                     <Users className="h-4 w-4" />
-                    <span className="text-sm font-semibold">{c.socialProof}</span>
+                    <span className="text-sm font-semibold">{t('socialProof', language)}</span>
                   </div>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-[#130d0a]/45 px-4 py-3 text-[#fff4de] backdrop-blur-sm">
-                  <div className="text-sm font-semibold text-[#f0c976]">{c.curiosity}</div>
+                  <div className="text-sm font-semibold text-[#f0c976]">{t('curiosity', language)}</div>
                 </div>
               </div>
             </motion.div>
@@ -272,8 +190,8 @@ const Index = () => {
                 <MascotGuide
                   pose="welcome"
                   position="center"
-                  text={c.mascotWelcome}
-                  actionLabel={c.mascotStart}
+                  text={t('mascotWelcome', language)}
+                  actionLabel={t('mascotStart', language)}
                   onAction={handleMascotStart}
                   className="pb-2"
                 />
@@ -283,7 +201,7 @@ const Index = () => {
                     animate={{ y: [0, -6, 0] }}
                     transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    <FoggyMapCard alt={c.mapAlt} title={c.mapCardTitle} />
+                    <FoggyMapCard alt={t('indexMapAlt', language)} title={t('indexMapCardTitle', language)} />
                   </motion.div>
                 </div>
               </div>
@@ -312,9 +230,9 @@ const Index = () => {
             transition={{ duration: 0.6 }}
             className="mx-auto max-w-2xl text-center"
           >
-            <p className="text-[11px] uppercase tracking-[0.32em] text-[#e1bb7b]">{c.sectionHow}</p>
-            <h2 className="mt-3 font-heading text-4xl text-[#fff1d2] sm:text-5xl">{c.sectionHow}</h2>
-            <p className="mt-4 text-base text-[#f2e3c4]/90 sm:text-lg">{c.sectionHowLead}</p>
+            <p className="text-[11px] uppercase tracking-[0.32em] text-[#e1bb7b]">{t('sectionHow', language)}</p>
+            <h2 className="mt-3 font-heading text-4xl text-[#fff1d2] sm:text-5xl">{t('sectionHow', language)}</h2>
+            <p className="mt-4 text-base text-[#f2e3c4]/90 sm:text-lg">{t('sectionHowLead', language)}</p>
           </motion.div>
 
           <div className="relative mx-auto mt-10 max-w-5xl">
@@ -327,7 +245,7 @@ const Index = () => {
             transition={{ duration: 0.5 }}
             className="mx-auto mb-6 max-w-2xl rounded-[28px] border border-[#d8b981]/40 bg-[linear-gradient(180deg,rgba(76,53,35,0.4),rgba(42,28,19,0.32))] px-4 py-3 text-[#f7ead1] shadow-[0_14px_36px_rgba(95,66,40,0.12)] backdrop-blur-[3px]"
           >
-              <MascotGuide pose="point" position="inline" text={c.mascotStepsLine} variant="dark" />
+              <MascotGuide pose="point" position="inline" text={t('mascotStepsLine', language)} variant="dark" />
             </motion.div>
 
             <div className="space-y-5">
@@ -336,7 +254,7 @@ const Index = () => {
 
                 return (
                   <motion.div
-                    key={title}
+                    key={index}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.25 }}
@@ -354,7 +272,9 @@ const Index = () => {
                           </div>
 
                           <div className="min-w-0">
-                            <div className="text-[11px] uppercase tracking-[0.28em] text-[#e4bb78]">Steg 0{index + 1}</div>
+                            <div className="text-[11px] uppercase tracking-[0.28em] text-[#e4bb78]">
+                              {t('stepLabel', language).replace('{n}', String(index + 1))}
+                            </div>
                             <h3 className="mt-2 font-heading text-[1.9rem] leading-none text-[#fff1d2]">{title}</h3>
                             <p className="mt-3 text-sm leading-6 text-[#fff0cf] sm:text-base">{text}</p>
                           </div>
@@ -382,8 +302,8 @@ const Index = () => {
             transition={{ duration: 0.6 }}
             className="mx-auto mt-10 max-w-3xl rounded-[30px] border border-[#f0d59a] bg-[linear-gradient(135deg,#2a1c13,#3a281c)] p-6 text-center text-[#fbf1dc] shadow-[0_26px_60px_rgba(40,25,16,0.18)]"
           >
-            <h3 className="font-heading text-3xl text-[#fff0cf] sm:text-4xl">{c.finalTitle}</h3>
-            <p className="mt-3 text-base leading-7 text-[#eadfc8]/84 sm:text-lg">{c.finalText}</p>
+            <h3 className="font-heading text-3xl text-[#fff0cf] sm:text-4xl">{t('finalTitle', language)}</h3>
+            <p className="mt-3 text-base leading-7 text-[#eadfc8]/84 sm:text-lg">{t('finalText', language)}</p>
             <div className="mt-6">
               <Button
                 asChild
@@ -391,7 +311,7 @@ const Index = () => {
                 className="h-14 rounded-full border border-[#f0c976]/30 bg-[#e0a84d] px-8 text-base font-semibold text-[#2f1d11] hover:bg-[#ebb760] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
               >
                 <Link to={startHref}>
-                  {c.finalCta}
+                  {t('finalCta', language)}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>

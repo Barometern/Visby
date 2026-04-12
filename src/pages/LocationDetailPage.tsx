@@ -9,12 +9,19 @@ import { Button } from '@/components/ui/button';
 export default function LocationDetailPage() {
   const { locationId } = useParams<{ locationId: string }>();
   const navigate = useNavigate();
-  const { language, locations } = useGameState();
+  const { language, locations, locationsStatus } = useGameState();
 
   const location = locations.find((item) => item.id === locationId);
   const pieceIndex = locations.findIndex((item) => item.id === locationId);
 
   if (!location) {
+    if (locationsStatus === 'idle' || locationsStatus === 'loading') {
+      return (
+        <div className="container mx-auto max-w-md px-4 py-16 text-center">
+          <p className="font-body text-muted-foreground">{t('loadingLocations', language)}</p>
+        </div>
+      );
+    }
     return (
       <div className="container mx-auto max-w-md px-4 py-16 text-center">
         <p className="font-body text-muted-foreground">{t('locationNotFound', language)}</p>

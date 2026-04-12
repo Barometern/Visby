@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Layout from "@/components/Layout";
 import AppBootstrap from "@/components/AppBootstrap";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
 import PuzzlePage from "./pages/PuzzlePage";
 import ScanPage from "./pages/ScanPage";
@@ -24,6 +25,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Layout>
+          <ErrorBoundary>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/puzzle" element={<PuzzlePage />} />
@@ -34,6 +36,7 @@ const App = () => (
             <Route path="/location/:locationId" element={<LocationDetailPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </ErrorBoundary>
         </Layout>
       </BrowserRouter>
     </TooltipProvider>
