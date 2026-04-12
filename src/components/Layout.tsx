@@ -29,7 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {!isHome && (
-        <header className="sticky top-0 z-50 border-b border-medieval-stone/20 bg-background/82 backdrop-blur-xl shadow-sm transition-all duration-300">
+        <header className="sticky top-0 z-50 border-b border-[#c9a84c]/12 bg-[rgba(14,9,6,0.86)] backdrop-blur-xl shadow-sm transition-all duration-300">
           <div className="container flex h-16 items-center justify-between gap-4 px-4">
             <Link to="/" className="group flex items-center gap-3 min-w-0">
               <div className="min-w-0">
@@ -118,7 +118,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {!isHome && (
         <nav className="fixed inset-x-0 bottom-0 z-50 px-3 pt-2 md:hidden">
-          <div className="mx-auto max-w-md rounded-t-[1.85rem] border border-b-0 border-medieval-stone/20 bg-background/92 px-3 pb-3.5 pt-3.5 backdrop-blur-2xl shadow-[0_-8px_28px_rgba(0,0,0,0.14)]">
+          <div className="mx-auto max-w-md rounded-t-[1.85rem] border border-b-0 border-[#c9a84c]/12 bg-[rgba(14,9,6,0.92)] px-3 pb-3.5 pt-3.5 backdrop-blur-2xl shadow-[0_-8px_28px_rgba(0,0,0,0.28)]">
             <div className="flex items-center justify-around gap-1">
               {navItems.map(({ to, icon: Icon, label }) => {
                 const active = isActive(to);
