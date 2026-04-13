@@ -111,6 +111,7 @@ const Index = () => {
   });
 
   const [showSkip, setShowSkip] = useState(false);
+  const [showPlayPrompt, setShowPlayPrompt] = useState(false);
   const [logoTitleVisible, setLogoTitleVisible] = useState(false);
   const [logoHintVisible, setLogoHintVisible] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -122,11 +123,17 @@ const Index = () => {
     return () => window.clearTimeout(timer);
   }, [phase]);
 
-  // Attempt autoplay; fall through to logo on failure
+  // Attempt autoplay; on mobile browsers that block it, show a tap-to-play prompt
   useEffect(() => {
     if (phase !== "video" || !videoRef.current) return;
-    videoRef.current.play().catch(goToLogo);
+    videoRef.current.play().catch(() => setShowPlayPrompt(true));
   }, [phase]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function handlePlayPromptTap() {
+    if (!videoRef.current) { goToLogo(); return; }
+    setShowPlayPrompt(false);
+    videoRef.current.play().catch(goToLogo);
+  }
 
   // Sequence logo elements
   useEffect(() => {
@@ -173,14 +180,39 @@ const Index = () => {
               src={introVideoSrc}
               muted
               playsInline
+              preload="auto"
               className="h-full w-full object-cover"
               onEnded={goToLogo}
               onError={goToLogo}
             />
 
+            {/* Tap-to-play prompt — shown when autoplay is blocked (mobile) */}
+            <AnimatePresence>
+              {showPlayPrompt && (
+                <motion.button
+                  key="play-prompt"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.4 }}
+                  onClick={handlePlayPromptTap}
+                  className="absolute inset-0 flex flex-col items-center justify-center gap-4"
+                >
+                  <div className="flex h-20 w-20 items-center justify-center rounded-full border border-white/20 bg-black/30 backdrop-blur-sm">
+                    <svg viewBox="0 0 24 24" className="h-9 w-9 translate-x-0.5 fill-[#fff1d6]">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#fff1d6]/70">
+                    Tryck för att spela
+                  </p>
+                </motion.button>
+              )}
+            </AnimatePresence>
+
             {/* Skip button — appears after 1 s */}
             <AnimatePresence>
-              {showSkip && (
+              {showSkip && !showPlayPrompt && (
                 <motion.button
                   key="skip-btn"
                   initial={{ opacity: 0 }}
