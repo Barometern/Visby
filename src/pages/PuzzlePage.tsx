@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { Award, Share2, Sparkles } from "lucide-react";
+import { Award, Map, QrCode, Share2, Sparkles } from "lucide-react";
 import PuzzleGrid from "@/components/PuzzleGrid";
 import MascotGuide from "@/components/MascotGuide";
 import PuzzleCompletionOverlay from "@/components/PuzzleCompletionOverlay";
@@ -228,6 +228,35 @@ export default function PuzzlePage() {
             transition={{ type: "spring", stiffness: 120, damping: 20 }}
           />
         </div>
+
+        {!isEmpty && !isComplete && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 0.35 }}
+            className="mt-4 flex flex-col items-center gap-3"
+          >
+            <p className="font-body text-xs text-amber-100/55 tracking-wide">
+              {unlockedPieces.length} / {TOTAL} {t("piecesCollected", language)}
+            </p>
+            <div className="flex gap-3">
+              <Link
+                to="/map"
+                className="inline-flex h-9 items-center gap-1.5 rounded-[6px] bg-[#1C2E4A] px-4 text-xs font-semibold text-[#F2E8D5] shadow-[1px_2px_0px_rgba(28,46,74,0.4)] transition-colors duration-150 hover:bg-[#2A3F5F]"
+              >
+                <Map className="h-3.5 w-3.5" />
+                {t("map", language)}
+              </Link>
+              <Link
+                to="/scan"
+                className="inline-flex h-9 items-center gap-1.5 rounded-[6px] border border-[#d5b06c]/30 bg-[#dca54a] px-4 text-xs font-semibold text-[#2f1d11] shadow-[1px_2px_0px_rgba(122,82,48,0.35)] transition-colors duration-150 hover:bg-[#e7b35d]"
+              >
+                <QrCode className="h-3.5 w-3.5" />
+                {t("scan", language)}
+              </Link>
+            </div>
+          </motion.div>
+        )}
 
         {isComplete && (
           <motion.div

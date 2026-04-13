@@ -355,7 +355,7 @@ export default function MapPage() {
                           language,
                         )}
                       >
-                        <div className="relative flex h-7 w-7 items-center justify-center">
+                        <div className="relative flex h-6 w-6 items-center justify-center">
                           {marker.state === "active" ? (
                             <>
                               <motion.div
@@ -364,12 +364,12 @@ export default function MapPage() {
                                 animate={{ scale: [1, 1.8, 1], opacity: [0.55, 0.06, 0.55] }}
                                 transition={{ duration: 2.1, repeat: Infinity, ease: "easeOut" }}
                               />
-                              <div className="rounded-full bg-[#8B1A1A] h-[10px] w-[10px] border border-[#f2d0a0]/60" />
+                              <div className="h-[8px] w-[8px] rounded-full bg-[#8B1A1A]" />
                             </>
                           ) : marker.state === "completed" ? (
-                            <div className="rounded-full bg-[#7A5230] h-[8px] w-[8px] border border-[#c9a84c]/50 opacity-75" />
+                            <div className="h-[6px] w-[6px] rounded-full bg-[#7A5230] opacity-70" />
                           ) : (
-                            <div className="rounded-full h-[6px] w-[6px] border border-[#7A5230]/40 opacity-35" />
+                            <div className="h-[5px] w-[5px] rounded-full border border-[#7A5230]/50 opacity-30" />
                           )}
                         </div>
                       </button>
