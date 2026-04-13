@@ -166,6 +166,21 @@ const Index = () => {
             transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
           />
         </div>
+
+        {/* Organic painted transition — parchment eats into the bottom of the hero */}
+        <svg
+          aria-hidden="true"
+          className="absolute bottom-0 left-0 z-10 w-full"
+          style={{ height: 100, display: "block" }}
+          viewBox="0 0 1440 100"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0,100 L0,72 C55,50 118,82 198,58 C278,34 336,76 458,52 C580,28 638,68 762,48 C886,28 942,72 1062,54 C1182,36 1244,70 1342,58 C1378,51 1416,74 1440,64 L1440,100 Z"
+            fill="#F2E8D5"
+          />
+        </svg>
       </section>
 
       {/* ─── SECTION 2 — PARCHMENT ─── */}
@@ -210,8 +225,36 @@ const Index = () => {
             </motion.div>
           </motion.div>
 
+          {/* Illuminated drop cap intro */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="mt-10"
+          >
+            {(() => {
+              const sentence = t("sectionHowLead", language);
+              return (
+                <div
+                  className="overflow-hidden font-body text-[15px] leading-7 text-[#2C1A0E]/68"
+                  aria-label={sentence}
+                >
+                  <span
+                    className="float-left select-none font-display leading-[0.82] text-[#8B1A1A]"
+                    style={{ fontSize: "5.5rem", marginRight: "0.1em", marginBottom: "-0.06em" }}
+                    aria-hidden="true"
+                  >
+                    {sentence.charAt(0)}
+                  </span>
+                  <span aria-hidden="true">{sentence.slice(1)}</span>
+                </div>
+              );
+            })()}
+          </motion.div>
+
           {/* Steps — plain vertical list */}
-          <div className="mt-14 space-y-8">
+          <div className="mt-10 space-y-8">
             {steps.map(({ title, text }, index) => (
               <motion.div
                 key={index}
