@@ -135,7 +135,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {!isHome && (
         <nav className="fixed inset-x-0 bottom-0 z-50 md:hidden">
-          <div className="mx-auto max-w-md border-t-2 border-[#7A5230]/40 bg-[#F2E8D5] px-3 pb-3.5 pt-3.5 shadow-[0_-8px_28px_rgba(0,0,0,0.08)]">
+          <div className="mx-auto max-w-md border-t border-[#7A5230]/25 bg-[#F2E8D5] px-3 pb-3.5 pt-3.5 shadow-[0_-8px_28px_rgba(0,0,0,0.06)]">
             <div className="flex items-center justify-around gap-1">
               {navItems.map(({ to, icon: Icon, label }) => {
                 const active = isActive(to);
