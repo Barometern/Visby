@@ -177,7 +177,7 @@ const Index = () => {
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M0,100 L0,72 C55,50 118,82 198,58 C278,34 336,76 458,52 C580,28 638,68 762,48 C886,28 942,72 1062,54 C1182,36 1244,70 1342,58 C1378,51 1416,74 1440,64 L1440,100 Z"
+            d="M0,100 L0,70 C180,70 260,22 390,38 C520,54 570,80 720,74 C810,68 930,36 1020,44 C1110,52 1280,76 1440,72 L1440,100 Z"
             fill="#F2E8D5"
           />
         </svg>
@@ -241,8 +241,8 @@ const Index = () => {
                   aria-label={sentence}
                 >
                   <span
-                    className="float-left select-none font-display leading-[0.82] text-[#8B1A1A]"
-                    style={{ fontSize: "5.5rem", marginRight: "0.1em", marginBottom: "-0.06em" }}
+                    className="float-left select-none font-display text-[#8B1A1A]"
+                    style={{ fontSize: "4.5rem", lineHeight: 0.75, marginRight: "0.12em", marginTop: "0.05em", marginBottom: 0 }}
                     aria-hidden="true"
                   >
                     {sentence.charAt(0)}
