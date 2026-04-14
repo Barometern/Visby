@@ -220,20 +220,6 @@ const Index = () => {
           />
         </div>
 
-        {/* Organic painted transition — parchment eats into the bottom of the hero */}
-        <svg
-          aria-hidden="true"
-          className="absolute bottom-0 left-0 z-10 w-full"
-          style={{ height: 100, display: "block" }}
-          viewBox="0 0 1440 100"
-          preserveAspectRatio="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0,100 L0,70 C180,70 260,22 390,38 C520,54 570,80 720,74 C810,68 930,36 1020,44 C1110,52 1280,76 1440,72 L1440,100 Z"
-            fill="#F2E8D5"
-          />
-        </svg>
       </section>
 
       {/* ─── SECTION 2 — PARCHMENT ─── */}
