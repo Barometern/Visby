@@ -121,8 +121,6 @@ const Index = () => {
             backgroundImage: `linear-gradient(180deg, rgba(12,8,5,0.42), rgba(12,8,5,0.78)), url(${heroImage})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            maskImage: "linear-gradient(to bottom, black 0%, black 48%, transparent 86%)",
-            WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 48%, transparent 86%)",
           }}
         />
 
