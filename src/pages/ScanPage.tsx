@@ -160,7 +160,7 @@ export default function ScanPage() {
 
   return (
     <div className="container mx-auto max-w-5xl px-4 py-6 pb-24 sm:py-8">
-      <section className="bg-[#F2E8D5] border-2 border-[#7A5230]/40 rounded-[16px] shadow-[4px_6px_0px_rgba(122,82,48,0.2)] p-5 text-[#2C1A0E] sm:p-6 transition-all duration-300">
+      <section className="bg-[#F2E8D5] border-2 border-[#1C2E4A]/40 rounded-[16px] shadow-[4px_6px_0px_rgba(28,46,74,0.2)] p-5 text-[#2C1A0E] sm:p-6 transition-all duration-300">
         <div className="relative space-y-6">
           {phase === 'scanning' && <QRScanner onScan={handleScan} />}
 

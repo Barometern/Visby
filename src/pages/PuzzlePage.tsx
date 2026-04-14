@@ -212,16 +212,16 @@ export default function PuzzlePage() {
         <div
           className="mx-auto mt-5 h-3 w-3/4 overflow-hidden rounded-sm"
           style={{
-            background: "linear-gradient(180deg, #3a2a18, #4a3828, #3a2a18)",
-            boxShadow: "inset 0 2px 4px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.05)",
-            border: "1px solid rgba(0,0,0,0.4)",
+            background: "rgba(28,46,74,0.12)",
+            boxShadow: "inset 0 1px 3px rgba(0,0,0,0.25)",
+            border: "1px solid rgba(28,46,74,0.2)",
           }}
         >
           <motion.div
             className="h-full"
             style={{
-              background: "linear-gradient(180deg, #e8c25c, #c9a84c, #a8882e)",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.3), 0 0 8px rgba(201,168,76,0.3)",
+              background: "linear-gradient(180deg, #253d60, #1C2E4A, #162438)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12), 0 0 8px rgba(28,46,74,0.4)",
             }}
             initial={{ width: 0 }}
             animate={{ width: `${(unlockedPieces.length / TOTAL) * 100}%` }}
@@ -249,7 +249,7 @@ export default function PuzzlePage() {
               </Link>
               <Link
                 to="/scan"
-                className="inline-flex h-9 items-center gap-1.5 rounded-[6px] border border-[#d5b06c]/30 bg-[#dca54a] px-4 text-xs font-semibold text-[#2f1d11] shadow-[1px_2px_0px_rgba(122,82,48,0.35)] transition-colors duration-150 hover:bg-[#e7b35d]"
+                className="inline-flex h-9 items-center gap-1.5 rounded-[6px] bg-[#1C2E4A] px-4 text-xs font-semibold text-[#F2E8D5] shadow-[1px_2px_0px_rgba(28,46,74,0.4)] transition-colors duration-150 hover:bg-[#2A3F5F]"
               >
                 <QrCode className="h-3.5 w-3.5" />
                 {t("scan", language)}

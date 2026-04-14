@@ -109,14 +109,17 @@ export default function MapClueOverlay({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.08, duration: 0.32, ease: "easeOut" }}
                 >
-                  <MascotGuide
-                    pose={isActiveClue ? "question" : "welcome"}
-                    position="center"
-                    text={mascotText}
-                    variant="parchment"
-                    lambSuffix={isActiveClue}
-                    className="mx-auto"
-                  />
+                  <div className="flex justify-end">
+                    <div className="w-[65%]">
+                      <MascotGuide
+                        pose={isActiveClue ? "question" : "welcome"}
+                        position="center"
+                        text={mascotText}
+                        variant="parchment"
+                        lambSuffix={isActiveClue}
+                      />
+                    </div>
+                  </div>
                 </motion.div>
 
                 <motion.div
@@ -132,7 +135,7 @@ export default function MapClueOverlay({
                         ? t("mapLockedHeading", language)
                         : t("readMoreContent", language)}
                   </p>
-                  <p className="mt-3 font-body text-[14px] leading-6 text-[#5b4330] sm:text-[15px] sm:leading-7">
+                  <p className="mt-3 font-display text-[14px] leading-6 text-[#5b4330] sm:text-[15px] sm:leading-7">
                     {secondaryText}
                   </p>
                 </motion.div>

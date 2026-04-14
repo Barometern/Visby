@@ -63,13 +63,8 @@ function FoggyMapCard({
       <div className="relative rounded-[8px] border border-[#f2d39b]/16 bg-[linear-gradient(180deg,rgba(242,224,189,0.96),rgba(214,188,146,0.94))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.3),inset_0_-8px_18px_rgba(111,72,33,0.08)]">
         <div className="mb-3 flex items-center justify-between gap-3">
           <div>
-            <div className="text-[10px] uppercase tracking-[0.32em] text-[#8f5e24]/82">Quest Chart</div>
+            <div className="text-[10px] uppercase tracking-[0.32em] text-[#8f5e24]/82">Kartan du kommer utforska</div>
             <div className="mt-1 font-heading text-[1.35rem] leading-none text-[#332015]">{title}</div>
-          </div>
-          <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#8e6338]/18 bg-[radial-gradient(circle,#fff0c6_0%,#ebc980_60%,#cf9c46_100%)] shadow-[0_8px_20px_rgba(111,72,33,0.16)]">
-            <div className="flex h-6 w-6 items-center justify-center rounded-full border border-[#8e6338]/25 bg-[rgba(91,57,26,0.12)] text-[10px] font-semibold uppercase tracking-[0.18em] text-[#6b4620]">
-              VV
-            </div>
           </div>
         </div>
 
@@ -221,6 +216,15 @@ const Index = () => {
           </motion.div>
         </div>
 
+        {/* Bottom dissolve — darkness slowly warmed away into parchment */}
+        <div
+          className="pointer-events-none absolute bottom-0 left-0 right-0 z-[8]"
+          style={{
+            height: 280,
+            background: "linear-gradient(to bottom, transparent 0%, rgba(242,232,213,0.08) 25%, rgba(242,232,213,0.30) 50%, rgba(242,232,213,0.65) 72%, rgba(242,232,213,0.90) 88%, #F2E8D5 100%)",
+          }}
+        />
+
         {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center">
           <motion.div
@@ -252,6 +256,13 @@ const Index = () => {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
+            <div className="relative">
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background: "radial-gradient(ellipse 80% 70% at 50% 58%, #EAD9BC 0%, rgba(242,232,213,0.55) 50%, transparent 78%)",
+                }}
+              />
             <MascotGuide
               pose="welcome"
               position="center"
@@ -259,6 +270,7 @@ const Index = () => {
               actionLabel={t("mascotStart", language)}
               onAction={() => navigate(startHref)}
             />
+            </div>
           </motion.div>
 
           {/* FoggyMapCard — full width, gentle float */}
@@ -288,24 +300,9 @@ const Index = () => {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="mt-10"
           >
-            {(() => {
-              const sentence = t("sectionHowLead", language);
-              return (
-                <div
-                  className="overflow-hidden font-body text-[15px] leading-7 text-[#2C1A0E]/68"
-                  aria-label={sentence}
-                >
-                  <span
-                    className="float-left select-none font-display text-[#8B1A1A]"
-                    style={{ fontSize: "4.5rem", lineHeight: 0.75, marginRight: "0.12em", marginTop: "0.05em", marginBottom: 0 }}
-                    aria-hidden="true"
-                  >
-                    {sentence.charAt(0)}
-                  </span>
-                  <span aria-hidden="true">{sentence.slice(1)}</span>
-                </div>
-              );
-            })()}
+            <p className="font-body text-[15px] leading-7 text-[#2C1A0E]/68">
+              {t("sectionHowLead", language)}
+            </p>
           </motion.div>
 
           {/* Steps — plain vertical list */}
@@ -345,7 +342,7 @@ const Index = () => {
             >
               <Link to={startHref}>{t("finalCta", language)}</Link>
             </Button>
-            <p className="mt-5 text-xs tracking-wide text-[#2C1A0E]/30">visby-quest.se</p>
+            <p className="mt-5 text-xs tracking-wide text-[#2C1A0E]/30">visbyeskapaden.info</p>
           </motion.div>
 
         </div>

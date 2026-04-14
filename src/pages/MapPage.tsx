@@ -359,17 +359,23 @@ export default function MapPage() {
                           {marker.state === "active" ? (
                             <>
                               <motion.div
-                                className="absolute rounded-full border border-[#8B1A1A]/50"
+                                className="absolute rounded-full border border-[#1C2E4A]/50"
                                 style={{ width: 16, height: 16 }}
                                 animate={{ scale: [1, 1.8, 1], opacity: [0.55, 0.06, 0.55] }}
                                 transition={{ duration: 2.1, repeat: Infinity, ease: "easeOut" }}
                               />
-                              <div className="h-[8px] w-[8px] rounded-full bg-[#8B1A1A]" />
+                              <div className="h-[8px] w-[8px] rounded-full bg-[#1C2E4A]" />
                             </>
                           ) : marker.state === "completed" ? (
-                            <div className="h-[6px] w-[6px] rounded-full bg-[#7A5230] opacity-70" />
+                            <div className="h-[6px] w-[6px] rounded-full bg-[#1C2E4A] opacity-70" />
                           ) : (
-                            <div className="h-[5px] w-[5px] rounded-full border border-[#7A5230]/50 opacity-30" />
+                            <>
+                              <div
+                                className="absolute rounded-full border border-dashed border-[#1C2E4A]/30"
+                                style={{ width: 13, height: 13 }}
+                              />
+                              <div className="h-[5px] w-[5px] rounded-full bg-[#1C2E4A] opacity-55" />
+                            </>
                           )}
                         </div>
                       </button>
