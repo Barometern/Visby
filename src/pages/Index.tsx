@@ -211,6 +211,15 @@ const Index = () => {
           </motion.div>
         </div>
 
+        {/* Bottom dissolve — darkness melts into warm parchment light from below */}
+        <div
+          className="pointer-events-none absolute bottom-0 left-0 right-0 z-[8]"
+          style={{
+            height: 220,
+            background: "linear-gradient(to bottom, transparent 0%, rgba(242,232,213,0.15) 30%, rgba(242,232,213,0.45) 55%, rgba(242,232,213,0.78) 75%, #F2E8D5 100%)",
+          }}
+        />
+
         {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center">
           <motion.div
@@ -233,11 +242,6 @@ const Index = () => {
           backgroundPosition: "center",
         }}
       >
-        {/* Shadow continuation — hero darkness bleeds onto parchment, fading naturally */}
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 z-0"
-          style={{ height: 220, background: "linear-gradient(to bottom, rgba(12,8,5,0.72), transparent)" }}
-        />
         <div className="relative z-10 mx-auto max-w-xl">
 
           {/* Mascot with Starta button */}
