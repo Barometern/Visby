@@ -124,6 +124,19 @@ const Index = () => {
           }}
         />
 
+        {/* Parchment texture rising from bottom — sits inside the hero so it composites over the photo */}
+        <div
+          className="pointer-events-none absolute bottom-0 left-0 right-0 z-[4]"
+          style={{
+            height: "55%",
+            backgroundImage: `url(${parchmentBg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            maskImage: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.55) 50%, black 72%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.55) 50%, black 72%)",
+          }}
+        />
+
         {/* Dust particles — slow-floating motes in torch-lit stone air */}
         {[
           { left: "12%", top: "55%", size: 2, opacity: 0.35, duration: 9,  delay: 0,   driftX: 8  },
@@ -235,7 +248,7 @@ const Index = () => {
       {/* ─── SECTION 2 — PARCHMENT ─── */}
       <section
         id="how-it-works"
-        className="relative -mt-[50vh] bg-[#F2E8D5] px-4 pb-16 pt-[calc(50vh+64px)] sm:px-6 lg:px-8 lg:pb-20"
+        className="relative bg-[#F2E8D5] px-4 py-16 sm:px-6 lg:px-8 lg:py-20"
         style={{
           backgroundImage: `url(${parchmentBg})`,
           backgroundSize: "cover",
