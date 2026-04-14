@@ -235,7 +235,7 @@ const Index = () => {
       {/* ─── SECTION 2 — PARCHMENT ─── */}
       <section
         id="how-it-works"
-        className="relative -mt-56 bg-[#F2E8D5] px-4 pb-16 pt-72 sm:px-6 lg:px-8 lg:pb-20"
+        className="relative -mt-[50vh] bg-[#F2E8D5] px-4 pb-16 pt-[calc(50vh+64px)] sm:px-6 lg:px-8 lg:pb-20"
         style={{
           backgroundImage: `url(${parchmentBg})`,
           backgroundSize: "cover",
