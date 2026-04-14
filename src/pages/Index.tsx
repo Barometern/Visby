@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import MascotGuide from "@/components/MascotGuide";
 import { useGameState } from "@/lib/game-state";
 import heroImage from "@/assets/IMG_3126.png";
+import parchmentBg from "@/assets/IMG_3128.png";
 import centurymap from "@/assets/18th-century-map-of-visby-sweden-375758-1024.png";
 import { languageNames, t, type Language } from "@/lib/i18n";
 import {
@@ -210,12 +211,6 @@ const Index = () => {
           </motion.div>
         </div>
 
-        {/* Parchment bleed — fades torn edge into section 2 background */}
-        <div
-          className="pointer-events-none absolute bottom-0 left-0 z-10 w-full"
-          style={{ height: 48, background: "linear-gradient(to bottom, transparent, #F2E8D5)" }}
-        />
-
         {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center">
           <motion.div
@@ -231,9 +226,19 @@ const Index = () => {
       {/* ─── SECTION 2 — PARCHMENT ─── */}
       <section
         id="how-it-works"
-        className="bg-[#F2E8D5] px-4 py-16 sm:px-6 lg:px-8 lg:py-20"
+        className="relative bg-[#F2E8D5] px-4 py-16 sm:px-6 lg:px-8 lg:py-20"
+        style={{
+          backgroundImage: `url(${parchmentBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       >
-        <div className="mx-auto max-w-xl">
+        {/* Shadow continuation — hero darkness bleeds onto parchment, fading naturally */}
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 z-0"
+          style={{ height: 220, background: "linear-gradient(to bottom, rgba(12,8,5,0.72), transparent)" }}
+        />
+        <div className="relative z-10 mx-auto max-w-xl">
 
           {/* Mascot with Starta button */}
           <motion.div
