@@ -242,7 +242,7 @@ const Index = () => {
         style={{
           backgroundImage: `url(${parchmentBg})`,
           backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundPosition: "center -35px",
         }}
       >
         <div className="relative z-10 mx-auto max-w-xl">
