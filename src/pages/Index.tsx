@@ -4,7 +4,7 @@ import { Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MascotGuide from "@/components/MascotGuide";
 import { useGameState } from "@/lib/game-state";
-import heroImage from "@/assets/IMG_3124.png";
+import heroImage from "@/assets/IMG_3126.png";
 import centurymap from "@/assets/18th-century-map-of-visby-sweden-375758-1024.png";
 import { languageNames, t, type Language } from "@/lib/i18n";
 import {
