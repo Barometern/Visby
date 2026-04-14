@@ -107,7 +107,7 @@ const Index = () => {
 
       {/* ─── SECTION 1 — CINEMATIC HERO ─── */}
       <section
-        className="relative flex min-h-screen flex-col overflow-hidden"
+        className="relative z-[1] flex min-h-screen flex-col overflow-hidden"
         style={{
           backgroundImage: `linear-gradient(180deg, rgba(12,8,5,0.42), rgba(12,8,5,0.78)), url(${heroImage})`,
           backgroundSize: "cover",
@@ -226,7 +226,7 @@ const Index = () => {
       {/* ─── SECTION 2 — PARCHMENT ─── */}
       <section
         id="how-it-works"
-        className="relative bg-[#F2E8D5] px-4 py-16 sm:px-6 lg:px-8 lg:py-20"
+        className="relative -mt-10 bg-[#F2E8D5] px-4 py-16 sm:px-6 lg:px-8 lg:py-20"
         style={{
           backgroundImage: `url(${parchmentBg})`,
           backgroundSize: "cover",
