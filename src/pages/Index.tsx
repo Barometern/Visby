@@ -109,31 +109,30 @@ const Index = () => {
       <section
         className="relative z-[1] flex min-h-screen flex-col overflow-hidden"
         style={{
-          backgroundImage: `linear-gradient(180deg, rgba(12,8,5,0.42), rgba(12,8,5,0.78)), url(${heroImage})`,
+          backgroundImage: `url(${parchmentBg})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,201,111,0.10),transparent_30%)]" />
-
-        {/* Concentrated text vignette — darkness pools around the text area, edges breathe */}
+        {/* Hero photo — dark overlay, masks out at bottom to reveal parchment behind */}
         <div
-          className="pointer-events-none absolute inset-0"
+          className="pointer-events-none absolute inset-0 z-[2]"
           style={{
-            background: "radial-gradient(ellipse 70% 50% at 50% 52%, rgba(0,0,0,0.30) 0%, transparent 100%)",
+            backgroundImage: `linear-gradient(180deg, rgba(12,8,5,0.42), rgba(12,8,5,0.78)), url(${heroImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            maskImage: "linear-gradient(to bottom, black 0%, black 48%, transparent 86%)",
+            WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 48%, transparent 86%)",
           }}
         />
 
-        {/* Parchment texture rising from bottom — sits inside the hero so it composites over the photo */}
+        <div className="pointer-events-none absolute inset-0 z-[3] bg-[radial-gradient(circle_at_top,rgba(255,201,111,0.10),transparent_30%)]" />
+
+        {/* Concentrated text vignette — darkness pools around the text area, edges breathe */}
         <div
-          className="pointer-events-none absolute bottom-0 left-0 right-0 z-[4]"
+          className="pointer-events-none absolute inset-0 z-[3]"
           style={{
-            height: "55%",
-            backgroundImage: `url(${parchmentBg})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center bottom",
-            maskImage: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.55) 50%, black 72%)",
-            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.55) 50%, black 72%)",
+            background: "radial-gradient(ellipse 70% 50% at 50% 52%, rgba(0,0,0,0.30) 0%, transparent 100%)",
           }}
         />
 
@@ -223,15 +222,6 @@ const Index = () => {
             </div>
           </motion.div>
         </div>
-
-        {/* Bottom dissolve — darkness melts into warm parchment light from below */}
-        <div
-          className="pointer-events-none absolute bottom-0 left-0 right-0 z-[8]"
-          style={{
-            height: 220,
-            background: "linear-gradient(to bottom, transparent 0%, rgba(242,232,213,0.15) 30%, rgba(242,232,213,0.45) 55%, rgba(242,232,213,0.78) 75%, #F2E8D5 100%)",
-          }}
-        />
 
         {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center">
