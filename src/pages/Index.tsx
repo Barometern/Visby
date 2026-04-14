@@ -210,6 +210,12 @@ const Index = () => {
           </motion.div>
         </div>
 
+        {/* Parchment bleed — fades torn edge into section 2 background */}
+        <div
+          className="pointer-events-none absolute bottom-0 left-0 z-10 w-full"
+          style={{ height: 48, background: "linear-gradient(to bottom, transparent, #F2E8D5)" }}
+        />
+
         {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center">
           <motion.div
