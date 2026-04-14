@@ -115,6 +115,48 @@ const Index = () => {
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,201,111,0.10),transparent_30%)]" />
 
+        {/* Concentrated text vignette — darkness pools around the text area, edges breathe */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: "radial-gradient(ellipse 70% 50% at 50% 52%, rgba(0,0,0,0.30) 0%, transparent 100%)",
+          }}
+        />
+
+        {/* Dust particles — slow-floating motes in torch-lit stone air */}
+        {[
+          { left: "12%", top: "55%", size: 2, opacity: 0.35, duration: 9,  delay: 0,   driftX: 8  },
+          { left: "27%", top: "68%", size: 3, opacity: 0.25, duration: 12, delay: 2.3, driftX: -12 },
+          { left: "53%", top: "30%", size: 2, opacity: 0.40, duration: 8,  delay: 4.1, driftX: 14 },
+          { left: "70%", top: "60%", size: 3, opacity: 0.28, duration: 14, delay: 1.7, driftX: -9 },
+          { left: "41%", top: "75%", size: 2, opacity: 0.33, duration: 11, delay: 5.5, driftX: 10 },
+          { left: "84%", top: "45%", size: 2, opacity: 0.30, duration: 10, delay: 3.2, driftX: -7 },
+        ].map((p, i) => (
+          <motion.div
+            key={i}
+            className="pointer-events-none absolute z-[5] rounded-full"
+            style={{
+              left: p.left,
+              top: p.top,
+              width: p.size,
+              height: p.size,
+              backgroundColor: `rgba(255,220,150,${p.opacity})`,
+            }}
+            animate={{
+              y: [20, -100],
+              x: [0, p.driftX],
+              opacity: [0, p.opacity, p.opacity * 0.9, 0],
+            }}
+            transition={{
+              times: [0, 0.15, 0.8, 1],
+              duration: p.duration,
+              delay: p.delay,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+        ))}
+
         {/* Language picker — top right only */}
         <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pt-4 sm:px-6 lg:px-8">
           <div className="flex justify-end">
@@ -133,9 +175,20 @@ const Index = () => {
               Visby · Gotland
             </p>
 
-            <h1 className="mt-5 max-w-xl font-display text-5xl leading-[0.92] text-[#fff1d3] drop-shadow-[0_10px_30px_rgba(0,0,0,0.32)] sm:text-6xl lg:text-7xl">
-              {t("heroTitle", language)}
-            </h1>
+            <div className="relative mt-5">
+              {/* Backlit glow — torch-lit warmth radiating behind the title */}
+              <div
+                className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                style={{
+                  width: 400,
+                  height: 200,
+                  background: "radial-gradient(ellipse at center, rgba(201,168,76,0.12), transparent 70%)",
+                }}
+              />
+              <h1 className="relative max-w-xl font-display text-5xl leading-[0.92] text-[#fff1d3] drop-shadow-[0_10px_30px_rgba(0,0,0,0.32)] sm:text-6xl lg:text-7xl">
+                {t("heroTitle", language)}
+              </h1>
+            </div>
 
             <p className="mx-auto mt-5 max-w-sm text-lg leading-8 text-[#fff1d6]/80 sm:text-xl">
               {t("heroSubtitle", language)}
@@ -145,7 +198,7 @@ const Index = () => {
               <Button
                 asChild
                 size="lg"
-                className="h-14 rounded-[6px] border border-[#f0c976]/35 bg-[#dca54a] px-10 text-base font-semibold text-[#2f1d11] shadow-[0_18px_36px_rgba(0,0,0,0.24),2px_3px_0px_rgba(122,82,48,0.35)] transition-all duration-300 hover:translate-y-[-1px] hover:bg-[#e7b35d] hover:scale-[1.02] active:scale-[0.98]"
+                className="h-14 rounded-[6px] border border-[#f0c976]/35 bg-[#dca54a] px-10 text-base font-semibold text-[#2f1d11] shadow-[0_18px_36px_rgba(0,0,0,0.24),2px_3px_0px_rgba(122,82,48,0.35),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(0,0,0,0.25)] transition-all duration-200 hover:translate-y-[-1px] hover:bg-[#e7b35d] hover:scale-[1.02] hover:shadow-[0_18px_36px_rgba(0,0,0,0.24),2px_3px_0px_rgba(122,82,48,0.35),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(0,0,0,0.25),0_0_18px_rgba(201,168,76,0.45)] active:translate-y-[1px] active:scale-[0.98] active:shadow-[0_6px_14px_rgba(0,0,0,0.22),1px_1px_0px_rgba(122,82,48,0.35),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(0,0,0,0.25)]"
               >
                 <Link to={startHref}>{t("heroCta", language)}</Link>
               </Button>
