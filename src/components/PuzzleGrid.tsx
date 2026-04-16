@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import puzzleImage from "@/assets/puzzle-placeholder.jpg";
 import { useGameState } from "@/lib/game-state";
-import { PIECE_SIZE, getPuzzleConfig } from "@/lib/puzzle-geometry";
+import { getPuzzleConfig } from "@/lib/puzzle-geometry";
 
 interface PuzzleGridProps {
   highlightPiece?: number;
@@ -20,9 +20,9 @@ function PuzzleGrid({
   teaseNextLockedPiece = false,
 }: PuzzleGridProps) {
   const { unlockedPieces, activeLocations, routeLength } = useGameState();
-  const { cols, rows, total, piecePaths } = getPuzzleConfig(routeLength ?? 10);
-  const VW = cols * PIECE_SIZE;
-  const VH = rows * PIECE_SIZE;
+  const { cols, total, piecePaths, pieceW, pieceH } = getPuzzleConfig(routeLength ?? 10);
+  const VW = cols * pieceW;
+  const VH = (total / cols) * pieceH;
   const navigate = useNavigate();
   const nextLockedPiece = Array.from({ length: total }, (_, i) => i).find((i) => !unlockedPieces.includes(i)) ?? null;
 
@@ -91,8 +91,8 @@ function PuzzleGrid({
                 </path>
               ) : null}
               <text
-                x={col * PIECE_SIZE + PIECE_SIZE / 2}
-                y={row * PIECE_SIZE + PIECE_SIZE / 2 + 6}
+                x={col * pieceW + pieceW / 2}
+                y={row * pieceH + pieceH / 2 + 6}
                 textAnchor="middle"
                 fontSize="16"
                 fill={isTeasedPiece ? "rgba(145,104,34,0.72)" : "rgba(130,110,80,0.28)"}
