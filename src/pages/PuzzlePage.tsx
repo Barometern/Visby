@@ -197,12 +197,12 @@ export default function PuzzlePage() {
             <div className="rounded-[16px] border-2 border-[#7A5230]/40 bg-[#F2E8D5] px-4 py-4 shadow-[4px_6px_0px_rgba(122,82,48,0.2)]">
               <div className="mb-3 inline-flex items-center gap-2 rounded-[4px] border border-[#7A5230]/30 bg-[#FAF6EE] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7A5230]">
                 <Sparkles className="h-3.5 w-3.5" />
-                Första steget
+                {t("puzzleFirstStepBadge", language)}
               </div>
               <MascotGuide
                 pose="point"
                 position="inline"
-                text="Skanna din första QR-kod för att väcka tavlan till liv. Den första biten skimrar redan och väntar på dig."
+                text={t("puzzleFirstStepGuide", language)}
                 lambSuffix={true}
               />
             </div>

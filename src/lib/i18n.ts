@@ -30,6 +30,8 @@ const translations = {
     shareCardTitle: 'Visby Quest complete!',
     shareCardSubtitle: 'A full puzzle, a full route, and a finished hunt.',
     shareSaveCard: 'Save share card',
+    puzzleFirstStepBadge: 'First step',
+    puzzleFirstStepGuide: 'Scan your first QR code to bring the board to life. The first piece is already shimmering and waiting for you.',
 
     // Scan
     scanTitle: 'Scan a QR Code',
@@ -270,6 +272,8 @@ const translations = {
     shareCardTitle: 'Visby Quest klar!',
     shareCardSubtitle: 'Hela pusslet, hela rutten och jakten slutförd.',
     shareSaveCard: 'Spara bildkort',
+    puzzleFirstStepBadge: 'Första steget',
+    puzzleFirstStepGuide: 'Skanna din första QR-kod för att väcka tavlan till liv. Den första biten skimrar redan och väntar på dig.',
 
     scanTitle: 'Skanna en QR-kod',
     scanInstructions: 'Rikta din kamera mot en Visby Quest QR-kod',
@@ -503,6 +507,8 @@ const translations = {
     shareCardTitle: 'Visby Quest geschafft!',
     shareCardSubtitle: 'Das ganze Puzzle, die ganze Route und die abgeschlossene Jagd.',
     shareSaveCard: 'Bildkarte speichern',
+    puzzleFirstStepBadge: 'Erster Schritt',
+    puzzleFirstStepGuide: 'Scanne deinen ersten QR-Code, um die Tafel zum Leben zu erwecken. Das erste Teil schimmert bereits und wartet auf dich.',
 
     scanTitle: 'QR-Code Scannen',
     scanInstructions: 'Richte deine Kamera auf einen Visby Quest QR-Code',
@@ -675,7 +681,6 @@ const translations = {
     adminDeleteGeneric: 'Diese Aktion kann nicht rückgängig gemacht werden.',
 
     // Accessibility
-    close: 'Schließen',
     togglePassword: 'Passwort-Sichtbarkeit umschalten',
 
     // Loading / empty states
