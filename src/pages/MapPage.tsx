@@ -211,7 +211,7 @@ export default function MapPage() {
               <p className="mt-1 font-heading text-[1.2rem] leading-6 text-[#fff0d0] [text-shadow:0_2px_5px_rgba(12,7,4,0.58)]">
                 {allLocationsCompleted
                   ? t("mapQuestCompleteTitle", language)
-                  : activeLocation?.name[language] ?? t("mapNoObjectiveTitle", language)}
+                  : activeLocation?.name[language] || t("mapNoObjectiveTitle", language)}
               </p>
             </div>
           </div>

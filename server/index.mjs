@@ -420,7 +420,7 @@ async function requireUser(req) {
 
 async function requireAdmin(req) {
   if (!ADMIN_ENABLED) {
-    return { error: "Admin mode is disabled in this environment.", statusCode: 404 };
+    return { error: "Admin mode is disabled in this environment.", statusCode: 403 };
   }
 
   const result = await requireUser(req);

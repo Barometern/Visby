@@ -413,20 +413,23 @@ export async function ensureAdminUser({ email, passwordHash }) {
 }
 
 export async function addScanForUser(email, locationId) {
-  const existingResult = await query(
-    `
-      SELECT 1
-      FROM scans
-      WHERE user_email = $1 AND location_id = $2
-    `,
-    [email, locationId],
-  );
-
-  if (existingResult.rows[0]) {
-    return { alreadyScanned: true, user: await getUserByEmail(email) };
-  }
+  let alreadyScanned = false;
 
   await runInTransaction(async (client) => {
+    const existingResult = await client.query(
+      `
+        SELECT 1
+        FROM scans
+        WHERE user_email = $1 AND location_id = $2
+      `,
+      [email, locationId],
+    );
+
+    if (existingResult.rows[0]) {
+      alreadyScanned = true;
+      return;
+    }
+
     await client.query(
       `
         INSERT INTO scans (user_email, location_id, scanned_at)
@@ -446,7 +449,7 @@ export async function addScanForUser(email, locationId) {
   });
 
   return {
-    alreadyScanned: false,
+    alreadyScanned,
     user: await getUserByEmail(email),
   };
 }
