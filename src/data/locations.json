@@ -1,0 +1,312 @@
+[
+  {
+    "id": "loc-1",
+    "qrCode": "visby-quest-1",
+    "name": {
+      "en": "Almedalen",
+      "sv": "Almedalen",
+      "de": "Almedalen"
+    },
+    "description": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "readMore": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "clue": {
+      "en": "En gåta...",
+      "sv": "En gåta...",
+      "de": "En gåta..."
+    },
+    "coordinates": {
+      "lat": 57.6406419256486,
+      "lng": 18.290298024859133
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6406419256486,18.290298024859133",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-2",
+    "qrCode": "visby-quest-2",
+    "name": {
+      "en": "Kruttornet",
+      "sv": "Kruttornet",
+      "de": "Kruttornet"
+    },
+    "description": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "readMore": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "clue": {
+      "en": "En gåta...",
+      "sv": "En gåta...",
+      "de": "En gåta..."
+    },
+    "coordinates": {
+      "lat": 57.64218283048665,
+      "lng": 18.2914973473632
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.64218283048665,18.2914973473632",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-3",
+    "qrCode": "visby-quest-3",
+    "name": {
+      "en": "Botaniska",
+      "sv": "Botaniska",
+      "de": "Botaniska"
+    },
+    "description": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "readMore": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "clue": {
+      "en": "En gåta...",
+      "sv": "En gåta...",
+      "de": "En gåta..."
+    },
+    "coordinates": {
+      "lat": 57.64369817974235,
+      "lng": 18.29400610346525
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.64369817974235,18.29400610346525",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-4",
+    "qrCode": "visby-quest-4",
+    "name": {
+      "en": "Snäckgärdsporten",
+      "sv": "Snäckgärdsporten",
+      "de": "Snäckgärdsporten"
+    },
+    "description": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "readMore": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "clue": {
+      "en": "En gåta...",
+      "sv": "En gåta...",
+      "de": "En gåta..."
+    },
+    "coordinates": {
+      "lat": 57.64667546271741,
+      "lng": 18.2962481173517
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.64667546271741,18.2962481173517",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-5",
+    "qrCode": "visby-quest-5",
+    "name": {
+      "en": "St Nicolai",
+      "sv": "St Nicolai",
+      "de": "St Nicolai"
+    },
+    "description": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "readMore": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "clue": {
+      "en": "En gåta...",
+      "sv": "En gåta...",
+      "de": "En gåta..."
+    },
+    "coordinates": {
+      "lat": 57.64410988530589,
+      "lng": 18.298517371558123
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.64410988530589,18.298517371558123",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-6",
+    "qrCode": "visby-quest-6",
+    "name": {
+      "en": "Domkyrkan",
+      "sv": "Domkyrkan",
+      "de": "Domkyrkan"
+    },
+    "description": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "readMore": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "clue": {
+      "en": "En gåta...",
+      "sv": "En gåta...",
+      "de": "En gåta..."
+    },
+    "coordinates": {
+      "lat": 57.641668916480064,
+      "lng": 18.297641439347583
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.641668916480064,18.297641439347583",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-7",
+    "qrCode": "visby-quest-7",
+    "name": {
+      "en": "Trappgatans park",
+      "sv": "Trappgatans park",
+      "de": "Trappgatans park"
+    },
+    "description": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "readMore": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "clue": {
+      "en": "En gåta...",
+      "sv": "En gåta...",
+      "de": "En gåta..."
+    },
+    "coordinates": {
+      "lat": 57.639944104511585,
+      "lng": 18.297040950719776
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.639944104511585,18.297040950719776",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-8",
+    "qrCode": "visby-quest-8",
+    "name": {
+      "en": "Österport",
+      "sv": "Österport",
+      "de": "Österport"
+    },
+    "description": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "readMore": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "clue": {
+      "en": "En gåta...",
+      "sv": "En gåta...",
+      "de": "En gåta..."
+    },
+    "coordinates": {
+      "lat": 57.638496416394666,
+      "lng": 18.298438963420132
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.638496416394666,18.298438963420132",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-9",
+    "qrCode": "visby-quest-9",
+    "name": {
+      "en": "Creperiehuset",
+      "sv": "Creperiehuset",
+      "de": "Creperiehuset"
+    },
+    "description": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "readMore": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "clue": {
+      "en": "En gåta...",
+      "sv": "En gåta...",
+      "de": "En gåta..."
+    },
+    "coordinates": {
+      "lat": 57.63874382346324,
+      "lng": 18.295835156791405
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.63874382346324,18.295835156791405",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-10",
+    "qrCode": "visby-quest-10",
+    "name": {
+      "en": "Stora Torget",
+      "sv": "Stora Torget",
+      "de": "Stora Torget"
+    },
+    "description": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "readMore": {
+      "en": "Information om platsen.",
+      "sv": "Information om platsen.",
+      "de": "Information om platsen."
+    },
+    "clue": {
+      "en": "En gåta...",
+      "sv": "En gåta...",
+      "de": "En gåta..."
+    },
+    "coordinates": {
+      "lat": 57.64068897779912,
+      "lng": 18.296136211701384
+    },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.64068897779912,18.296136211701384",
+    "images": [],
+    "scanCount": 0
+  }
+]

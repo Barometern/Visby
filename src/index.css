@@ -1,0 +1,499 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=MedievalSharp&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Design token palette */
+    --parchment: #F2E8D5;
+    --parchment-light: #FAF6EE;
+    --ink: #2C1A0E;
+    --wood: #7A5230;
+    --navy: #1C2E4A;
+    --navy-light: #2A3F5F;
+    --gold: #C9A84C;
+    --seal-red: #8B1A1A;
+
+    --background: 35 30% 92%;
+    --foreground: 25 40% 15%;
+
+    --card: 38 35% 88%;
+    --card-foreground: 25 40% 15%;
+
+    --popover: 38 35% 88%;
+    --popover-foreground: 25 40% 15%;
+
+    --primary: 36 60% 42%;
+    --primary-foreground: 38 30% 95%;
+
+    --secondary: 30 25% 78%;
+    --secondary-foreground: 25 40% 15%;
+
+    --muted: 35 20% 85%;
+    --muted-foreground: 25 15% 45%;
+
+    --accent: 42 75% 55%;
+    --accent-foreground: 25 40% 12%;
+
+    --destructive: 0 65% 45%;
+    --destructive-foreground: 38 30% 95%;
+
+    --border: 30 20% 72%;
+    --input: 30 20% 72%;
+    --ring: 36 60% 42%;
+
+    --radius: 0.375rem;
+
+    --medieval-gold: 42 75% 55%;
+    --medieval-brown: 25 40% 22%;
+    --medieval-stone: 30 10% 55%;
+    --medieval-parchment: 38 40% 90%;
+    --medieval-moss: 90 25% 35%;
+    --medieval-crimson: 0 55% 40%;
+
+    --sidebar-background: 25 30% 18%;
+    --sidebar-foreground: 38 30% 90%;
+    --sidebar-primary: 42 75% 55%;
+    --sidebar-primary-foreground: 25 40% 12%;
+    --sidebar-accent: 25 25% 25%;
+    --sidebar-accent-foreground: 38 30% 90%;
+    --sidebar-border: 25 20% 28%;
+    --sidebar-ring: 42 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease;
+  }
+
+  ::selection {
+    background: hsl(var(--medieval-gold) / 0.35);
+    color: hsl(var(--medieval-brown));
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer utilities {
+  .type-display {
+    @apply font-display;
+  }
+
+  .type-heading {
+    @apply font-heading;
+  }
+
+  .type-body {
+    @apply font-body;
+  }
+
+  .parchment-bg {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--medieval-parchment)),
+      hsl(38 35% 86%),
+      hsl(var(--medieval-parchment))
+    );
+    box-shadow: inset 0 0 60px hsl(30 20% 70% / 0.3);
+  }
+
+  .stone-border {
+    border: 2px solid hsl(var(--medieval-stone) / 0.5);
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.1),
+      0 2px 8px hsl(var(--medieval-brown) / 0.2);
+  }
+
+  .gold-glow {
+    box-shadow:
+      0 0 8px hsl(var(--medieval-gold) / 0.5),
+      0 0 20px hsl(var(--medieval-gold) / 0.3),
+      0 0 40px hsl(var(--medieval-gold) / 0.15),
+      0 4px 16px hsl(var(--medieval-brown) / 0.2);
+  }
+
+  .animate-fade-in {
+    animation: fade-in-up 0.5s ease-out both;
+  }
+
+  .card-medieval {
+    @apply parchment-bg stone-border rounded-2xl;
+    transition: transform 250ms ease, box-shadow 250ms ease;
+  }
+
+  .card-medieval:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.1),
+      0 8px 24px hsl(var(--medieval-brown) / 0.18);
+  }
+
+  .btn-gold {
+    @apply rounded-[6px] font-semibold;
+    background: hsl(var(--medieval-gold));
+    color: hsl(var(--medieval-brown));
+    box-shadow: 0 4px 14px hsl(var(--medieval-gold) / 0.35);
+    transition: filter 200ms ease, transform 150ms ease, box-shadow 200ms ease;
+  }
+
+  .btn-gold:hover {
+    filter: brightness(1.08);
+    box-shadow: 0 6px 20px hsl(var(--medieval-gold) / 0.45);
+  }
+
+  .text-gold-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--medieval-gold)),
+      hsl(45 80% 65%),
+      hsl(var(--medieval-gold))
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .medieval-shadow {
+    text-shadow: 2px 2px 4px hsl(var(--medieval-brown) / 0.5);
+  }
+
+  /* Wood table background */
+  .wood-table-bg {
+    background-image: url('/src/assets/wood-table.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+  }
+
+  .wood-table-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 25% 20%, hsla(35, 60%, 65%, 0.14) 0%, transparent 55%),
+      radial-gradient(ellipse at center, transparent 40%, hsla(20, 20%, 5%, 0.45) 100%),
+      linear-gradient(180deg, hsla(25, 30%, 8%, 0.1) 0%, transparent 40%, transparent 60%, hsla(25, 30%, 5%, 0.2) 100%);
+    pointer-events: none;
+    z-index: 0;
+    backdrop-filter: blur(0.8px);
+  }
+
+  .wood-table-bg > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* 3D perspective wrapper for the map */
+  .map-perspective {
+    perspective: none;
+  }
+
+  /* Map container sitting on table */
+  .parchment-map-container {
+    filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.7))
+            drop-shadow(0 6px 12px rgba(0, 0, 0, 0.5))
+            drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+    transform: none;
+    transition: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .parchment-map-container:hover {
+    transform: none;
+  }
+
+  .parchment-map-container,
+  .parchment-map-container * {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Scroll roll cylinders */
+  .scroll-roll {
+    position: relative;
+    z-index: 10;
+    height: 28px;
+    margin: 0 -2px;
+    border-radius: 14px;
+    background: linear-gradient(180deg,
+      hsl(28, 22%, 44%) 0%,
+      hsl(26, 20%, 36%) 35%,
+      hsl(24, 18%, 30%) 50%,
+      hsl(26, 20%, 36%) 65%,
+      hsl(28, 22%, 44%) 100%
+    );
+    box-shadow:
+      0 4px 10px rgba(0, 0, 0, 0.55),
+      0 1px 3px rgba(0, 0, 0, 0.35),
+      inset 0 1px 1px hsla(30, 15%, 55%, 0.12),
+      inset 0 -1px 1px hsla(20, 15%, 10%, 0.2);
+  }
+
+  .scroll-roll::before,
+  .scroll-roll::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    width: 18px;
+    height: 22px;
+    border-radius: 50%;
+    background: radial-gradient(
+      ellipse at 45% 38%,
+      hsl(28, 18%, 42%),
+      hsl(24, 16%, 28%)
+    );
+    box-shadow:
+      inset 0 1px 2px hsla(20, 15%, 10%, 0.35),
+      0 2px 4px rgba(0, 0, 0, 0.35);
+  }
+
+  .scroll-roll::before { left: -6px; }
+  .scroll-roll::after { right: -6px; }
+
+  .scroll-roll-top {
+    margin-bottom: -6px;
+    box-shadow:
+      0 5px 14px rgba(0, 0, 0, 0.45),
+      inset 0 1px 1px hsla(30, 15%, 55%, 0.1);
+  }
+
+  .scroll-roll-bottom {
+    margin-top: -6px;
+    box-shadow:
+      0 -2px 6px rgba(0, 0, 0, 0.25),
+      0 4px 10px rgba(0, 0, 0, 0.45),
+      inset 0 -1px 1px hsla(30, 15%, 55%, 0.1);
+  }
+
+  /* Shadow where paper meets rolls */
+  .scroll-paper-shadow-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(180deg, hsla(25, 20%, 15%, 0.25) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .scroll-paper-shadow-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(0deg, hsla(25, 20%, 15%, 0.25) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Paper grain texture overlay */
+  .paper-texture-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: inherit;
+    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='6' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='0.05'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  /* Warm lighting from top */
+  .map-warm-light {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    border-radius: inherit;
+    background: linear-gradient(
+      180deg,
+      hsla(42, 60%, 70%, 0.12) 0%,
+      transparent 40%,
+      transparent 100%
+    );
+  }
+
+  /* Vignette around edges */
+  .map-vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    border-radius: inherit;
+    box-shadow: inset 0 0 40px 10px hsla(25, 30%, 10%, 0.35),
+                inset 0 0 80px 20px hsla(25, 30%, 10%, 0.15);
+  }
+
+  /* Parchment with torn edges */
+  .parchment-torn {
+    background: linear-gradient(
+      145deg,
+      hsl(42, 45%, 90%),
+      hsl(38, 38%, 87%),
+      hsl(44, 42%, 88%),
+      hsl(36, 30%, 85%),
+      hsl(42, 40%, 87%)
+    );
+    clip-path: polygon(
+      0% 1.2%, 2% 0.3%, 4.5% 1.5%, 7% 0%, 10% 0.8%, 13% 1.8%, 16% 0.2%,
+      19% 1.4%, 22% 0%, 25.5% 0.6%, 28% 1.6%, 31% 0.1%, 34% 1.2%, 37% 0.4%,
+      40% 1.8%, 43% 0%, 46% 0.9%, 49% 1.5%, 52% 0.2%, 55% 1.1%, 58% 0%,
+      61% 1.6%, 64% 0.5%, 67% 1.3%, 70% 0%, 73% 0.7%, 76% 1.9%, 79% 0.3%,
+      82% 1.1%, 85% 0%, 88% 1.4%, 91% 0.6%, 94% 1.7%, 97% 0.2%, 100% 0.8%,
+      99.2% 3%, 100% 6%, 99.5% 10%, 100% 14%, 99.3% 18%, 100% 22%,
+      99.6% 27%, 100% 32%, 99.2% 37%, 100% 42%, 99.7% 47%, 100% 52%,
+      99.4% 57%, 100% 62%, 99.8% 67%, 100% 72%, 99.3% 77%, 100% 82%,
+      99.5% 87%, 100% 91%, 99.2% 95%, 100% 98.5%,
+      97% 99.3%, 94% 100%, 91% 98.8%, 88% 100%, 85% 99.4%, 82% 100%,
+      79% 98.6%, 76% 100%, 73% 99.2%, 70% 100%, 67% 98.9%, 64% 100%,
+      61% 99.5%, 58% 100%, 55% 98.7%, 52% 100%, 49% 99.1%, 46% 100%,
+      43% 98.4%, 40% 100%, 37% 99.6%, 34% 100%, 31% 98.8%, 28% 100%,
+      25% 99.3%, 22% 100%, 19% 98.5%, 16% 100%, 13% 99.7%, 10% 100%,
+      7% 98.6%, 4% 100%, 1.5% 99.1%, 0% 100%,
+      0.8% 97%, 0% 94%, 0.5% 90%, 0% 86%, 0.7% 82%, 0% 78%,
+      0.4% 73%, 0% 68%, 0.6% 63%, 0% 58%, 0.3% 53%, 0% 48%,
+      0.5% 43%, 0% 38%, 0.8% 33%, 0% 28%, 0.4% 23%, 0% 18%,
+      0.6% 13%, 0% 8%, 0.3% 4%
+    );
+    box-shadow:
+      inset 0 0 30px hsla(30, 20%, 40%, 0.15),
+      inset 0 0 80px hsla(30, 15%, 50%, 0.08);
+    overflow: hidden;
+    border: 1px solid hsla(30, 20%, 45%, 0.25);
+    position: relative;
+  }
+
+  /* Corner wear & aging effects */
+  .parchment-torn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    background:
+      /* Worn corners — darker, faded */
+      radial-gradient(ellipse at 0% 0%, hsla(35, 30%, 50%, 0.25) 0%, transparent 18%),
+      radial-gradient(ellipse at 100% 0%, hsla(35, 25%, 48%, 0.2) 0%, transparent 15%),
+      radial-gradient(ellipse at 0% 100%, hsla(33, 28%, 46%, 0.22) 0%, transparent 16%),
+      radial-gradient(ellipse at 100% 100%, hsla(35, 30%, 50%, 0.25) 0%, transparent 20%),
+      /* Edge darkening */
+      linear-gradient(90deg, hsla(30, 20%, 40%, 0.08) 0%, transparent 6%, transparent 94%, hsla(30, 20%, 40%, 0.08) 100%),
+      linear-gradient(180deg, hsla(30, 20%, 40%, 0.06) 0%, transparent 5%, transparent 95%, hsla(30, 20%, 40%, 0.06) 100%),
+      /* Subtle noise grain */
+      url("data:image/svg+xml,%3Csvg width='300' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  .torn-map-edge {
+    clip-path: polygon(
+      0% 1.2%, 2% 0.3%, 4.5% 1.5%, 7% 0%, 10% 0.8%, 13% 1.8%, 16% 0.2%,
+      19% 1.4%, 22% 0%, 25.5% 0.6%, 28% 1.6%, 31% 0.1%, 34% 1.2%, 37% 0.4%,
+      40% 1.8%, 43% 0%, 46% 0.9%, 49% 1.5%, 52% 0.2%, 55% 1.1%, 58% 0%,
+      61% 1.6%, 64% 0.5%, 67% 1.3%, 70% 0%, 73% 0.7%, 76% 1.9%, 79% 0.3%,
+      82% 1.1%, 85% 0%, 88% 1.4%, 91% 0.6%, 94% 1.7%, 97% 0.2%, 100% 0.8%,
+      99.2% 3%, 100% 6%, 99.5% 10%, 100% 14%, 99.3% 18%, 100% 22%,
+      99.6% 27%, 100% 32%, 99.2% 37%, 100% 42%, 99.7% 47%, 100% 52%,
+      99.4% 57%, 100% 62%, 99.8% 67%, 100% 72%, 99.3% 77%, 100% 82%,
+      99.5% 87%, 100% 91%, 99.2% 95%, 100% 98.5%,
+      97% 99.3%, 94% 100%, 91% 98.8%, 88% 100%, 85% 99.4%, 82% 100%,
+      79% 98.6%, 76% 100%, 73% 99.2%, 70% 100%, 67% 98.9%, 64% 100%,
+      61% 99.5%, 58% 100%, 55% 98.7%, 52% 100%, 49% 99.1%, 46% 100%,
+      43% 98.4%, 40% 100%, 37% 99.6%, 34% 100%, 31% 98.8%, 28% 100%,
+      25% 99.3%, 22% 100%, 19% 98.5%, 16% 100%, 13% 99.7%, 10% 100%,
+      7% 98.6%, 4% 100%, 1.5% 99.1%, 0% 100%,
+      0.8% 97%, 0% 94%, 0.5% 90%, 0% 86%, 0.7% 82%, 0% 78%,
+      0.4% 73%, 0% 68%, 0.6% 63%, 0% 58%, 0.3% 53%, 0% 48%,
+      0.5% 43%, 0% 38%, 0.8% 33%, 0% 28%, 0.4% 23%, 0% 18%,
+      0.6% 13%, 0% 8%, 0.3% 4%
+    );
+    overflow: hidden;
+  }
+
+  .deckle-map-edge {
+    clip-path: polygon(
+      0% 1.4%, 3% 0.3%, 6% 1.6%, 10% 0.2%, 14% 1.1%, 18% 0.1%, 22% 1.5%,
+      27% 0.4%, 32% 1.8%, 37% 0.2%, 42% 1.2%, 47% 0.1%, 52% 1.6%,
+      57% 0.5%, 62% 1.7%, 67% 0.2%, 72% 1.3%, 77% 0.1%, 82% 1.5%,
+      87% 0.4%, 92% 1.8%, 96% 0.3%, 100% 1.2%,
+      100% 98.7%,
+      96% 99.8%, 92% 98.4%, 87% 100%, 82% 98.7%, 77% 99.9%, 72% 98.5%,
+      67% 100%, 62% 98.8%, 57% 99.7%, 52% 98.4%, 47% 100%, 42% 98.6%,
+      37% 99.8%, 32% 98.3%, 27% 100%, 22% 98.7%, 18% 99.7%, 14% 98.5%,
+      10% 99.9%, 6% 98.4%, 3% 99.6%, 0% 98.8%
+    );
+    overflow: hidden;
+  }
+
+  .visby-landmark-tooltip {
+    background: rgba(246, 234, 207, 0.94);
+    border: 1px solid rgba(124, 87, 51, 0.18);
+    border-radius: 999px;
+    color: hsl(25 45% 24%);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    font-family: "Crimson Text", serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 2px 8px;
+  }
+
+  .visby-landmark-tooltip::before {
+    display: none;
+  }
+
+  .visby-historic-map-overlay {
+    filter: sepia(0.22) saturate(0.9) contrast(1.02) brightness(0.98);
+  }
+
+  /* Primary navy action button */
+  .btn-primary {
+    @apply inline-flex h-12 items-center justify-center rounded-[6px] bg-[#1C2E4A] px-6 text-sm font-semibold text-[#F2E8D5] transition-all duration-200;
+    box-shadow: 2px 3px 0px rgba(28, 46, 74, 0.4);
+  }
+
+  .btn-primary:hover {
+    @apply bg-[#2A3F5F];
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  /* Gold stamp action button */
+  .btn-stamp {
+    @apply inline-flex h-12 items-center justify-center rounded-[6px] border border-[#d5b06c]/30 bg-[#dca54a] px-6 text-sm font-semibold text-[#2f1d11] transition-all duration-200;
+    box-shadow: 2px 3px 0px rgba(122, 82, 48, 0.35);
+  }
+
+  .btn-stamp:hover {
+    @apply bg-[#e7b35d];
+    transform: translateY(-1px);
+  }
+
+  .btn-stamp:active {
+    transform: translateY(0);
+  }
+}
