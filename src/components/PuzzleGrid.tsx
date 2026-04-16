@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import puzzleImage from "@/assets/puzzle-placeholder.jpg";
 import { useGameState } from "@/lib/game-state";
-import { COLS, PIECE_SIZE, ROWS, TOTAL, PIECE_PATHS } from "@/lib/puzzle-geometry";
+import { PIECE_SIZE, getPuzzleConfig } from "@/lib/puzzle-geometry";
 
 interface PuzzleGridProps {
   highlightPiece?: number;
@@ -12,9 +12,6 @@ interface PuzzleGridProps {
   teaseNextLockedPiece?: boolean;
 }
 
-const VW = COLS * PIECE_SIZE;
-const VH = ROWS * PIECE_SIZE;
-
 // ─── Component ────────────────────────────────────────────────────────────────
 function PuzzleGrid({
   highlightPiece,
@@ -22,13 +19,16 @@ function PuzzleGrid({
   teaseFirstPiece = false,
   teaseNextLockedPiece = false,
 }: PuzzleGridProps) {
-  const { unlockedPieces, locations } = useGameState();
+  const { unlockedPieces, activeLocations, routeLength } = useGameState();
+  const { cols, rows, total, piecePaths } = getPuzzleConfig(routeLength ?? 10);
+  const VW = cols * PIECE_SIZE;
+  const VH = rows * PIECE_SIZE;
   const navigate = useNavigate();
-  const nextLockedPiece = Array.from({ length: TOTAL }, (_, i) => i).find((i) => !unlockedPieces.includes(i)) ?? null;
+  const nextLockedPiece = Array.from({ length: total }, (_, i) => i).find((i) => !unlockedPieces.includes(i)) ?? null;
 
   const handleClick = (i: number) => {
     if (!interactive || !unlockedPieces.includes(i)) return;
-    const loc = locations[i];
+    const loc = activeLocations[i];
     if (loc) navigate(`/location/${loc.id}`);
   };
 
@@ -47,9 +47,9 @@ function PuzzleGrid({
       >
         <defs>
           {/* One clipPath per piece — shared by the image + stroke layers */}
-          {Array.from({ length: TOTAL }, (_, i) => (
+          {Array.from({ length: total }, (_, i) => (
             <clipPath key={i} id={`pc-${i}`}>
-              <path d={PIECE_PATHS[i]} />
+              <path d={piecePaths[i]} />
             </clipPath>
           ))}
 
@@ -60,22 +60,22 @@ function PuzzleGrid({
         </defs>
 
         {/* ── Empty slots ─────────────────────────────────────────────────── */}
-        {Array.from({ length: TOTAL }, (_, i) => {
+        {Array.from({ length: total }, (_, i) => {
           if (unlockedPieces.includes(i)) return null;
-          const col = i % COLS;
-          const row = Math.floor(i / COLS);
+          const col = i % cols;
+          const row = Math.floor(i / cols);
           const isTeasedPiece = (teaseFirstPiece && i === 0) || (teaseNextLockedPiece && i === nextLockedPiece);
           return (
             <g key={`slot-${i}`}>
               <path
-                d={PIECE_PATHS[i]}
+                d={piecePaths[i]}
                 fill={isTeasedPiece ? "rgba(201,168,76,0.12)" : "rgba(74,54,36,0.07)"}
                 stroke={isTeasedPiece ? "rgba(201,168,76,0.55)" : "rgba(130,110,80,0.3)"}
                 strokeWidth="1"
               />
               {isTeasedPiece ? (
                 <path
-                  d={PIECE_PATHS[i]}
+                  d={piecePaths[i]}
                   fill="none"
                   stroke="rgba(245,231,199,0.8)"
                   strokeWidth="0.8"
@@ -102,7 +102,7 @@ function PuzzleGrid({
                 {i + 1}
               </text>
               {isTeasedPiece ? (
-                <path d={PIECE_PATHS[i]} fill="rgba(255,255,255,0.08)">
+                <path d={piecePaths[i]} fill="rgba(255,255,255,0.08)">
                   <animate attributeName="opacity" values="0.18;0.42;0.18" dur="2.2s" repeatCount="indefinite" />
                 </path>
               ) : null}
@@ -111,10 +111,10 @@ function PuzzleGrid({
         })}
 
         {/* ── Unlocked pieces ──────────────────────────────────────────────── */}
-        {Array.from({ length: TOTAL }, (_, i) => {
+        {Array.from({ length: total }, (_, i) => {
           if (!unlockedPieces.includes(i)) return null;
           const isHighlighted = highlightPiece === i;
-          const d = PIECE_PATHS[i];
+          const d = piecePaths[i];
 
           return (
             <motion.g

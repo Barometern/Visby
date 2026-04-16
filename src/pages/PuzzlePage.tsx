@@ -10,12 +10,13 @@ import { t } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import wallTexture from "@/assets/wall-texture.jpg";
 import puzzleImage from "@/assets/puzzle-placeholder.jpg";
-import { TOTAL } from "@/lib/puzzle-geometry";
+import { getPuzzleConfig } from "@/lib/puzzle-geometry";
 
 export default function PuzzlePage() {
-  const { language, unlockedPieces, questStartedAt, questCompletedAt } = useGameState();
+  const { language, unlockedPieces, questStartedAt, questCompletedAt, routeLength } = useGameState();
+  const { total } = getPuzzleConfig(routeLength ?? 10);
   const navigate = useNavigate();
-  const isComplete = unlockedPieces.length >= TOTAL;
+  const isComplete = unlockedPieces.length >= total;
   const isEmpty = unlockedPieces.length === 0;
 
   const [confettiPieces, setConfettiPieces] = useState<Array<{ id: number; x: number; color: string; delay: number }>>([]);
@@ -88,7 +89,7 @@ export default function PuzzlePage() {
             {t("puzzleTitle", language)}
           </h1>
           <p className="mt-1 text-center font-body text-sm text-amber-100/82">
-            <span className="font-bold text-medieval-gold">{unlockedPieces.length}</span> / {TOTAL}{" "}
+            <span className="font-bold text-medieval-gold">{unlockedPieces.length}</span> / {total}{" "}
             {t("piecesCollected", language)}
           </p>
         </div>
@@ -159,7 +160,7 @@ export default function PuzzlePage() {
                 style={{ background: "linear-gradient(180deg, rgba(255,245,220,0.15) 0%, transparent 30%)" }}
               />
 
-              {unlockedPieces.length < TOTAL && (
+              {unlockedPieces.length < total && (
                 <img
                   src={puzzleImage}
                   alt=""
@@ -224,7 +225,7 @@ export default function PuzzlePage() {
               boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12), 0 0 8px rgba(28,46,74,0.4)",
             }}
             initial={{ width: 0 }}
-            animate={{ width: `${(unlockedPieces.length / TOTAL) * 100}%` }}
+            animate={{ width: `${(unlockedPieces.length / total) * 100}%` }}
             transition={{ type: "spring", stiffness: 120, damping: 20 }}
           />
         </div>
@@ -237,7 +238,7 @@ export default function PuzzlePage() {
             className="mt-4 flex flex-col items-center gap-3"
           >
             <p className="font-body text-xs text-amber-100/55 tracking-wide">
-              {unlockedPieces.length} / {TOTAL} {t("piecesCollected", language)}
+              {unlockedPieces.length} / {total} {t("piecesCollected", language)}
             </p>
             <div className="flex gap-3">
               <Link

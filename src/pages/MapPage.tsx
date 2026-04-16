@@ -22,6 +22,7 @@ import {
 } from "@/lib/map-page-config";
 import centurymap from "@/assets/18th-century-map-of-visby-sweden-375758-1024.png";
 import modernMapScreenshot from "@/assets/visby-modern-screenshot.png";
+import RouteSelectionModal from "@/components/RouteSelectionModal";
 
 const MAP_MODE_LABELS: Record<MapMode, TranslationKey> = {
   historic: "historicMapLabel",
@@ -77,7 +78,7 @@ function buildProjectedMarkers(
 }
 
 export default function MapPage() {
-  const { language, locations, scannedLocations } = useGameState();
+  const { language, activeLocations, scannedLocations, routeLength, setRouteLength } = useGameState();
   const navigate = useNavigate();
   const [mapUnrolled, setMapUnrolled] = useState(false);
   const [zoomedIn, setZoomedIn] = useState(false);
@@ -99,10 +100,10 @@ export default function MapPage() {
   const showModernImageMap = mapMode === "modernImage";
 
   const completedCount = scannedLocations.length;
-  const activeLocation = locations.find((location) => !scannedLocations.includes(location.id)) ?? null;
+  const activeLocation = activeLocations.find((location) => !scannedLocations.includes(location.id)) ?? null;
   const activeLocationId = activeLocation?.id ?? null;
-  const allLocationsCompleted = locations.length > 0 && completedCount === locations.length;
-  const overlayLocation = locations.find((location) => location.id === overlayLocationId) ?? null;
+  const allLocationsCompleted = activeLocations.length > 0 && completedCount === activeLocations.length;
+  const overlayLocation = activeLocations.find((location) => location.id === overlayLocationId) ?? null;
 
   useCalibrationMaps({
     mapHostRef: calibrationMapHostRef,
@@ -125,12 +126,12 @@ export default function MapPage() {
 
     const frameId = window.requestAnimationFrame(() => {
       setProjectedMarkers(
-        buildProjectedMarkers(calibrationMarkerMapRef.current, locations, scannedLocations, activeLocationId),
+        buildProjectedMarkers(calibrationMarkerMapRef.current, activeLocations, scannedLocations, activeLocationId),
       );
     });
 
     return () => window.cancelAnimationFrame(frameId);
-  }, [activeLocationId, locations, mapUnrolled, scannedLocations, zoomedIn]);
+  }, [activeLocationId, activeLocations, mapUnrolled, scannedLocations, zoomedIn]);
 
   useEffect(() => {
     if (mapUnrolled) {
@@ -195,7 +196,7 @@ export default function MapPage() {
                   </h1>
                 </div>
                 <p className="mt-1 pl-6 font-body text-[11px] uppercase tracking-[0.18em] text-[#f0ddae]/88 [text-shadow:0_1px_3px_rgba(12,7,4,0.5)]">
-                  {t("mapSealCollectionLabel", language)} {completedCount}/{locations.length}
+                  {t("mapSealCollectionLabel", language)} {completedCount}/{activeLocations.length}
                 </p>
               </div>
 
@@ -478,6 +479,12 @@ export default function MapPage() {
           </div>
         </div>
       </div>
+
+      <RouteSelectionModal
+        open={routeLength === null}
+        language={language}
+        onSelect={setRouteLength}
+      />
 
       <MapClueOverlay
         isOpen={overlayLocation !== null && overlayMode !== null}

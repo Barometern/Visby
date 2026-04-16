@@ -33,6 +33,19 @@ const translations = {
     puzzleFirstStepBadge: 'First step',
     puzzleFirstStepGuide: 'Scan your first QR code to bring the board to life. The first piece is already shimmering and waiting for you.',
 
+    // Route selection
+    routeSelectTitle: 'Choose your route',
+    routeSelectSubtitle: 'Pick a length that suits your visit.',
+    routeShortLabel: 'Short route',
+    routeShortDesc: '10 stops · ~2 hours',
+    routeLongLabel: 'Long route',
+    routeLongDesc: '15 stops · ~3 hours',
+    routeChangeTitle: 'Change route?',
+    routeChangeWarning: 'This will reset your progress. You will start from the beginning.',
+    routeChangeConfirm: 'Yes, change',
+    routeShort: 'Short (10)',
+    routeLong: 'Long (15)',
+
     // Scan
     scanTitle: 'Scan a QR Code',
     scanInstructions: 'Point your camera at a Visby Quest QR code',
@@ -275,6 +288,19 @@ const translations = {
     puzzleFirstStepBadge: 'Första steget',
     puzzleFirstStepGuide: 'Skanna din första QR-kod för att väcka tavlan till liv. Den första biten skimrar redan och väntar på dig.',
 
+    // Route selection
+    routeSelectTitle: 'Välj din rutt',
+    routeSelectSubtitle: 'Välj en längd som passar ditt besök.',
+    routeShortLabel: 'Kort rutt',
+    routeShortDesc: '10 stopp · ca 2 timmar',
+    routeLongLabel: 'Lång rutt',
+    routeLongDesc: '15 stopp · ca 3 timmar',
+    routeChangeTitle: 'Byt rutt?',
+    routeChangeWarning: 'Det här återställer dina framsteg. Du börjar om från början.',
+    routeChangeConfirm: 'Ja, byt',
+    routeShort: 'Kort (10)',
+    routeLong: 'Lång (15)',
+
     scanTitle: 'Skanna en QR-kod',
     scanInstructions: 'Rikta din kamera mot en Visby Quest QR-kod',
     scanning: 'Skannar...',
@@ -446,7 +472,6 @@ const translations = {
     adminDeleteGeneric: 'Denna åtgärd kan inte ångras.',
 
     // Accessibility
-    close: 'Stäng',
     togglePassword: 'Växla lösenordsvisning',
 
     // Loading / empty states
@@ -509,6 +534,19 @@ const translations = {
     shareSaveCard: 'Bildkarte speichern',
     puzzleFirstStepBadge: 'Erster Schritt',
     puzzleFirstStepGuide: 'Scanne deinen ersten QR-Code, um die Tafel zum Leben zu erwecken. Das erste Teil schimmert bereits und wartet auf dich.',
+
+    // Route selection
+    routeSelectTitle: 'Wähle deine Route',
+    routeSelectSubtitle: 'Wähle eine Länge für deinen Besuch.',
+    routeShortLabel: 'Kurze Route',
+    routeShortDesc: '10 Stopps · ~2 Stunden',
+    routeLongLabel: 'Lange Route',
+    routeLongDesc: '15 Stopps · ~3 Stunden',
+    routeChangeTitle: 'Route wechseln?',
+    routeChangeWarning: 'Dein Fortschritt wird zurückgesetzt. Du fängst von vorne an.',
+    routeChangeConfirm: 'Ja, wechseln',
+    routeShort: 'Kurz (10)',
+    routeLong: 'Lang (15)',
 
     scanTitle: 'QR-Code Scannen',
     scanInstructions: 'Richte deine Kamera auf einen Visby Quest QR-Code',

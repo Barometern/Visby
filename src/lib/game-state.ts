@@ -82,6 +82,10 @@ interface GameState {
   hasPaid: boolean;
   userEmail: string;
 
+  routeLength: 10 | 15 | null;
+  activeLocations: LocationData[];
+  setRouteLength: (length: 10 | 15) => void;
+
   locations: LocationData[];
   scannedLocations: string[];
   unlockedPieces: number[];
@@ -97,6 +101,10 @@ interface GameState {
   updateLocation: (id: string, data: Partial<LocationData>) => Promise<void>;
   addLocation: (data: LocationData) => Promise<void>;
   removeLocation: (id: string) => Promise<void>;
+}
+
+function deriveActiveLocations(all: LocationData[], routeLength: 10 | 15 | null): LocationData[] {
+  return all.slice(0, routeLength ?? 10);
 }
 
 function deriveQuestTimestamps(
@@ -115,12 +123,12 @@ function deriveQuestTimestamps(
 }
 
 function applyUser(user: BackendUser, set: (partial: Partial<GameState>) => void, get: () => GameState) {
-  const locations = get().locations;
+  const activeLocations = get().activeLocations;
   const timestamps = deriveQuestTimestamps(
     get().questStartedAt,
     get().questCompletedAt,
     user.scannedLocations,
-    locations.length,
+    activeLocations.length,
   );
 
   set({
@@ -130,7 +138,7 @@ function applyUser(user: BackendUser, set: (partial: Partial<GameState>) => void
     hasPaid: user.hasPaid,
     userEmail: user.email,
     scannedLocations: user.scannedLocations,
-    unlockedPieces: deriveUnlockedPieces(locations, user.scannedLocations),
+    unlockedPieces: deriveUnlockedPieces(activeLocations, user.scannedLocations),
     ...timestamps,
     authError: undefined,
   });
@@ -150,11 +158,26 @@ export const useGameState = create<GameState>()(
       userEmail: '',
       isLoggedIn: false,
 
+      routeLength: null,
+      activeLocations: [],
+
       locations: [],
       scannedLocations: [],
       unlockedPieces: [],
       questStartedAt: null,
       questCompletedAt: null,
+
+      setRouteLength: (length) => {
+        const active = deriveActiveLocations(get().locations, length);
+        set({
+          routeLength: length,
+          activeLocations: active,
+          scannedLocations: [],
+          unlockedPieces: [],
+          questStartedAt: null,
+          questCompletedAt: null,
+        });
+      },
 
       bootstrapApp: async (defaults) => {
         set({ locationsStatus: 'loading', authStatus: 'loading' });
@@ -164,8 +187,10 @@ export const useGameState = create<GameState>()(
 
         // 🚀 instant paint from cache
         if (cached) {
+          const locs = cached.data.map(toLocationData);
           set({
-            locations: cached.data.map(toLocationData),
+            locations: locs,
+            activeLocations: deriveActiveLocations(locs, get().routeLength),
             locationsStatus: 'ready',
           });
         }
@@ -177,14 +202,17 @@ export const useGameState = create<GameState>()(
 
           saveCache(fresh);
 
+          const locs = fresh.map(toLocationData);
           set({
-            locations: fresh.map(toLocationData),
+            locations: locs,
+            activeLocations: deriveActiveLocations(locs, get().routeLength),
             locationsStatus: 'ready',
           });
         } catch (e) {
           if (!cached) {
             set({
               locations: fallback,
+              activeLocations: deriveActiveLocations(fallback, get().routeLength),
               locationsStatus: 'error',
               locationsError: 'Failed to load locations',
             });
@@ -210,11 +238,11 @@ export const useGameState = create<GameState>()(
             get().questStartedAt,
             get().questCompletedAt,
             next,
-            get().locations.length,
+            get().activeLocations.length,
           );
           set({
             scannedLocations: next,
-            unlockedPieces: deriveUnlockedPieces(get().locations, next),
+            unlockedPieces: deriveUnlockedPieces(get().activeLocations, next),
             ...timestamps,
           });
         }
@@ -227,12 +255,12 @@ export const useGameState = create<GameState>()(
           // rollback if needed
           set({
             scannedLocations: prev,
-            unlockedPieces: deriveUnlockedPieces(get().locations, prev),
+            unlockedPieces: deriveUnlockedPieces(get().activeLocations, prev),
             ...deriveQuestTimestamps(
               get().questStartedAt,
               get().questCompletedAt,
               prev,
-              get().locations.length,
+              get().activeLocations.length,
             ),
           });
           throw e;
@@ -284,23 +312,31 @@ export const useGameState = create<GameState>()(
         const nextLocations = currentLocations.map((loc) =>
           loc.id === id ? updatedLocation : loc,
         );
+        const nextActive = deriveActiveLocations(nextLocations, get().routeLength);
         set({
           locations: nextLocations,
-          unlockedPieces: deriveUnlockedPieces(nextLocations, get().scannedLocations),
+          activeLocations: nextActive,
+          unlockedPieces: deriveUnlockedPieces(nextActive, get().scannedLocations),
         });
       },
 
       addLocation: async (data) => {
         const res = await api.createLocation(data as BackendLocation);
-        set({ locations: [...get().locations, toLocationData(res.location)] });
+        const nextLocations = [...get().locations, toLocationData(res.location)];
+        set({
+          locations: nextLocations,
+          activeLocations: deriveActiveLocations(nextLocations, get().routeLength),
+        });
       },
 
       removeLocation: async (id) => {
         await api.deleteLocation(id);
         const nextLocations = get().locations.filter((loc) => loc.id !== id);
+        const nextActive = deriveActiveLocations(nextLocations, get().routeLength);
         set({
           locations: nextLocations,
-          unlockedPieces: deriveUnlockedPieces(nextLocations, get().scannedLocations),
+          activeLocations: nextActive,
+          unlockedPieces: deriveUnlockedPieces(nextActive, get().scannedLocations),
         });
       },
     }),
@@ -310,6 +346,7 @@ export const useGameState = create<GameState>()(
         language: s.language,
         questStartedAt: s.questStartedAt,
         questCompletedAt: s.questCompletedAt,
+        routeLength: s.routeLength,
       }),
     }
   )

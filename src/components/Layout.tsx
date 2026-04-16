@@ -9,11 +9,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
+import RouteSettingsDropdown from '@/components/RouteSettingsDropdown';
 
 const ADMIN_ENABLED = import.meta.env.DEV || import.meta.env.VITE_ENABLE_ADMIN === 'true';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { language, setLanguage, isLoggedIn, isAdmin, logout } = useGameState();
+  const { language, setLanguage, isLoggedIn, isAdmin, logout, routeLength, setRouteLength } = useGameState();
   const location = useLocation();
   const isHome = location.pathname === '/';
 
@@ -62,6 +63,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </nav>
 
             <div className="flex items-center gap-2">
+              <RouteSettingsDropdown
+                language={language}
+                routeLength={routeLength}
+                onChangeRoute={setRouteLength}
+              />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button

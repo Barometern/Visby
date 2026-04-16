@@ -308,5 +308,65 @@
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.64068897779912,18.296136211701384",
     "images": [],
     "scanCount": 0
+  },
+  {
+    "id": "loc-11",
+    "qrCode": "visby-quest-11",
+    "name": { "en": "Norderport", "sv": "Norderport", "de": "Norderport" },
+    "description": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
+    "readMore": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
+    "clue": { "en": "En gåta...", "sv": "En gåta...", "de": "En gåta..." },
+    "coordinates": { "lat": 57.6425, "lng": 18.2935 },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6425,18.2935",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-12",
+    "qrCode": "visby-quest-12",
+    "name": { "en": "Helge And", "sv": "Helge And", "de": "Helge And" },
+    "description": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
+    "readMore": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
+    "clue": { "en": "En gåta...", "sv": "En gåta...", "de": "En gåta..." },
+    "coordinates": { "lat": 57.6435, "lng": 18.2950 },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6435,18.295",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-13",
+    "qrCode": "visby-quest-13",
+    "name": { "en": "Östergravar", "sv": "Östergravar", "de": "Östergravar" },
+    "description": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
+    "readMore": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
+    "clue": { "en": "En gåta...", "sv": "En gåta...", "de": "En gåta..." },
+    "coordinates": { "lat": 57.6412, "lng": 18.2988 },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6412,18.2988",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-14",
+    "qrCode": "visby-quest-14",
+    "name": { "en": "Strandgatan", "sv": "Strandgatan", "de": "Strandgatan" },
+    "description": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
+    "readMore": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
+    "clue": { "en": "En gåta...", "sv": "En gåta...", "de": "En gåta..." },
+    "coordinates": { "lat": 57.6398, "lng": 18.2943 },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6398,18.2943",
+    "images": [],
+    "scanCount": 0
+  },
+  {
+    "id": "loc-15",
+    "qrCode": "visby-quest-15",
+    "name": { "en": "Fiskargränd", "sv": "Fiskargränd", "de": "Fiskargränd" },
+    "description": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
+    "readMore": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
+    "clue": { "en": "En gåta...", "sv": "En gåta...", "de": "En gåta..." },
+    "coordinates": { "lat": 57.6449, "lng": 18.2970 },
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6449,18.297",
+    "images": [],
+    "scanCount": 0
   }
 ]
