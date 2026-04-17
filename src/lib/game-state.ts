@@ -234,6 +234,10 @@ export const useGameState = create<GameState>()(
       },
 
       scanLocation: async (id) => {
+        if (!get().activeLocations.some((loc) => loc.id === id)) {
+          throw new Error('This location is not part of your current route.');
+        }
+
         const prev = get().scannedLocations;
 
         // ⚡ optimistic update

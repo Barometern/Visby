@@ -10,10 +10,10 @@ import { Button } from '@/components/ui/button';
 export default function LocationDetailPage() {
   const { locationId } = useParams<{ locationId: string }>();
   const navigate = useNavigate();
-  const { language, locations, locationsStatus } = useGameState();
+  const { language, locations, activeLocations, locationsStatus } = useGameState();
 
   const location = locations.find((item) => item.id === locationId);
-  const pieceIndex = locations.findIndex((item) => item.id === locationId);
+  const pieceIndex = activeLocations.findIndex((item) => item.id === locationId);
 
   if (!location) {
     if (locationsStatus === 'idle' || locationsStatus === 'loading') {
