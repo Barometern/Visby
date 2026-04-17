@@ -99,7 +99,7 @@ export default function MapPage() {
   const showHistoricMap = mapMode === "historic";
   const showModernImageMap = mapMode === "modernImage";
 
-  const completedCount = scannedLocations.length;
+  const completedCount = scannedLocations.filter((id) => activeLocations.some((loc) => loc.id === id)).length;
   const activeLocation = activeLocations.find((location) => !scannedLocations.includes(location.id)) ?? null;
   const activeLocationId = activeLocation?.id ?? null;
   const allLocationsCompleted = activeLocations.length > 0 && completedCount === activeLocations.length;

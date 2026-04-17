@@ -16,7 +16,7 @@ const SCAN_HINT_SEEN_KEY = 'visby-quest-scan-hint-seen';
 
 export default function ScanPage() {
   const {
-    language, isLoggedIn, hasPaid, scannedLocations, locations,
+    language, isLoggedIn, hasPaid, scannedLocations, locations, activeLocations,
     scanLocation, purchaseFullAccess,
   } = useGameState();
 
@@ -65,10 +65,10 @@ export default function ScanPage() {
   const freeScansLeft = Math.max(0, 2 - scannedLocations.length);
   const needsPayment = !hasPaid && scannedLocations.length >= 2;
   const scannedLocation = scannedLocationId
-    ? locations.find((location) => location.id === scannedLocationId) ?? null
+    ? activeLocations.find((location) => location.id === scannedLocationId) ?? null
     : null;
   const scannedPieceIndex = scannedLocation
-    ? locations.findIndex((location) => location.id === scannedLocation.id)
+    ? activeLocations.findIndex((location) => location.id === scannedLocation.id)
     : -1;
 
   const handleScan = async (decodedText: string) => {
