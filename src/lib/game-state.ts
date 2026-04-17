@@ -169,13 +169,18 @@ export const useGameState = create<GameState>()(
 
       setRouteLength: (length) => {
         const active = deriveActiveLocations(get().locations, length);
+        const scanned = get().scannedLocations;
+        const timestamps = deriveQuestTimestamps(
+          get().questStartedAt,
+          get().questCompletedAt,
+          scanned,
+          active.length,
+        );
         set({
           routeLength: length,
           activeLocations: active,
-          scannedLocations: [],
-          unlockedPieces: [],
-          questStartedAt: null,
-          questCompletedAt: null,
+          unlockedPieces: deriveUnlockedPieces(active, scanned),
+          ...timestamps,
         });
       },
 
