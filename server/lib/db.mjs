@@ -412,6 +412,38 @@ export async function ensureAdminUser({ email, passwordHash }) {
   return getUserByEmail(email);
 }
 
+export async function upsertLocation(location) {
+  await query(
+    `INSERT INTO locations (
+        id, qr_code, name_json, description_json, read_more_json,
+        clue_json, latitude, longitude, google_maps_url, images_json, scan_count
+      ) VALUES ($1,$2,$3::jsonb,$4::jsonb,$5::jsonb,$6::jsonb,$7,$8,$9,$10::jsonb,$11)
+      ON CONFLICT (id) DO UPDATE SET
+        qr_code          = EXCLUDED.qr_code,
+        name_json        = EXCLUDED.name_json,
+        description_json = EXCLUDED.description_json,
+        read_more_json   = EXCLUDED.read_more_json,
+        clue_json        = EXCLUDED.clue_json,
+        latitude         = EXCLUDED.latitude,
+        longitude        = EXCLUDED.longitude,
+        google_maps_url  = EXCLUDED.google_maps_url,
+        images_json      = EXCLUDED.images_json`,
+    [
+      location.id,
+      location.qrCode,
+      JSON.stringify(location.name),
+      JSON.stringify(location.description),
+      JSON.stringify(location.readMore),
+      JSON.stringify(location.clue),
+      location.coordinates.lat,
+      location.coordinates.lng,
+      location.googleMapsUrl,
+      JSON.stringify(location.images ?? []),
+      location.scanCount ?? 0,
+    ],
+  );
+}
+
 export async function addScanForUser(email, locationId) {
   let alreadyScanned = false;
 
