@@ -412,6 +412,13 @@ export async function ensureAdminUser({ email, passwordHash }) {
   return getUserByEmail(email);
 }
 
+export async function deleteLocationIfQrCodeMismatch(qrCode, expectedId) {
+  await query(
+    'DELETE FROM locations WHERE qr_code = $1 AND id != $2',
+    [qrCode, expectedId],
+  );
+}
+
 export async function upsertLocation(location) {
   await query(
     `INSERT INTO locations (
