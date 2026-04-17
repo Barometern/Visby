@@ -11,4 +11,7 @@ export interface LocationData {
   googleMapsUrl: string;
   images: string[];
   scanCount: number;
+  hints?: string[];
+  orderIndex?: number | null;
+  isDamaged?: boolean;
 }

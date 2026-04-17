@@ -98,6 +98,9 @@ interface GameState {
   logout: () => Promise<void>;
   purchaseFullAccess: () => Promise<void>;
   scanLocation: (id: string) => Promise<{ alreadyScanned: boolean }>;
+  manualCodeUnlock: (code: string) => Promise<{ locationId: string; alreadyScanned: boolean }>;
+  gpsUnlock: (locationId: string, lat: number, lng: number) => Promise<{ alreadyScanned: boolean }>;
+  reportDamaged: (locationId: string) => Promise<{ alreadyScanned: boolean }>;
   updateLocation: (id: string, data: Partial<LocationData>) => Promise<void>;
   addLocation: (data: LocationData) => Promise<void>;
   removeLocation: (id: string) => Promise<void>;
@@ -262,6 +265,87 @@ export const useGameState = create<GameState>()(
           return { alreadyScanned: res.alreadyScanned };
         } catch (e) {
           // rollback if needed
+          set({
+            scannedLocations: prev,
+            unlockedPieces: deriveUnlockedPieces(get().activeLocations, prev),
+            ...deriveQuestTimestamps(
+              get().questStartedAt,
+              get().questCompletedAt,
+              prev,
+              get().activeLocations.length,
+            ),
+          });
+          throw e;
+        }
+      },
+
+      manualCodeUnlock: async (code) => {
+        const prev = get().scannedLocations;
+        const res = await api.unlockByManualCode(code);
+        applyUser(res.user, set, get);
+        return { locationId: res.locationId, alreadyScanned: res.alreadyScanned };
+      },
+
+      gpsUnlock: async (locationId, lat, lng) => {
+        const prev = get().scannedLocations;
+
+        if (!prev.includes(locationId)) {
+          const next = [...prev, locationId];
+          const timestamps = deriveQuestTimestamps(
+            get().questStartedAt,
+            get().questCompletedAt,
+            next,
+            get().activeLocations.length,
+          );
+          set({
+            scannedLocations: next,
+            unlockedPieces: deriveUnlockedPieces(get().activeLocations, next),
+            ...timestamps,
+          });
+        }
+
+        try {
+          const res = await api.unlockByGps(locationId, lat, lng);
+          applyUser(res.user, set, get);
+          return { alreadyScanned: res.alreadyScanned };
+        } catch (e) {
+          set({
+            scannedLocations: prev,
+            unlockedPieces: deriveUnlockedPieces(get().activeLocations, prev),
+            ...deriveQuestTimestamps(
+              get().questStartedAt,
+              get().questCompletedAt,
+              prev,
+              get().activeLocations.length,
+            ),
+          });
+          throw e;
+        }
+      },
+
+      reportDamaged: async (locationId) => {
+        const prev = get().scannedLocations;
+
+        if (!prev.includes(locationId)) {
+          const next = [...prev, locationId];
+          const timestamps = deriveQuestTimestamps(
+            get().questStartedAt,
+            get().questCompletedAt,
+            next,
+            get().activeLocations.length,
+          );
+          set({
+            scannedLocations: next,
+            unlockedPieces: deriveUnlockedPieces(get().activeLocations, next),
+            ...timestamps,
+          });
+        }
+
+        try {
+          const res = await api.reportDamaged(locationId);
+          applyUser(res.user, set, get);
+          return { alreadyScanned: res.alreadyScanned };
+        } catch (e) {
           set({
             scannedLocations: prev,
             unlockedPieces: deriveUnlockedPieces(get().activeLocations, prev),

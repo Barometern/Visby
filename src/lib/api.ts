@@ -18,6 +18,15 @@ export interface BackendLocation {
   googleMapsUrl: string;
   images: string[];
   scanCount: number;
+  hints?: string[];
+  orderIndex?: number | null;
+  isDamaged?: boolean;
+}
+
+export interface UnlockResponse {
+  alreadyScanned: boolean;
+  locationId: string;
+  user: BackendUser;
 }
 
 export interface ScanResponse {
@@ -48,10 +57,19 @@ const backendLocationSchema = z.object({
   googleMapsUrl: z.string().url(),
   images: z.array(z.string()),
   scanCount: z.number(),
+  hints: z.array(z.string()).optional(),
+  orderIndex: z.number().nullable().optional(),
+  isDamaged: z.boolean().optional(),
 });
 
 const scanResponseSchema = z.object({
   alreadyScanned: z.boolean(),
+  user: backendUserSchema,
+});
+
+const unlockResponseSchema = z.object({
+  alreadyScanned: z.boolean(),
+  locationId: z.string(),
   user: backendUserSchema,
 });
 
@@ -134,5 +152,23 @@ export const api = {
     return apiRequest<{ ok: true }>(`/api/admin/locations/${locationId}`, {
       method: "DELETE",
     }, z.object({ ok: z.literal(true) }));
+  },
+  unlockByManualCode(code: string) {
+    return apiRequest<UnlockResponse>("/api/progress/manual-code", {
+      method: "POST",
+      body: JSON.stringify({ code }),
+    }, unlockResponseSchema);
+  },
+  unlockByGps(locationId: string, latitude: number, longitude: number) {
+    return apiRequest<UnlockResponse>("/api/progress/gps-unlock", {
+      method: "POST",
+      body: JSON.stringify({ locationId, latitude, longitude }),
+    }, unlockResponseSchema);
+  },
+  reportDamaged(locationId: string) {
+    return apiRequest<UnlockResponse>("/api/progress/report-damaged", {
+      method: "POST",
+      body: JSON.stringify({ locationId }),
+    }, unlockResponseSchema);
   },
 };

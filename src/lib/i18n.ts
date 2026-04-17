@@ -258,6 +258,30 @@ const translations = {
 
     // Puzzle page
     puzzleStartHint: 'Scan QR codes to unlock puzzle pieces',
+
+    // Failsafe system
+    failsafeLinkText: 'Is the ram guarding his secret?',
+    failsafeModalTitle: 'Balle Bagge wants to help',
+    failsafeModalSubtitle: 'Sometimes the stone itself resists. Fear not — there are other ways to prove your worth.',
+    failsafeManualTitle: 'Enter the quest code',
+    failsafeManualDesc: 'A short code is written on the sign next to the QR code.',
+    failsafeManualPlaceholder: 'e.g. BAGGE3',
+    failsafeManualSubmit: 'Unlock with code',
+    failsafeManualLoading: 'Checking the code\u2026',
+    failsafeManualErrorInvalid: 'Balle Bagge shakes his head. That code does not match your current destination.',
+    failsafeManualErrorNotFound: 'Balle Bagge searches his scrolls but finds nothing. Check the sign again.',
+    failsafeGpsTitle: 'I am standing at this location',
+    failsafeGpsDesc: 'The code on the sign is damaged, but you are here. Balle Bagge can sense your presence.',
+    failsafeGpsButton: 'Confirm my location',
+    failsafeGpsChecking: 'Balle Bagge is checking\u2026',
+    failsafeGpsErrorFar: 'Balle Bagge senses you are not quite there yet. Move a little closer and try again.',
+    failsafeGpsErrorDenied: 'Balle Bagge cannot read your position. Allow location access, or use the code on the sign instead.',
+    failsafeGpsErrorGeneral: 'Balle Bagge lost his compass. Try the code on the sign instead.',
+    failsafeReportTitle: 'The seal is broken or missing',
+    failsafeReportDesc: 'Report it and we will send someone to fix it. Your quest continues — and you help future adventurers.',
+    failsafeReportButton: 'Report damaged seal',
+    failsafeReportLoading: 'Sending report\u2026',
+    failsafeReportError: 'Balle Bagge could not send the report. Try again.',
   },
   sv: {
     home: 'Hem',
@@ -505,6 +529,30 @@ const translations = {
 
     // Puzzle page
     puzzleStartHint: 'Skanna QR-koder för att låsa upp pusselbitar',
+
+    // Failsafe system
+    failsafeLinkText: 'Vaktar baggen sin hemlighet?',
+    failsafeModalTitle: 'Balle Bagge vill hjälpa dig',
+    failsafeModalSubtitle: 'Ibland motarbetar stenen. Frukta ej — det finns andra vägar att bevisa ditt värde.',
+    failsafeManualTitle: 'Ange uppdragskoden',
+    failsafeManualDesc: 'En kort kod finns skriven på skylten bredvid QR-koden.',
+    failsafeManualPlaceholder: 'ex. BAGGE3',
+    failsafeManualSubmit: 'Lås upp med kod',
+    failsafeManualLoading: 'Kontrollerar koden\u2026',
+    failsafeManualErrorInvalid: 'Balle Bagge skakar på huvudet. Den koden passar inte din nuvarande destination.',
+    failsafeManualErrorNotFound: 'Balle Bagge letar i sina pergament men hittar ingenting. Kontrollera skylten igen.',
+    failsafeGpsTitle: 'Jag står på platsen',
+    failsafeGpsDesc: 'Koden på skylten är skadad, men du är här. Balle Bagge kan känna din närvaro.',
+    failsafeGpsButton: 'Bekräfta min position',
+    failsafeGpsChecking: 'Balle Bagge kontrollerar\u2026',
+    failsafeGpsErrorFar: 'Balle Bagge förnimmer att du inte riktigt är framme ännu. Gå lite närmare och försök igen.',
+    failsafeGpsErrorDenied: 'Balle Bagge kan inte läsa din position. Tillåt platsåtkomst, eller använd koden på skylten istället.',
+    failsafeGpsErrorGeneral: 'Balle Bagge tappade kompassen. Prova koden på skylten istället.',
+    failsafeReportTitle: 'Sigillet är brutet eller borta',
+    failsafeReportDesc: 'Rapportera det så skickar vi någon för att åtgärda det. Din resa fortsätter — och du hjälper framtida äventyrare.',
+    failsafeReportButton: 'Rapportera skadat sigill',
+    failsafeReportLoading: 'Skickar rapport\u2026',
+    failsafeReportError: 'Balle Bagge kunde inte skicka rapporten. Försök igen.',
   },
   de: {
     home: 'Startseite',
@@ -752,6 +800,30 @@ const translations = {
 
     // Puzzle page
     puzzleStartHint: 'Scanne QR-Codes, um Puzzleteile freizuschalten',
+
+    // Failsafe system
+    failsafeLinkText: 'Bewacht der Widder sein Geheimnis?',
+    failsafeModalTitle: 'Balle Bagge m\u00f6chte helfen',
+    failsafeModalSubtitle: 'Manchmal widersetzt sich der Stein. F\u00fcrchte nichts \u2014 es gibt andere Wege, deinen Mut zu beweisen.',
+    failsafeManualTitle: 'Aufgabencode eingeben',
+    failsafeManualDesc: 'Neben dem QR-Code steht ein kurzer Code auf dem Schild.',
+    failsafeManualPlaceholder: 'z.B. BAGGE3',
+    failsafeManualSubmit: 'Mit Code entsperren',
+    failsafeManualLoading: 'Code wird gepr\u00fcft\u2026',
+    failsafeManualErrorInvalid: 'Balle Bagge sch\u00fcttelt den Kopf. Dieser Code passt nicht zu deinem aktuellen Ziel.',
+    failsafeManualErrorNotFound: 'Balle Bagge durchsucht seine Schriftrollen, findet aber nichts. \u00dcberpr\u00fcfe das Schild.',
+    failsafeGpsTitle: 'Ich stehe an diesem Ort',
+    failsafeGpsDesc: 'Der Code auf dem Schild ist besch\u00e4digt, aber du bist hier. Balle Bagge sp\u00fcrt deine Anwesenheit.',
+    failsafeGpsButton: 'Meinen Standort best\u00e4tigen',
+    failsafeGpsChecking: 'Balle Bagge \u00fcberpr\u00fcft\u2026',
+    failsafeGpsErrorFar: 'Balle Bagge sp\u00fcrt, dass du noch nicht ganz da bist. Geh etwas n\u00e4her und versuche es erneut.',
+    failsafeGpsErrorDenied: 'Balle Bagge kann deinen Standort nicht lesen. Erlaube den Standortzugriff oder nutze stattdessen den Code auf dem Schild.',
+    failsafeGpsErrorGeneral: 'Balle Bagge hat seinen Kompass verloren. Versuche stattdessen den Code auf dem Schild.',
+    failsafeReportTitle: 'Das Siegel ist gebrochen oder fehlt',
+    failsafeReportDesc: 'Melde es und wir schicken jemanden zur Reparatur. Deine Quest geht weiter \u2014 und du hilfst k\u00fcnftigen Abenteurern.',
+    failsafeReportButton: 'Besch\u00e4digtes Siegel melden',
+    failsafeReportLoading: 'Bericht wird gesendet\u2026',
+    failsafeReportError: 'Balle Bagge konnte den Bericht nicht senden. Versuche es erneut.',
   },
 } as const;
 

@@ -3,13 +3,16 @@ import { randomBytes, randomUUID, scryptSync, timingSafeEqual } from "node:crypt
 import { createReadStream, existsSync } from "node:fs";
 import path from "node:path";
 import {
+  addDamageReport,
   addScanForUser,
   createLocation,
   createUser,
   deleteLocation,
   deleteSession,
   ensureAdminUser,
+  flagLocationDamaged,
   getLocationById,
+  getLocationByManualCode,
   getLocationByQrCode,
   getUserByEmail,
   getUserBySessionId,
@@ -392,6 +395,9 @@ function sanitizeLocation(location) {
     googleMapsUrl: location.googleMapsUrl,
     images: location.images,
     scanCount: location.scanCount,
+    hints: location.hints ?? [],
+    orderIndex: location.orderIndex ?? null,
+    isDamaged: Boolean(location.isDamaged),
   };
 }
 
@@ -402,6 +408,43 @@ function sanitizeUser(user) {
     hasPaid: user.hasPaid,
     scannedLocations: user.scannedLocations,
   };
+}
+
+function haversineMeters(lat1, lng1, lat2, lng2) {
+  const R = 6371000;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLng = ((lng2 - lng1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(a));
+}
+
+const GPS_UNLOCK_RADIUS_METERS = 75;
+
+async function notifyAdminDamageReport(locationId, userEmail) {
+  logWarn("damage_report.received", { locationId, userEmail });
+
+  const webhookUrl = process.env.ADMIN_WEBHOOK_URL;
+  if (!webhookUrl) return;
+
+  try {
+    await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event: "damage_report",
+        locationId,
+        userEmail,
+        timestamp: new Date().toISOString(),
+      }),
+    });
+  } catch (err) {
+    logError("damage_report.webhook_failed", {
+      locationId,
+      message: err instanceof Error ? err.message : "Unknown error",
+    });
+  }
 }
 
 async function requireUser(req) {
@@ -638,6 +681,177 @@ const server = createServer(async (req, res) => {
 
       sendJson(res, 200, {
         alreadyScanned: scanResult.alreadyScanned,
+        user: sanitizeUser(scanResult.user),
+      });
+      return;
+    }
+
+    if (req.method === "POST" && url.pathname === "/api/progress/manual-code") {
+      if (!enforceScanRateLimit(req, res)) return;
+
+      const result = await requireUser(req);
+
+      if ("error" in result) {
+        sendError(res, 401, "Please log in before using the manual code.", { path: url.pathname });
+        return;
+      }
+
+      const { code } = await parseJsonBody(req);
+
+      if (!code || typeof code !== "string" || !code.trim()) {
+        sendError(res, 400, "A code is required.", { path: url.pathname });
+        return;
+      }
+
+      if (!result.user.hasPaid && result.user.scannedLocations.length >= 2) {
+        sendError(res, 402, "You have used the free scans for this account.", {
+          path: url.pathname,
+          email: result.user.email,
+        });
+        return;
+      }
+
+      const location = await getLocationByManualCode(code.trim());
+
+      if (!location) {
+        sendError(res, 404, "no_location_found", { path: url.pathname });
+        return;
+      }
+
+      const allLocations = await listLocations();
+      const nextLocation = allLocations.find((loc) => !result.user.scannedLocations.includes(loc.id));
+
+      if (!nextLocation || nextLocation.id !== location.id) {
+        sendError(res, 422, "wrong_destination", { path: url.pathname, locationId: location.id });
+        return;
+      }
+
+      const scanResult = await addScanForUser(result.user.email, location.id, "manual_code");
+
+      sendJson(res, 200, {
+        alreadyScanned: scanResult.alreadyScanned,
+        locationId: location.id,
+        user: sanitizeUser(scanResult.user),
+      });
+      return;
+    }
+
+    if (req.method === "POST" && url.pathname === "/api/progress/gps-unlock") {
+      if (!enforceScanRateLimit(req, res)) return;
+
+      const result = await requireUser(req);
+
+      if ("error" in result) {
+        sendError(res, 401, "Please log in before using GPS unlock.", { path: url.pathname });
+        return;
+      }
+
+      const { locationId, latitude, longitude } = await parseJsonBody(req);
+
+      if (!locationId || !Number.isFinite(Number(latitude)) || !Number.isFinite(Number(longitude))) {
+        sendError(res, 400, "locationId, latitude, and longitude are required.", { path: url.pathname });
+        return;
+      }
+
+      if (!result.user.hasPaid && result.user.scannedLocations.length >= 2) {
+        sendError(res, 402, "You have used the free scans for this account.", {
+          path: url.pathname,
+          email: result.user.email,
+        });
+        return;
+      }
+
+      const location = await getLocationById(locationId);
+
+      if (!location) {
+        sendError(res, 404, "Location not found.", { path: url.pathname, locationId });
+        return;
+      }
+
+      const allLocations = await listLocations();
+      const nextLocation = allLocations.find((loc) => !result.user.scannedLocations.includes(loc.id));
+
+      if (!nextLocation || nextLocation.id !== locationId) {
+        sendError(res, 422, "wrong_destination", { path: url.pathname, locationId });
+        return;
+      }
+
+      const distanceMeters = haversineMeters(
+        Number(latitude),
+        Number(longitude),
+        location.coordinates.lat,
+        location.coordinates.lng,
+      );
+
+      if (distanceMeters > GPS_UNLOCK_RADIUS_METERS) {
+        sendError(res, 422, "too_far", {
+          path: url.pathname,
+          locationId,
+          distanceMeters: Math.round(distanceMeters),
+        });
+        return;
+      }
+
+      const scanResult = await addScanForUser(result.user.email, locationId, "gps");
+
+      sendJson(res, 200, {
+        alreadyScanned: scanResult.alreadyScanned,
+        locationId,
+        user: sanitizeUser(scanResult.user),
+      });
+      return;
+    }
+
+    if (req.method === "POST" && url.pathname === "/api/progress/report-damaged") {
+      if (!enforceScanRateLimit(req, res)) return;
+
+      const result = await requireUser(req);
+
+      if ("error" in result) {
+        sendError(res, 401, "Please log in before reporting a damaged code.", { path: url.pathname });
+        return;
+      }
+
+      const { locationId } = await parseJsonBody(req);
+
+      if (!locationId) {
+        sendError(res, 400, "locationId is required.", { path: url.pathname });
+        return;
+      }
+
+      if (!result.user.hasPaid && result.user.scannedLocations.length >= 2) {
+        sendError(res, 402, "You have used the free scans for this account.", {
+          path: url.pathname,
+          email: result.user.email,
+        });
+        return;
+      }
+
+      const location = await getLocationById(locationId);
+
+      if (!location) {
+        sendError(res, 404, "Location not found.", { path: url.pathname, locationId });
+        return;
+      }
+
+      const allLocations = await listLocations();
+      const nextLocation = allLocations.find((loc) => !result.user.scannedLocations.includes(loc.id));
+
+      if (!nextLocation || nextLocation.id !== locationId) {
+        sendError(res, 422, "wrong_destination", { path: url.pathname, locationId });
+        return;
+      }
+
+      const reportId = randomUUID();
+      await addDamageReport(reportId, result.user.email, locationId);
+      await flagLocationDamaged(locationId);
+      await notifyAdminDamageReport(locationId, result.user.email);
+
+      const scanResult = await addScanForUser(result.user.email, locationId, "damage_report");
+
+      sendJson(res, 200, {
+        alreadyScanned: scanResult.alreadyScanned,
+        locationId,
         user: sanitizeUser(scanResult.user),
       });
       return;

@@ -6,9 +6,10 @@ import { t } from '@/lib/i18n';
 
 interface QRScannerProps {
   onScan: (decodedText: string) => boolean | Promise<boolean>;
+  onFailsafe?: () => void;
 }
 
-export default function QRScanner({ onScan }: QRScannerProps) {
+export default function QRScanner({ onScan, onFailsafe }: QRScannerProps) {
   const { language } = useGameState();
   const [error, setError] = useState('');
   const [isScanning, setIsScanning] = useState(false);
@@ -136,6 +137,18 @@ export default function QRScanner({ onScan }: QRScannerProps) {
           />
         </div>
       </div>
+
+      {onFailsafe && (
+        <div className="mt-3 text-center">
+          <button
+            type="button"
+            onClick={onFailsafe}
+            className="font-body text-[11px] text-[#9a6b31]/50 transition-colors hover:text-[#9a6b31]/80 hover:underline underline-offset-2"
+          >
+            {t('failsafeLinkText', language)}
+          </button>
+        </div>
+      )}
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         <div className="rounded-2xl border border-[#d7ba87]/24 bg-[rgba(255,250,240,0.55)] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)]">
