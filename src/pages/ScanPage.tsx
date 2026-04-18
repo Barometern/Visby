@@ -5,6 +5,7 @@ import QRScanner from '@/components/QRScanner';
 import ScanRevealAnimation from '@/components/ScanRevealAnimation';
 import LocationScreen from '@/components/LocationScreen';
 import MascotGuide from '@/components/MascotGuide';
+import FailsafeModal from '@/components/FailsafeModal';
 import { playSuccessfulScanSound } from '@/lib/audio';
 import { useGameState } from '@/lib/game-state';
 import { t } from '@/lib/i18n';
@@ -19,6 +20,8 @@ export default function ScanPage() {
     language, isLoggedIn, hasPaid, scannedLocations, locations, activeLocations,
     scanLocation, purchaseFullAccess,
   } = useGameState();
+
+  const [failsafeOpen, setFailsafeOpen] = useState(false);
 
   const routeLocation = useLocation();
 
@@ -70,6 +73,7 @@ export default function ScanPage() {
   const scannedPieceIndex = scannedLocation
     ? activeLocations.findIndex((location) => location.id === scannedLocation.id)
     : -1;
+  const nextTargetLocation = activeLocations.find((loc) => !scannedLocations.includes(loc.id)) ?? null;
 
   const handleScan = async (decodedText: string) => {
     if (needsPayment) return true;
@@ -114,6 +118,13 @@ export default function ScanPage() {
 
   const handleRevealComplete = () => {
     setPhase('location');
+  };
+
+  const handleFailsafeUnlock = (locationId: string) => {
+    setFailsafeOpen(false);
+    setScannedLocationId(locationId);
+    playSuccessfulScanSound();
+    setPhase('reveal');
   };
 
   if (!isLoggedIn) {
@@ -162,7 +173,12 @@ export default function ScanPage() {
     <div className="container mx-auto max-w-5xl px-4 py-6 pb-24 sm:py-8">
       <section className="bg-[#F2E8D5] border-2 border-[#1C2E4A]/40 rounded-[16px] shadow-[4px_6px_0px_rgba(28,46,74,0.2)] p-5 text-[#2C1A0E] sm:p-6 transition-all duration-300">
         <div className="relative space-y-6">
-          {phase === 'scanning' && <QRScanner onScan={handleScan} />}
+          {phase === 'scanning' && (
+            <QRScanner
+              onScan={handleScan}
+              onFailsafe={() => setFailsafeOpen(true)}
+            />
+          )}
 
           {phase === 'scanning' && showFirstVisitHint && (
             <motion.div
@@ -284,6 +300,13 @@ export default function ScanPage() {
           />
         )}
       </AnimatePresence>
+
+      <FailsafeModal
+        open={failsafeOpen}
+        onClose={() => setFailsafeOpen(false)}
+        targetLocationId={nextTargetLocation?.id ?? null}
+        onUnlock={handleFailsafeUnlock}
+      />
     </div>
   );
 }

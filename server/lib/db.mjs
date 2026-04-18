@@ -32,6 +32,10 @@ function parseLocation(row) {
   return {
     id: row.id,
     qrCode: row.qr_code,
+    manualCode: row.manual_code ?? null,
+    orderIndex: row.order_index != null ? Number(row.order_index) : null,
+    hints: row.hints ?? [],
+    isDamaged: Boolean(row.is_damaged),
     name: row.name_json,
     description: row.description_json,
     readMore: row.read_more_json,
@@ -128,8 +132,24 @@ const MIGRATIONS = [
       );
     `,
   },
-  // Example of how to add future schema changes:
-  // { name: "002_add_display_name", sql: `ALTER TABLE users ADD COLUMN IF NOT EXISTS display_name TEXT;` },
+  {
+    name: "002_failsafe_fields",
+    sql: `
+      ALTER TABLE locations ADD COLUMN IF NOT EXISTS manual_code TEXT UNIQUE;
+      ALTER TABLE locations ADD COLUMN IF NOT EXISTS order_index INTEGER;
+      ALTER TABLE locations ADD COLUMN IF NOT EXISTS hints JSONB NOT NULL DEFAULT '[]';
+      ALTER TABLE locations ADD COLUMN IF NOT EXISTS is_damaged BOOLEAN NOT NULL DEFAULT FALSE;
+
+      ALTER TABLE scans ADD COLUMN IF NOT EXISTS scan_method TEXT NOT NULL DEFAULT 'qr';
+
+      CREATE TABLE IF NOT EXISTS damage_reports (
+        id TEXT PRIMARY KEY,
+        user_email TEXT NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+        location_id TEXT NOT NULL REFERENCES locations(id) ON DELETE CASCADE,
+        reported_at BIGINT NOT NULL
+      );
+    `,
+  },
 ];
 
 export async function initDb() {
@@ -451,7 +471,7 @@ export async function upsertLocation(location) {
   );
 }
 
-export async function addScanForUser(email, locationId) {
+export async function addScanForUser(email, locationId, scanMethod = 'qr') {
   let alreadyScanned = false;
 
   await runInTransaction(async (client) => {
@@ -471,10 +491,10 @@ export async function addScanForUser(email, locationId) {
 
     await client.query(
       `
-        INSERT INTO scans (user_email, location_id, scanned_at)
-        VALUES ($1, $2, $3)
+        INSERT INTO scans (user_email, location_id, scanned_at, scan_method)
+        VALUES ($1, $2, $3, $4)
       `,
-      [email, locationId, Date.now()],
+      [email, locationId, Date.now(), scanMethod],
     );
 
     await client.query(
@@ -491,4 +511,23 @@ export async function addScanForUser(email, locationId) {
     alreadyScanned,
     user: await getUserByEmail(email),
   };
+}
+
+export async function getLocationByManualCode(manualCode) {
+  const result = await query(
+    `SELECT * FROM locations WHERE UPPER(manual_code) = UPPER($1)`,
+    [manualCode.trim()],
+  );
+  return parseLocation(result.rows[0]);
+}
+
+export async function flagLocationDamaged(locationId) {
+  await query(`UPDATE locations SET is_damaged = TRUE WHERE id = $1`, [locationId]);
+}
+
+export async function addDamageReport(id, userEmail, locationId) {
+  await query(
+    `INSERT INTO damage_reports (id, user_email, location_id, reported_at) VALUES ($1, $2, $3, $4)`,
+    [id, userEmail, locationId, Date.now()],
+  );
 }
