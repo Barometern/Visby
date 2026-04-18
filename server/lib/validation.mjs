@@ -8,6 +8,25 @@ function normalizeString(value) {
   return typeof value === 'string' ? value.trim() : '';
 }
 
+function validateLocalizedClues(fieldName, value) {
+  const languages = ['en', 'sv', 'de'];
+  if (!value || typeof value !== 'object') {
+    return `${fieldName} must contain translated values.`;
+  }
+  for (const language of languages) {
+    const clues = value[language];
+    if (!Array.isArray(clues) || clues.length === 0) {
+      return `${fieldName}.${language} must be an array of at least one clue.`;
+    }
+    for (const clue of clues) {
+      if (!isNonEmptyString(clue, 600)) {
+        return `${fieldName}.${language} contains an invalid clue (empty or too long).`;
+      }
+    }
+  }
+  return null;
+}
+
 function validateLocalizedStrings(fieldName, value, max = 5000) {
   const languages = ['en', 'sv', 'de'];
 
@@ -59,7 +78,7 @@ export function validateLocationPayload(location) {
   const nameError = validateLocalizedStrings('name', location.name, 160);
   if (nameError) return { ok: false, error: nameError };
 
-  const clueError = validateLocalizedStrings('clue', location.clue, 600);
+  const clueError = validateLocalizedClues('clue', location.clue);
   if (clueError) return { ok: false, error: clueError };
 
   const descriptionError = validateLocalizedStrings('description', location.description, 2000);

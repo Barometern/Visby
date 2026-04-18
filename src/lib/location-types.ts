@@ -6,7 +6,7 @@ export interface LocationData {
   name: Record<Language, string>;
   description: Record<Language, string>;
   readMore: Record<Language, string>;
-  clue: Record<Language, string>;
+  clue: Record<Language, string[]>;
   coordinates: { lat: number; lng: number };
   googleMapsUrl: string;
   images: string[];

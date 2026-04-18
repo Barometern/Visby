@@ -28,6 +28,7 @@ export default function MapClueOverlay({
   onClose,
 }: MapClueOverlayProps) {
   const [confirmMaps, setConfirmMaps] = useState(false);
+  const [clueLevel, setClueLevel] = useState(0);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -44,6 +45,7 @@ export default function MapClueOverlay({
 
   useEffect(() => {
     setConfirmMaps(false);
+    setClueLevel(0);
   }, [isOpen, location?.id, mode]);
 
   if (!location || !mode) return null;
@@ -60,8 +62,12 @@ export default function MapClueOverlay({
     : isLocked
       ? t("mapLockedSealLabel", language)
       : t("mapDiscoveredPlace", language);
+  const clues = location.clue[language] ?? [];
+  const currentClue = clues[clueLevel] ?? clues[0] ?? '';
+  const clueCount = clues.length;
+
   const mascotText = isActiveClue
-    ? location.clue[language]
+    ? currentClue
     : isLocked
       ? t("mapLockedTeaser", language)
       : location.description[language];
@@ -129,9 +135,25 @@ export default function MapClueOverlay({
 
                   <div className="relative mt-5 rounded-[14px] border border-[#b58854]/24 bg-[rgba(255,251,243,0.44)] px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]">
                     <p className="pr-20 font-body text-[15px] leading-7 text-[#4e3422]">
-                      {location.clue[language]}
+                      {currentClue}
                     </p>
                   </div>
+
+                  {clueLevel < clueCount - 1 && (
+                    <div className="relative mt-3 flex items-center justify-between">
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8a6137]">
+                        {t("clueLevel", language)} {clueLevel + 1}/{clueCount}
+                      </span>
+                      <Button
+                        type="button"
+                        size="sm"
+                        onClick={() => setClueLevel((l) => l + 1)}
+                        className="h-8 rounded-[6px] border border-[#b28547]/30 bg-[#d6a153]/20 px-3 font-heading text-xs font-semibold text-[#6b4728] hover:bg-[#d6a153]/40"
+                      >
+                        {t("clueNextLevel", language)}
+                      </Button>
+                    </div>
+                  )}
 
                   <div className="relative mt-5 grid grid-cols-1 gap-3">
                     <Button
@@ -233,6 +255,22 @@ export default function MapClueOverlay({
                       />
                     </div>
                   </div>
+
+                  {isActiveClue && clueLevel < clueCount - 1 && (
+                    <div className="mt-3 flex items-center justify-between">
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#fbebc1]/70">
+                        {t("clueLevel", language)} {clueLevel + 1}/{clueCount}
+                      </span>
+                      <Button
+                        type="button"
+                        size="sm"
+                        onClick={() => setClueLevel((l) => l + 1)}
+                        className="h-8 rounded-[6px] border border-[#d5b06c]/30 bg-[#dca54a]/20 px-3 font-heading text-xs font-semibold text-[#fbebc1] hover:bg-[#dca54a]/40"
+                      >
+                        {t("clueNextLevel", language)}
+                      </Button>
+                    </div>
+                  )}
                 </motion.div>
 
                 <motion.div

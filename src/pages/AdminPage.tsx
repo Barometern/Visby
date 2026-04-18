@@ -70,7 +70,7 @@ export default function AdminPage() {
       name: { en: 'New Location', sv: 'Ny Plats', de: 'Neuer Standort' },
       description: { en: 'Description...', sv: 'Beskrivning...', de: 'Beschreibung...' },
       readMore: { en: 'More details...', sv: 'Mer detaljer...', de: 'Mehr Details...' },
-      clue: { en: 'A riddle...', sv: 'En gåta...', de: 'Ein Rätsel...' },
+      clue: { en: ['A riddle...', 'More specific clue...', 'Very specific clue...'], sv: ['En gåta...', 'En mer specifik ledtråd...', 'En väldigt specifik ledtråd...'], de: ['Ein Rätsel...', 'Genauerer Hinweis...', 'Sehr genauer Hinweis...'] },
       coordinates: { lat: 57.638, lng: 18.294 },
       googleMapsUrl: 'https://www.google.com/maps/dir/?api=1&destination=57.638,18.294',
       images: [],
@@ -235,14 +235,20 @@ export default function AdminPage() {
 
               <div>
                 <Label className="font-body">{t('adminClue', language)}</Label>
-                <Textarea
-                  value={draftLocation.clue[editLang]}
-                  onChange={(e) => updateDraft((current) => ({
-                    ...current,
-                    clue: { ...current.clue, [editLang]: e.target.value },
-                  }))}
-                  className="bg-background/50 font-body min-h-[90px]"
-                />
+                {[0, 1, 2].map((level) => (
+                  <div key={level} className="mt-2">
+                    <p className="mb-1 text-xs text-muted-foreground font-body">{t('clueLevel', language)} {level + 1}/3</p>
+                    <Textarea
+                      value={draftLocation.clue[editLang]?.[level] ?? ''}
+                      onChange={(e) => updateDraft((current) => {
+                        const clues = [...(current.clue[editLang] ?? ['', '', ''])];
+                        clues[level] = e.target.value;
+                        return { ...current, clue: { ...current.clue, [editLang]: clues } };
+                      })}
+                      className="bg-background/50 font-body min-h-[70px]"
+                    />
+                  </div>
+                ))}
               </div>
 
               <div>
