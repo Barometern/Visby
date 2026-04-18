@@ -48,6 +48,12 @@ function toLocalized(record: Record<string, string>): Record<Language, string> {
   ) as Record<Language, string>;
 }
 
+function toLocalizedArray(record: Record<string, string[]>): Record<Language, string[]> {
+  return Object.fromEntries(
+    LANGUAGES.map((lang) => [lang, record[lang] ?? []])
+  ) as Record<Language, string[]>;
+}
+
 function toLocationData(location: BackendLocation): LocationData {
   if (!location.id) throw new Error('Invalid location');
   return {
@@ -55,7 +61,7 @@ function toLocationData(location: BackendLocation): LocationData {
     name: toLocalized(location.name),
     description: toLocalized(location.description),
     readMore: toLocalized(location.readMore),
-    clue: toLocalized(location.clue),
+    clue: toLocalizedArray(location.clue),
   };
 }
 

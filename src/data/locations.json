@@ -18,9 +18,9 @@
       "de": "Information om platsen."
     },
     "clue": {
-      "en": "En gåta...",
-      "sv": "En gåta...",
-      "de": "En gåta..."
+      "sv": ["Förr vaggade skepp här vid kaj – nu viskar höga träd istället en sommardag.", "Leta efter en grön park alldeles vid hamnen, med skuggande träd och en liten damm full av änder.", "Gå till den lilla parken precis intill hamnen – den med bänkar runt dammen och höga gamla träd."],
+      "en": ["Förr vaggade skepp här vid kaj – nu viskar höga träd istället en sommardag.", "Leta efter en grön park alldeles vid hamnen, med skuggande träd och en liten damm full av änder.", "Gå till den lilla parken precis intill hamnen – den med bänkar runt dammen och höga gamla träd."],
+      "de": ["Förr vaggade skepp här vid kaj – nu viskar höga träd istället en sommardag.", "Leta efter en grön park alldeles vid hamnen, med skuggande träd och en liten damm full av änder.", "Gå till den lilla parken precis intill hamnen – den med bänkar runt dammen och höga gamla träd."]
     },
     "coordinates": {
       "lat": 57.6406419256486,
@@ -49,9 +49,9 @@
       "de": "Information om platsen."
     },
     "clue": {
-      "en": "En gåta...",
-      "sv": "En gåta...",
-      "de": "En gåta..."
+      "sv": ["Ett runt jättetorn av sten som förr sparade smällar istället för fikabröd – och dörren sitter inte där ni tror!", "Sök ett högt runt torn nära hamnen, byggt av ljus kalksten, utan någon dörr på marknivå.", "Hitta det stora runda tornet vid hamnen, ungefär 25 meter högt – titta upp mot toppen!"],
+      "en": ["Ett runt jättetorn av sten som förr sparade smällar istället för fikabröd – och dörren sitter inte där ni tror!", "Sök ett högt runt torn nära hamnen, byggt av ljus kalksten, utan någon dörr på marknivå.", "Hitta det stora runda tornet vid hamnen, ungefär 25 meter högt – titta upp mot toppen!"],
+      "de": ["Ett runt jättetorn av sten som förr sparade smällar istället för fikabröd – och dörren sitter inte där ni tror!", "Sök ett högt runt torn nära hamnen, byggt av ljus kalksten, utan någon dörr på marknivå.", "Hitta det stora runda tornet vid hamnen, ungefär 25 meter högt – titta upp mot toppen!"]
     },
     "coordinates": {
       "lat": 57.64218283048665,
@@ -80,9 +80,9 @@
       "de": "Information om platsen."
     },
     "clue": {
-      "en": "En gåta...",
-      "sv": "En gåta...",
-      "de": "En gåta..."
+      "sv": ["I en hemlig grön värld sover en liten kyrka under en mantel av murgröna, omgiven av blommor från fjärran länder.", "Leta efter trädgården strax innanför ringmuren med exotiska växter och en ruin helt täckt av klätterväxt.", "Gå till den stora trädgården nära stadsmuren där det växer ovanliga blommor och en liten ruin står mitt i grönskan."],
+      "en": ["I en hemlig grön värld sover en liten kyrka under en mantel av murgröna, omgiven av blommor från fjärran länder.", "Leta efter trädgården strax innanför ringmuren med exotiska växter och en ruin helt täckt av klätterväxt.", "Gå till den stora trädgården nära stadsmuren där det växer ovanliga blommor och en liten ruin står mitt i grönskan."],
+      "de": ["I en hemlig grön värld sover en liten kyrka under en mantel av murgröna, omgiven av blommor från fjärran länder.", "Leta efter trädgården strax innanför ringmuren med exotiska växter och en ruin helt täckt av klätterväxt.", "Gå till den stora trädgården nära stadsmuren där det växer ovanliga blommor och en liten ruin står mitt i grönskan."]
     },
     "coordinates": {
       "lat": 57.64369817974235,
@@ -111,9 +111,9 @@
       "de": "Information om platsen."
     },
     "clue": {
-      "en": "En gåta...",
-      "sv": "En gåta...",
-      "de": "En gåta..."
+      "sv": ["Där stadens långa stendrake slingrar sig norrut finns en lucka med torn – vågar ni klättra upp på drakens rygg?", "Leta norrut i stan efter en port med torn i ringmuren – här får man gå upp och promenera ovanpå själva muren.", "Gå till porten i den norra delen av ringmuren – den med ett torn och trappor upp till murkrönet."],
+      "en": ["Där stadens långa stendrake slingrar sig norrut finns en lucka med torn – vågar ni klättra upp på drakens rygg?", "Leta norrut i stan efter en port med torn i ringmuren – här får man gå upp och promenera ovanpå själva muren.", "Gå till porten i den norra delen av ringmuren – den med ett torn och trappor upp till murkrönet."],
+      "de": ["Där stadens långa stendrake slingrar sig norrut finns en lucka med torn – vågar ni klättra upp på drakens rygg?", "Leta norrut i stan efter en port med torn i ringmuren – här får man gå upp och promenera ovanpå själva muren.", "Gå till porten i den norra delen av ringmuren – den med ett torn och trappor upp till murkrönet."]
     },
     "coordinates": {
       "lat": 57.64667546271741,
@@ -142,9 +142,9 @@
       "de": "Information om platsen."
     },
     "clue": {
-      "en": "En gåta...",
-      "sv": "En gåta...",
-      "de": "En gåta..."
+      "sv": ["En mäktig kyrka där himlen är tak och molnen är altarkläde – i gaveln kikar två runda rosor av sten.", "Sök en stor kyrkoruin utan tak, med två enorma runda fönster som stenrosor högt upp i ena gaveln.", "Gå till den stora kyrkoruinen där himlen syns rakt ovanför och två runda rosettfönster pryder gavelväggen."],
+      "en": ["En mäktig kyrka där himlen är tak och molnen är altarkläde – i gaveln kikar två runda rosor av sten.", "Sök en stor kyrkoruin utan tak, med två enorma runda fönster som stenrosor högt upp i ena gaveln.", "Gå till den stora kyrkoruinen där himlen syns rakt ovanför och två runda rosettfönster pryder gavelväggen."],
+      "de": ["En mäktig kyrka där himlen är tak och molnen är altarkläde – i gaveln kikar två runda rosor av sten.", "Sök en stor kyrkoruin utan tak, med två enorma runda fönster som stenrosor högt upp i ena gaveln.", "Gå till den stora kyrkoruinen där himlen syns rakt ovanför och två runda rosettfönster pryder gavelväggen."]
     },
     "coordinates": {
       "lat": 57.64410988530589,
@@ -173,9 +173,9 @@
       "de": "Information om platsen."
     },
     "clue": {
-      "en": "En gåta...",
-      "sv": "En gåta...",
-      "de": "En gåta..."
+      "sv": ["Tre spiror sträcker sig mot skyn, en högre än de andra – här ringer klockor fortfarande när bönerna vandrar.", "Leta efter den stora gul-vita kyrkan med hela tre torn – den enda i stan där det fortfarande hålls gudstjänst.", "Gå till domkyrkan med tre torn och gul fasad – det högsta tornet är hela 58 meter."],
+      "en": ["Tre spiror sträcker sig mot skyn, en högre än de andra – här ringer klockor fortfarande när bönerna vandrar.", "Leta efter den stora gul-vita kyrkan med hela tre torn – den enda i stan där det fortfarande hålls gudstjänst.", "Gå till domkyrkan med tre torn och gul fasad – det högsta tornet är hela 58 meter."],
+      "de": ["Tre spiror sträcker sig mot skyn, en högre än de andra – här ringer klockor fortfarande när bönerna vandrar.", "Leta efter den stora gul-vita kyrkan med hela tre torn – den enda i stan där det fortfarande hålls gudstjänst.", "Gå till domkyrkan med tre torn och gul fasad – det högsta tornet är hela 58 meter."]
     },
     "coordinates": {
       "lat": 57.641668916480064,
@@ -204,9 +204,9 @@
       "de": "Information om platsen."
     },
     "clue": {
-      "en": "En gåta...",
-      "sv": "En gåta...",
-      "de": "En gåta..."
+      "sv": ["Uppför en brant stentrappa väntar en liten grön oas – härifrån ser ni taken som en röd vågig matta.", "Sök en liten park högt uppe på Klinten – ni måste ta trappor upp för kullerstensgatan för att komma dit.", "Gå uppför trapporna på kullerstensgatan tills ni når en liten park med fin utsikt över hela stan."],
+      "en": ["Uppför en brant stentrappa väntar en liten grön oas – härifrån ser ni taken som en röd vågig matta.", "Sök en liten park högt uppe på Klinten – ni måste ta trappor upp för kullerstensgatan för att komma dit.", "Gå uppför trapporna på kullerstensgatan tills ni når en liten park med fin utsikt över hela stan."],
+      "de": ["Uppför en brant stentrappa väntar en liten grön oas – härifrån ser ni taken som en röd vågig matta.", "Sök en liten park högt uppe på Klinten – ni måste ta trappor upp för kullerstensgatan för att komma dit.", "Gå uppför trapporna på kullerstensgatan tills ni når en liten park med fin utsikt över hela stan."]
     },
     "coordinates": {
       "lat": 57.639944104511585,
@@ -235,9 +235,9 @@
       "de": "Information om platsen."
     },
     "clue": {
-      "en": "En gåta...",
-      "sv": "En gåta...",
-      "de": "En gåta..."
+      "sv": ["Stadens äldsta vakt står i öster, fem våningar stark – förr red handelsmän in genom dess mörka valv.", "Leta efter det största porttornet i öster – byggt av kalksten och äldst av alla stadens portar.", "Gå till den stora östra porten i ringmuren – ett högt torn med fem våningar där man förr red in i staden."],
+      "en": ["Stadens äldsta vakt står i öster, fem våningar stark – förr red handelsmän in genom dess mörka valv.", "Leta efter det största porttornet i öster – byggt av kalksten och äldst av alla stadens portar.", "Gå till den stora östra porten i ringmuren – ett högt torn med fem våningar där man förr red in i staden."],
+      "de": ["Stadens äldsta vakt står i öster, fem våningar stark – förr red handelsmän in genom dess mörka valv.", "Leta efter det största porttornet i öster – byggt av kalksten och äldst av alla stadens portar.", "Gå till den stora östra porten i ringmuren – ett högt torn med fem våningar där man förr red in i staden."]
     },
     "coordinates": {
       "lat": 57.638496416394666,
@@ -266,9 +266,9 @@
       "de": "Information om platsen."
     },
     "clue": {
-      "en": "En gåta...",
-      "sv": "En gåta...",
-      "de": "En gåta..."
+      "sv": ["Ett hus smalt som en pilspets, format som mormors hetaste redskap – men här stryks inga skjortor, bara tunna pannkakor.", "Sök ett konstigt kilformat hus vid Wallérs plats – spetsigt och smalt, precis som ett stort strykjärn.", "Hitta det smala spetsiga huset vid Wallérs plats där man serverar franska pannkakor (crêpes)."],
+      "en": ["Ett hus smalt som en pilspets, format som mormors hetaste redskap – men här stryks inga skjortor, bara tunna pannkakor.", "Sök ett konstigt kilformat hus vid Wallérs plats – spetsigt och smalt, precis som ett stort strykjärn.", "Hitta det smala spetsiga huset vid Wallérs plats där man serverar franska pannkakor (crêpes)."],
+      "de": ["Ett hus smalt som en pilspets, format som mormors hetaste redskap – men här stryks inga skjortor, bara tunna pannkakor.", "Sök ett konstigt kilformat hus vid Wallérs plats – spetsigt och smalt, precis som ett stort strykjärn.", "Hitta det smala spetsiga huset vid Wallérs plats där man serverar franska pannkakor (crêpes)."]
     },
     "coordinates": {
       "lat": 57.63874382346324,
@@ -297,9 +297,9 @@
       "de": "Information om platsen."
     },
     "clue": {
-      "en": "En gåta...",
-      "sv": "En gåta...",
-      "de": "En gåta..."
+      "sv": ["Stadens hjärta slår här, omringat av caféernas dofter – och en taklös kyrka står vakt som ett stort stenspöke.", "Leta efter stadens största öppna torg, kantat av caféer, med en kyrkoruin som vakar på ena sidan.", "Gå till det stora torget mitt i stan – på vintern ligger här en isbana, och ruinen av Sankta Karin står bredvid."],
+      "en": ["Stadens hjärta slår här, omringat av caféernas dofter – och en taklös kyrka står vakt som ett stort stenspöke.", "Leta efter stadens största öppna torg, kantat av caféer, med en kyrkoruin som vakar på ena sidan.", "Gå till det stora torget mitt i stan – på vintern ligger här en isbana, och ruinen av Sankta Karin står bredvid."],
+      "de": ["Stadens hjärta slår här, omringat av caféernas dofter – och en taklös kyrka står vakt som ett stort stenspöke.", "Leta efter stadens största öppna torg, kantat av caféer, med en kyrkoruin som vakar på ena sidan.", "Gå till det stora torget mitt i stan – på vintern ligger här en isbana, och ruinen av Sankta Karin står bredvid."]
     },
     "coordinates": {
       "lat": 57.64068897779912,
@@ -315,7 +315,7 @@
     "name": { "en": "Norderport", "sv": "Norderport", "de": "Norderport" },
     "description": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
     "readMore": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
-    "clue": { "en": "En gåta...", "sv": "En gåta...", "de": "En gåta..." },
+    "clue": { "sv": ["En gåta..."], "en": ["En gåta..."], "de": ["En gåta..."] },
     "coordinates": { "lat": 57.6425, "lng": 18.2935 },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6425,18.2935",
     "images": [],
@@ -327,7 +327,7 @@
     "name": { "en": "Helge And", "sv": "Helge And", "de": "Helge And" },
     "description": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
     "readMore": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
-    "clue": { "en": "En gåta...", "sv": "En gåta...", "de": "En gåta..." },
+    "clue": { "sv": ["En gåta..."], "en": ["En gåta..."], "de": ["En gåta..."] },
     "coordinates": { "lat": 57.6435, "lng": 18.2950 },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6435,18.295",
     "images": [],
@@ -339,7 +339,7 @@
     "name": { "en": "Östergravar", "sv": "Östergravar", "de": "Östergravar" },
     "description": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
     "readMore": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
-    "clue": { "en": "En gåta...", "sv": "En gåta...", "de": "En gåta..." },
+    "clue": { "sv": ["En gåta..."], "en": ["En gåta..."], "de": ["En gåta..."] },
     "coordinates": { "lat": 57.6412, "lng": 18.2988 },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6412,18.2988",
     "images": [],
@@ -351,7 +351,7 @@
     "name": { "en": "Strandgatan", "sv": "Strandgatan", "de": "Strandgatan" },
     "description": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
     "readMore": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
-    "clue": { "en": "En gåta...", "sv": "En gåta...", "de": "En gåta..." },
+    "clue": { "sv": ["En gåta..."], "en": ["En gåta..."], "de": ["En gåta..."] },
     "coordinates": { "lat": 57.6398, "lng": 18.2943 },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6398,18.2943",
     "images": [],
@@ -363,7 +363,7 @@
     "name": { "en": "Fiskargränd", "sv": "Fiskargränd", "de": "Fiskargränd" },
     "description": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
     "readMore": { "en": "Information om platsen.", "sv": "Information om platsen.", "de": "Information om platsen." },
-    "clue": { "en": "En gåta...", "sv": "En gåta...", "de": "En gåta..." },
+    "clue": { "sv": ["En gåta..."], "en": ["En gåta..."], "de": ["En gåta..."] },
     "coordinates": { "lat": 57.6449, "lng": 18.2970 },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6449,18.297",
     "images": [],

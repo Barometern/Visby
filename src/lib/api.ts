@@ -13,7 +13,7 @@ export interface BackendLocation {
   name: Record<string, string>;
   description: Record<string, string>;
   readMore: Record<string, string>;
-  clue: Record<string, string>;
+  clue: Record<string, string[]>;
   coordinates: { lat: number; lng: number };
   googleMapsUrl: string;
   images: string[];
@@ -40,7 +40,7 @@ const backendLocationSchema = z.object({
   name: localizedRecordSchema,
   description: localizedRecordSchema,
   readMore: localizedRecordSchema,
-  clue: localizedRecordSchema,
+  clue: z.record(z.string(), z.array(z.string())),
   coordinates: z.object({
     lat: z.number(),
     lng: z.number(),
