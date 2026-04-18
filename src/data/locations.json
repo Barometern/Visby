@@ -27,7 +27,7 @@
       "lng": 18.290298024859133
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6406419256486,18.290298024859133",
-    "images": [],
+    "images": ["https://commons.wikimedia.org/wiki/Special:FilePath/Olof_Palme_Almedalen_1968.jpg"],
     "scanCount": 0
   },
   {
@@ -58,7 +58,7 @@
       "lng": 18.2914973473632
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.64218283048665,18.2914973473632",
-    "images": [],
+    "images": ["https://commons.wikimedia.org/wiki/Special:FilePath/Kruttornet_Visby.jpg"],
     "scanCount": 0
   },
   {
@@ -89,7 +89,7 @@
       "lng": 18.29400610346525
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.64369817974235,18.29400610346525",
-    "images": [],
+    "images": ["https://commons.wikimedia.org/wiki/Special:FilePath/Visby_botanical_garden_2.jpg"],
     "scanCount": 0
   },
   {
@@ -120,7 +120,7 @@
       "lng": 18.2962481173517
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.64667546271741,18.2962481173517",
-    "images": [],
+    "images": ["https://commons.wikimedia.org/wiki/Special:FilePath/Snäckgärdsporten_Visby.jpg"],
     "scanCount": 0
   },
   {
@@ -151,7 +151,7 @@
       "lng": 18.298517371558123
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.64410988530589,18.298517371558123",
-    "images": [],
+    "images": ["https://mm.dimu.org/image/0210412380657"],
     "scanCount": 0
   },
   {
@@ -182,7 +182,7 @@
       "lng": 18.297641439347583
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.641668916480064,18.297641439347583",
-    "images": [],
+    "images": ["https://mm.dimu.org/image/0210213402179"],
     "scanCount": 0
   },
   {
@@ -213,7 +213,7 @@
       "lng": 18.297040950719776
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.639944104511585,18.297040950719776",
-    "images": [],
+    "images": ["https://commons.wikimedia.org/wiki/Special:FilePath/Klinten_Visby.jpg"],
     "scanCount": 0
   },
   {
@@ -244,7 +244,7 @@
       "lng": 18.298438963420132
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.638496416394666,18.298438963420132",
-    "images": [],
+    "images": ["https://commons.wikimedia.org/wiki/Special:FilePath/%C3%96sterport%2C_Visby%2C_1880s.jpg"],
     "scanCount": 0
   },
   {
@@ -275,7 +275,7 @@
       "lng": 18.295835156791405
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.63874382346324,18.295835156791405",
-    "images": [],
+    "images": ["https://mm.dimu.org/image/011013844321"],
     "scanCount": 0
   },
   {
@@ -306,7 +306,7 @@
       "lng": 18.296136211701384
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.64068897779912,18.296136211701384",
-    "images": [],
+    "images": ["https://mm.dimu.org/image/0210413938127", "https://mm.dimu.org/image/0210116511383"],
     "scanCount": 0
   },
   {
