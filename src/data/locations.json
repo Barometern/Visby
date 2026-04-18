@@ -9,12 +9,12 @@
     },
     "description": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Almedalen är en grönskande park mitt i Visby, men här låg en gång stadens medeltida hamn. På 1100- och 1200-talet lade Hansans handelsskepp till här med varor från hela Östersjön. När havet drog sig tillbaka (Gotland höjer sig ungefär 2,5 mm per år!) blev hamnen för grund, och på 1870-talet planterades almar — och området fick sitt namn. Den 25 juli 1968 hoppade politikern Olof Palme upp på ett lastbilsflak och höll ett tal — så föddes Almedalsveckan, Sveriges största politikerfestival.",
       "de": "Information om platsen."
     },
     "readMore": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Marken du står på var en gång havsbotten, och arkeologer har grävt upp medeltida träbryggor precis under parken!",
       "de": "Information om platsen."
     },
     "clue": {
@@ -40,12 +40,12 @@
     },
     "description": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Kruttornet är ett av Nordens äldsta bevarade världsliga hus, byggt omkring år 1150 — nästan 900 år gammalt. Det restes vid medeltidshamnens norra infart långt innan ringmuren fanns. Tornet är omkring 25 meter högt med enormt tjocka kalkstensmurar. Det har ingen dörr på marken — bara en liten lucka högt upp där vakterna klättrade in på en stege som sedan drogs in. På 1700-talet fylldes tornet med krut för att försvara Gotland mot ryssarna, och då fick det sitt nuvarande namn.",
       "de": "Information om platsen."
     },
     "readMore": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "En enda gnista kunde ha fått hela tornet att flyga i luften på 1700-talet!",
       "de": "Information om platsen."
     },
     "clue": {
@@ -65,18 +65,18 @@
     "id": "loc-3",
     "qrCode": "visby-quest-3",
     "name": {
-      "en": "Botaniska",
-      "sv": "Botaniska",
-      "de": "Botaniska"
+      "en": "Botaniska trädgården",
+      "sv": "Botaniska trädgården",
+      "de": "Botaniska trädgården"
     },
     "description": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Visby botaniska trädgård, kallad \"Botan\", grundades 1855 av sällskapet De Badande Vännerna — ett gäng herrar som började träffas redan 1814 för att bada tillsammans i havet! Mitt i trädgården reser sig kyrkoruinen S:t Olof, täckt av Sveriges kanske mäktigaste murgröna. Eftersom ringmuren skyddar mot kyla växer här mullbärsträd, fikon, valnötter och till och med palmer. År 2005, till 150-årsjubileet, fick trädgården en helt egen ros som heter \"Visby\".",
       "de": "Information om platsen."
     },
     "readMore": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Här finns aptrollet (Araucaria araucana) — ett träd med så vassa grenar att inte ens apor kan klättra i det!",
       "de": "Information om platsen."
     },
     "clue": {
@@ -102,12 +102,12 @@
     },
     "description": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Snäckgärdsporten byggdes 1294 och är en av ringmurens tre äldsta portar (efter Österport och Norderport). Namnet kommer från Snäckgärdet, betesmarkerna utanför muren — än idag går folk genom porten för att bada vid Snäck. I portvalvet syns djupa spår där man kunde släppa ner ett tungt järngaller, ett fällgaller, för att stoppa fiender. På 1800-talet var tornet inte längre ett försvar utan ett fint sommarkafé där gäster serverades kaffe och thé inne i medeltidsmurarna!",
       "de": "Information om platsen."
     },
     "readMore": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Sedan 2009 kan du klättra upp i tornet och gå på muren som en riktig medeltida vaktsoldat — första gången på 700 år!",
       "de": "Information om platsen."
     },
     "clue": {
@@ -127,18 +127,18 @@
     "id": "loc-5",
     "qrCode": "visby-quest-5",
     "name": {
-      "en": "St Nicolai",
-      "sv": "St Nicolai",
-      "de": "St Nicolai"
+      "en": "Sankt Nicolai",
+      "sv": "Sankt Nicolai",
+      "de": "Sankt Nicolai"
     },
     "description": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Sankt Nicolai började byggas omkring 1220 och togs över av dominikanerna, munkar i svarta kåpor som kallades \"svartbröderna\" — det var deras första kloster i Sverige. År 1525 brändes kyrkan när trupper från Lübeck anföll Visby, och sedan dess har den stått som ruin. I västgaveln sitter två stora rosettfönster. Enligt sägnen satt där en gång gigantiska röda karbunkelstenar som lyste så starkt att sjömän långt ute på havet kunde se Visby.",
       "de": "Information om platsen."
     },
     "readMore": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "När danske kung Valdemar Atterdag stal karbunklarna år 1361 sjönk hans skepp vid Karlsöarna — sägen säger att stenarna fortfarande blinkar på havsbotten!",
       "de": "Information om platsen."
     },
     "clue": {
@@ -158,18 +158,18 @@
     "id": "loc-6",
     "qrCode": "visby-quest-6",
     "name": {
-      "en": "Domkyrkan",
-      "sv": "Domkyrkan",
-      "de": "Domkyrkan"
+      "en": "Domkyrkan Sankta Maria",
+      "sv": "Domkyrkan Sankta Maria",
+      "de": "Domkyrkan Sankta Maria"
     },
     "description": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Visby domkyrka invigdes den 27 juli 1225 och är den enda medeltida kyrkan i Visby som fortfarande används. Den byggdes av tyska handelsmän och bekostades av avgifter från Hansans skepp — varje köpmansskepp som kom till hamnen var tvunget att bidra, och därför tog bygget över 50 år! Kyrkan har tre torn: ett fyrkantigt västtorn på 58 meter och två smala östtorn med barockspiror från 1761. Högt uppe på vinden förvarade medeltida köpmän pengakistor och handelsvaror.",
       "de": "Information om platsen."
     },
     "readMore": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Dopfunten av kalksten är från 1100-talet — äldre än själva kyrkan!",
       "de": "Information om platsen."
     },
     "clue": {
@@ -195,12 +195,12 @@
     },
     "description": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Högt uppe på Klinten, stadsdelen ovanför Stora torget, slingrar sig Trappgatan mellan små trähus från 1780-talet. Vid utsiktsplatsen kan du se hela Visby samtidigt: röda tak, domkyrkans torn, kyrkoruinerna och Östersjön. Förr bodde Visbys fattigaste här, och det fanns inget vatten på berget — folk fick klättra 40 meter ner till Stora torget varje dag för att hämta vatten! Först 1855 borrades en brunn, och 1868 höggs Brunnsporten ut ur ringmuren för att underlätta.",
       "de": "Information om platsen."
     },
     "readMore": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Pippi Långstrumpfilmerna spelades delvis in på Klintens kullerstensgränder — gå här och låtsas vara Pippi!",
       "de": "Information om platsen."
     },
     "clue": {
@@ -226,12 +226,12 @@
     },
     "description": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Österport är Visbys största porttorn, byggt redan omkring 1286 — det äldsta av ringmurens portar enligt årsringsdatering. Genom porten kom bönder från hela Gotland med oxkärror, varor och djur till stadens marknader. Det fem våningar höga tornet har till och med en medeltida toalett inne i muren — för vakterna bodde och sov där dygnet runt! En gång kröntes porten av en vacker spira, men den brann ner 1610 och byggdes aldrig upp igen. På 1700-talet breddades pilskårorna för att kanoner skulle få plats.",
       "de": "Information om platsen."
     },
     "readMore": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Den enda original-träporten från hela ringmuren är Österports gamla dörr — den finns bevarad på Gotlands museum!",
       "de": "Information om platsen."
     },
     "clue": {
@@ -257,12 +257,12 @@
     },
     "description": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Det kilformade huset vid Wallérs plats kallas \"Strykjärnet\" för att det ser ut precis som ett gammaldags strykjärn! Huset byggdes omkring år 1750 med en trästomme som kallas bulhus. Genom århundradena har här funnits kopparslagare, hattmakare, antikaffär, keramikverkstad — och en snickare som byggde likkistor på 1910-talet. På 1950-talet blev Kafé Strykjärnet Visbys första kafé med TV, och folk trängdes för att se frågesporten \"10 000-kronorsfrågan\". Sedan 2006 är huset en crêperie.",
       "de": "Information om platsen."
     },
     "readMore": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Det sägs vara ett av Visbys mest fotograferade hus — och står precis där medeltidens enda naturliga passage mellan övre och nedre staden låg.",
       "de": "Information om platsen."
     },
     "clue": {
@@ -288,12 +288,12 @@
     },
     "description": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Stora Torget är Visbys centrala mötesplats, anlagt på 1300-talet. Här ligger den vackra kyrkoruinen Sankta Karin, grundad 1233 som Sveriges första franciskanerkloster. År 1924 hittade arkeologer en 4 000 år gammal stenåldersboplats rakt under torget! På 1500-talet rasade sex av kyrkans valv under en söndagsmässa — efter det vågade ingen hålla gudstjänst där mer. Idag är torget fullt av caféer, och under Medeltidsveckan i augusti förvandlas det till en riktig medeltida marknad med riddare och gycklare.",
       "de": "Information om platsen."
     },
     "readMore": {
       "en": "Information om platsen.",
-      "sv": "Information om platsen.",
+      "sv": "Varje vinter blir Sankta Karins ruin en gratis isbana — du kan åka skridskor inne i en nästan 800 år gammal kyrka!",
       "de": "Information om platsen."
     },
     "clue": {
