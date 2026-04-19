@@ -272,7 +272,7 @@ export async function listLocations() {
     `
       SELECT *
       FROM locations
-      ORDER BY created_at ASC, id ASC
+      ORDER BY order_index ASC NULLS LAST, created_at ASC, id ASC
     `,
   );
 
