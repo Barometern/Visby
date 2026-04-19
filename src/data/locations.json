@@ -28,7 +28,9 @@
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6406419256486,18.290298024859133",
     "images": ["https://commons.wikimedia.org/wiki/Special:FilePath/Olof_Palme_Almedalen_1968.jpg"],
-    "scanCount": 0
+    "scanCount": 0,
+    "manualCode": "BAGGE1",
+    "orderIndex": 1
   },
   {
     "id": "loc-2",
@@ -59,7 +61,9 @@
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.64218283048665,18.2914973473632",
     "images": ["https://commons.wikimedia.org/wiki/Special:FilePath/Kruttornet_Visby.jpg"],
-    "scanCount": 0
+    "scanCount": 0,
+    "manualCode": "BAGGE2",
+    "orderIndex": 2
   },
   {
     "id": "loc-3",
@@ -90,7 +94,9 @@
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.64369817974235,18.29400610346525",
     "images": ["https://commons.wikimedia.org/wiki/Special:FilePath/Visby_botanical_garden_2.jpg"],
-    "scanCount": 0
+    "scanCount": 0,
+    "manualCode": "BAGGE3",
+    "orderIndex": 3
   },
   {
     "id": "loc-4",
@@ -121,7 +127,9 @@
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.64667546271741,18.2962481173517",
     "images": ["https://commons.wikimedia.org/wiki/Special:FilePath/Snäckgärdsporten_Visby.jpg"],
-    "scanCount": 0
+    "scanCount": 0,
+    "manualCode": "BAGGE4",
+    "orderIndex": 4
   },
   {
     "id": "loc-5",
@@ -152,7 +160,9 @@
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.64410988530589,18.298517371558123",
     "images": ["https://mm.dimu.org/image/0210412380657"],
-    "scanCount": 0
+    "scanCount": 0,
+    "manualCode": "BAGGE5",
+    "orderIndex": 5
   },
   {
     "id": "loc-6",
@@ -183,7 +193,9 @@
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.641668916480064,18.297641439347583",
     "images": ["https://mm.dimu.org/image/0210213402179"],
-    "scanCount": 0
+    "scanCount": 0,
+    "manualCode": "BAGGE6",
+    "orderIndex": 6
   },
   {
     "id": "loc-7",
@@ -214,7 +226,9 @@
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.639944104511585,18.297040950719776",
     "images": ["https://commons.wikimedia.org/wiki/Special:FilePath/Klinten_Visby.jpg"],
-    "scanCount": 0
+    "scanCount": 0,
+    "manualCode": "BAGGE7",
+    "orderIndex": 7
   },
   {
     "id": "loc-8",
@@ -245,7 +259,9 @@
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.638496416394666,18.298438963420132",
     "images": ["https://commons.wikimedia.org/wiki/Special:FilePath/%C3%96sterport%2C_Visby%2C_1880s.jpg"],
-    "scanCount": 0
+    "scanCount": 0,
+    "manualCode": "BAGGE8",
+    "orderIndex": 8
   },
   {
     "id": "loc-9",
@@ -276,7 +292,9 @@
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.63874382346324,18.295835156791405",
     "images": ["https://mm.dimu.org/image/011013844321"],
-    "scanCount": 0
+    "scanCount": 0,
+    "manualCode": "BAGGE9",
+    "orderIndex": 9
   },
   {
     "id": "loc-10",
@@ -307,7 +325,9 @@
     },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.64068897779912,18.296136211701384",
     "images": ["https://mm.dimu.org/image/0210413938127", "https://mm.dimu.org/image/0210116511383"],
-    "scanCount": 0
+    "scanCount": 0,
+    "manualCode": "BAGGE10",
+    "orderIndex": 10
   },
   {
     "id": "loc-11",
@@ -319,7 +339,9 @@
     "coordinates": { "lat": 57.6425, "lng": 18.2935 },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6425,18.2935",
     "images": [],
-    "scanCount": 0
+    "scanCount": 0,
+    "manualCode": "BAGGE11",
+    "orderIndex": 11
   },
   {
     "id": "loc-12",
@@ -331,7 +353,9 @@
     "coordinates": { "lat": 57.6435, "lng": 18.2950 },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6435,18.295",
     "images": [],
-    "scanCount": 0
+    "scanCount": 0,
+    "manualCode": "BAGGE12",
+    "orderIndex": 12
   },
   {
     "id": "loc-13",
@@ -343,7 +367,9 @@
     "coordinates": { "lat": 57.6412, "lng": 18.2988 },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6412,18.2988",
     "images": [],
-    "scanCount": 0
+    "scanCount": 0,
+    "manualCode": "BAGGE13",
+    "orderIndex": 13
   },
   {
     "id": "loc-14",
@@ -355,7 +381,9 @@
     "coordinates": { "lat": 57.6398, "lng": 18.2943 },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6398,18.2943",
     "images": [],
-    "scanCount": 0
+    "scanCount": 0,
+    "manualCode": "BAGGE14",
+    "orderIndex": 14
   },
   {
     "id": "loc-15",
@@ -367,6 +395,8 @@
     "coordinates": { "lat": 57.6449, "lng": 18.2970 },
     "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=57.6449,18.297",
     "images": [],
-    "scanCount": 0
+    "scanCount": 0,
+    "manualCode": "BAGGE15",
+    "orderIndex": 15
   }
 ]
