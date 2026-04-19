@@ -7,6 +7,7 @@ import {
   addScanForUser,
   createLocation,
   createUser,
+  deleteLocationIfQrCodeMismatch,
   deleteLocation,
   deleteSession,
   ensureAdminUser,
@@ -22,6 +23,7 @@ import {
   setUserPaid,
   startSessionPurgeInterval,
   updateLocation,
+  upsertLocation,
   upsertSession,
 } from "./lib/db.mjs";
 import { loadBundledLocations } from "./lib/default-locations.mjs";
@@ -74,28 +76,14 @@ startSessionPurgeInterval();
 
 try {
   const bundledLocations = loadBundledLocations();
-  const existingLocations = await listLocations();
-
-  if (existingLocations.length === 0) {
-    const seededLocations = await seedLocations(bundledLocations);
-    if (seededLocations.length !== bundledLocations.length) {
-      logError("locations.seed_incomplete", {
-        expected: bundledLocations.length,
-        actual: seededLocations.length,
-      });
-    } else {
-      logInfo("locations.seeded", { count: seededLocations.length });
-    }
-  } else if (existingLocations.length < bundledLocations.length) {
-    logWarn("locations.count_mismatch", {
-      expected: bundledLocations.length,
-      actual: existingLocations.length,
-      message: "DB has fewer locations than the bundled set. Manual intervention may be needed.",
-    });
+  for (const loc of bundledLocations) {
+    await deleteLocationIfQrCodeMismatch(loc.qrCode, loc.id);
+    await upsertLocation(loc);
   }
+  logInfo("locations.synced", { count: bundledLocations.length });
 } catch (error) {
-  logError("locations.seed_failed", {
-    message: error instanceof Error ? error.message : "Unknown seed error",
+  logError("locations.sync_failed", {
+    message: error instanceof Error ? error.message : "Unknown sync error",
   });
 }
 
