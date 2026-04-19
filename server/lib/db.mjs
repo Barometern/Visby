@@ -443,8 +443,9 @@ export async function upsertLocation(location) {
   await query(
     `INSERT INTO locations (
         id, qr_code, name_json, description_json, read_more_json,
-        clue_json, latitude, longitude, google_maps_url, images_json, scan_count
-      ) VALUES ($1,$2,$3::jsonb,$4::jsonb,$5::jsonb,$6::jsonb,$7,$8,$9,$10::jsonb,$11)
+        clue_json, latitude, longitude, google_maps_url, images_json, scan_count,
+        manual_code, order_index
+      ) VALUES ($1,$2,$3::jsonb,$4::jsonb,$5::jsonb,$6::jsonb,$7,$8,$9,$10::jsonb,$11,$12,$13)
       ON CONFLICT (id) DO UPDATE SET
         qr_code          = EXCLUDED.qr_code,
         name_json        = EXCLUDED.name_json,
@@ -454,7 +455,9 @@ export async function upsertLocation(location) {
         latitude         = EXCLUDED.latitude,
         longitude        = EXCLUDED.longitude,
         google_maps_url  = EXCLUDED.google_maps_url,
-        images_json      = EXCLUDED.images_json`,
+        images_json      = EXCLUDED.images_json,
+        manual_code      = EXCLUDED.manual_code,
+        order_index      = EXCLUDED.order_index`,
     [
       location.id,
       location.qrCode,
@@ -467,6 +470,8 @@ export async function upsertLocation(location) {
       location.googleMapsUrl,
       JSON.stringify(location.images ?? []),
       location.scanCount ?? 0,
+      location.manualCode ?? null,
+      location.orderIndex ?? null,
     ],
   );
 }
