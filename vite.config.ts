@@ -22,4 +22,19 @@ export default defineConfig(() => ({
     },
     dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return;
+          if (id.includes("framer-motion")) return "vendor-motion";
+          if (id.includes("leaflet")) return "vendor-map";
+          if (id.includes("@tanstack/react-query")) return "vendor-query";
+          if (id.includes("@radix-ui")) return "vendor-ui";
+          if (id.includes("recharts") || id.includes("d3-")) return "vendor-charts";
+          if (id.includes("react-router") || id.includes("react-dom") || id.includes("/react/")) return "vendor-react";
+        },
+      },
+    },
+  },
 }));

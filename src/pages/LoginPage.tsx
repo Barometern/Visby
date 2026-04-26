@@ -59,6 +59,8 @@ export default function LoginPage() {
             src={balleBaggeGlad}
             alt=""
             aria-hidden="true"
+            loading="lazy"
+            decoding="async"
             className="w-20 h-auto mx-auto mb-4"
           />
           <h1 className="font-heading text-2xl text-[#2C1A0E]">

@@ -180,6 +180,8 @@ export default function MapClueOverlay({
                     alt=""
                     aria-hidden="true"
                     draggable={false}
+                    loading="lazy"
+                    decoding="async"
                     className="pointer-events-none absolute bottom-3 right-3 w-[86px] select-none drop-shadow-[0_12px_20px_rgba(72,44,18,0.22)]"
                   />
                 </div>
