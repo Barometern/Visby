@@ -184,7 +184,7 @@ export default function MapPage() {
 
   return (
     <>
-      <div className="wood-table-bg relative flex min-h-screen flex-col overflow-hidden">
+      <div className={`wood-table-bg relative flex min-h-screen flex-col overflow-hidden transition-[filter] duration-300 ${overlayLocation !== null ? "blur-[3px] brightness-90" : ""}`}>
         <div className="relative z-10 mx-auto w-full max-w-md px-4 pt-4">
           <div className="px-1 py-2 text-[#fff3d4]">
             <div className="flex items-start justify-between gap-4">
