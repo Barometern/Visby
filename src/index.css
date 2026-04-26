@@ -208,7 +208,7 @@
 
   /* Map container sitting on table */
   .parchment-map-container {
-    filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.65));
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.65);
     transform: none;
     transition: none;
     -webkit-tap-highlight-color: transparent;
@@ -348,6 +348,7 @@
 
   /* Parchment with torn edges */
   .parchment-torn {
+    will-change: transform;
     background: linear-gradient(
       145deg,
       hsl(42, 45%, 90%),
