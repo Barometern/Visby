@@ -158,13 +158,13 @@ export default function PuzzleCompletionOverlay({
     <AnimatePresence>
       {isOpen ? (
         <motion.div
-          className="fixed inset-0 z-[130] flex items-end justify-center bg-[radial-gradient(circle_at_top,rgba(247,210,132,0.18),transparent_30%),rgba(14,9,7,0.88)] px-3 pb-3 pt-6 backdrop-blur-[10px] sm:items-center sm:px-6"
+          className="fixed inset-0 z-[130] overflow-y-auto flex items-start justify-center bg-[radial-gradient(circle_at_top,rgba(247,210,132,0.18),transparent_30%),rgba(14,9,7,0.88)] px-3 pb-6 pt-6 backdrop-blur-[10px] sm:px-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="relative w-full max-w-xl overflow-hidden rounded-[38px] border border-[#ebce94]/18 bg-[linear-gradient(180deg,rgba(33,22,15,0.98),rgba(17,11,8,0.98))] text-[#fff1d4] shadow-[0_30px_90px_rgba(0,0,0,0.42)]"
+            className="relative my-auto w-full max-w-xl overflow-hidden rounded-[38px] border border-[#ebce94]/18 bg-[linear-gradient(180deg,rgba(33,22,15,0.98),rgba(17,11,8,0.98))] text-[#fff1d4] shadow-[0_30px_90px_rgba(0,0,0,0.42)]"
             initial={{ opacity: 0, y: 40, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.98 }}
