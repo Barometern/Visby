@@ -99,7 +99,7 @@ export default function MapClueOverlay({
               type="button"
               aria-label={t("close", language)}
               onClick={onClose}
-              className="absolute inset-0 h-full w-full cursor-default bg-[rgba(12,8,5,0.68)] backdrop-blur-[5px]"
+              className="absolute inset-0 h-full w-full cursor-default bg-[rgba(12,8,5,0.85)]"
             />
 
             <div className="relative flex min-h-screen items-center justify-center px-4 py-6">
@@ -201,7 +201,7 @@ export default function MapClueOverlay({
     <AnimatePresence>
       {isOpen ? (
         <motion.div
-          className="fixed inset-0 z-[120] flex items-stretch justify-center bg-[radial-gradient(circle_at_top,rgba(239,201,127,0.18),transparent_25%),rgba(16,11,8,0.78)] backdrop-blur-[10px]"
+          className="fixed inset-0 z-[120] flex items-stretch justify-center bg-[radial-gradient(circle_at_top,rgba(239,201,127,0.18),transparent_25%),rgba(16,11,8,0.92)]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
