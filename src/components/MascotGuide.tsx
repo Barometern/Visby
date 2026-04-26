@@ -115,6 +115,8 @@ export default function MascotGuide({
         alt=""
         aria-hidden="true"
         draggable={false}
+        loading="lazy"
+        decoding="async"
         animate={{ y: [0, -3, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         className={[
